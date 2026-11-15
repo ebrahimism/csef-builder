@@ -1,0 +1,10 @@
+{
+  "command": "python verification_step5/finalize.py",
+  "exit_code": 0,
+  "checks": "ledger/log consistency; 48 inventory rows; 130 cases; mutation summary; reference static imports",
+  "reference_imports": [
+    "json",
+    "sys"
+  ],
+  "note": "Static imports do not prove clean-room provenance or confinement."
+}

@@ -1,0 +1,302 @@
+{
+  "boundary": {
+    "backend": "codex-native-windows",
+    "checks": {
+      "control_read_denied": true,
+      "control_write_denied": true,
+      "loopback_denied": false,
+      "scratch_write": true,
+      "snapshot_write_denied": true,
+      "source_read": true
+    },
+    "execution_root": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\csef-execution\\a0604548672943818a330b4514eb1d11",
+    "file_boundary_verified": true,
+    "network_isolation_verified": false,
+    "process": {
+      "command_sha256": "8b5d8c170a75822b5147acdddfbb01ba98f3572d797b19d1e652e73f5643b406",
+      "elapsed_s": 2.219,
+      "exit_code": 0,
+      "overflow": false,
+      "stderr": "",
+      "stdout": "{\"source_read\": true, \"scratch_write\": true, \"control_read_denied\": true, \"control_write_denied\": true, \"snapshot_write_denied\": true, \"loopback_denied\": false}\r\n",
+      "timed_out": false
+    },
+    "scope": "observed read/write/loopback probes, not proof against all sandbox escapes",
+    "verified": false
+  },
+  "cases": [
+    {
+      "actual_json": {
+        "legacy": 500
+      },
+      "command_sha256": "700752c3ffb39a4e61d58da1c9d06f1007b9a95fdbfa1778ff5d9904385f48e6",
+      "elapsed_s": 2.094,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "legacy": 500
+      },
+      "id": "LEGACY",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"legacy\": 500}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 8
+      },
+      "command_sha256": "9520a0eba024851ce0ff65cb9f3437f99db64c5adb5239162f40286e4dc63609",
+      "elapsed_s": 2.313,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 8
+      },
+      "id": "ADD",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 8}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "hosting": 2500
+      },
+      "command_sha256": "9a320588141d1af541f3e2cacdd31d9b9717361dc5ffc897c189a845ebfb95ae",
+      "elapsed_s": 2.156,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "hosting": 2500
+      },
+      "id": "REPORT",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"hosting\": 2500}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "ce7ac9121db517cc04ac11699c12f48d6cb0366badf4b835e6e6c5fcca29b477",
+      "elapsed_s": 2.078,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "INVALID",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 9
+      },
+      "command_sha256": "ad9ce68b6963c4525710e027238fc1988dd882a4924d0aadf669654ebd5f2102",
+      "elapsed_s": 2.172,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 9
+      },
+      "id": "KEY_ADD",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 9}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 9
+      },
+      "command_sha256": "ad9ce68b6963c4525710e027238fc1988dd882a4924d0aadf669654ebd5f2102",
+      "elapsed_s": 2.078,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 9
+      },
+      "id": "KEY_REPEAT",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 9}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "conflict"
+      },
+      "command_sha256": "8e0a1bcbcca35b48d0fd11bb757d86146ecfe12f45f2d4bbf598e9fed9972107",
+      "elapsed_s": 2.094,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "conflict"
+      },
+      "id": "KEY_CONFLICT",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"conflict\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "hosting": 2600
+      },
+      "command_sha256": "9a320588141d1af541f3e2cacdd31d9b9717361dc5ffc897c189a845ebfb95ae",
+      "elapsed_s": 2.078,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "hosting": 2600
+      },
+      "id": "COUNT_AFTER_RETRY",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"hosting\": 2600}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 10
+      },
+      "command_sha256": "d19e3dfdc2a2f484d6795e66d9d963e03a41f87575875899de4fddd81586f104",
+      "elapsed_s": 2.094,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 10
+      },
+      "id": "UNICODE",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 10}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "records": [
+          {
+            "amount": 2500,
+            "category": "hosting",
+            "date": "2026-01-03",
+            "id": 8
+          },
+          {
+            "amount": 100,
+            "category": "hosting",
+            "date": "2026-01-05",
+            "id": 9
+          }
+        ]
+      },
+      "command_sha256": "420c2e6007dc47c96056a85c19cb047c4025b2f15f3dd53ed1b201ae04ca3ec7",
+      "elapsed_s": 2.063,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "records": [
+          {
+            "amount": 2500,
+            "category": "hosting",
+            "date": "2026-01-03",
+            "id": 8
+          },
+          {
+            "amount": 100,
+            "category": "hosting",
+            "date": "2026-01-05",
+            "id": 9
+          }
+        ]
+      },
+      "id": "EXPORT",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"records\": [{\"id\": 8, \"amount\": 2500, \"category\": \"hosting\", \"date\": \"2026-01-03\"}, {\"id\": 9, \"amount\": 100, \"category\": \"hosting\", \"date\": \"2026-01-05\"}]}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "f96feba4f4a4c00bbda9356a21caf7918276748157b32b7be38c66cd632241d6",
+      "elapsed_s": 2.063,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "CANONICAL_DATE",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "دامنه": 7000
+      },
+      "command_sha256": "0691561bb127aa9f804eca08ed18de2b63315cf4e4ed67571448b28240729b39",
+      "elapsed_s": 2.062,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "دامنه": 7000
+      },
+      "id": "UNICODE_REPORT",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"\\u062f\\u0627\\u0645\\u0646\\u0647\": 7000}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "legacy": 500
+      },
+      "command_sha256": "700752c3ffb39a4e61d58da1c9d06f1007b9a95fdbfa1778ff5d9904385f48e6",
+      "elapsed_s": 2.093,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "legacy": 500
+      },
+      "id": "LEGACY_STILL_PRESENT",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"legacy\": 500}\r\n",
+      "timed_out": false
+    }
+  ],
+  "error": null,
+  "evaluation_id": "eval-21670c3dff3c4ecdab16861c66f8c392",
+  "finished_at": "2026-11-15T15:55:51.099788+00:00",
+  "measurement_only": true,
+  "run_id": "run-083c259472ae49e38cb8c93c527201cb",
+  "source_manifest": {
+    "app.py": "f627013aad08c239d1120f35262fe3bb393decaf4ce41f0e67155cbcda1b14aa",
+    "domain.py": "9afe47a4a83625c0a6c1abb3f5db134a272fd1facc2405cda8c0033a15b66c14",
+    "storage.py": "f15abf8d45e0a5c5f7f42efa202ceaf2fca9192578a03b082e5d1f4271af9c0a"
+  },
+  "source_sha256": "db082bd85bae83143687169a71efe937ee2a87a969452b10a2aa685e4efe23fc",
+  "spec_sha256": "df9181a12720a0ba4103ee9757c9d069e041c7b1dc03d5d06bbc2d93af6e72c6",
+  "status": "review"
+}

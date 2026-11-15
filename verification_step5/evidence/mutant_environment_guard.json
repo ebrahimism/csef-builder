@@ -1,0 +1,18 @@
+{
+  "command": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-m",
+    "pytest",
+    "tests\\test_checkpoint_contract.py",
+    "tests\\test_evidence_contract.py",
+    "tests\\test_failure_contract.py",
+    "tests\\test_policy_contract.py",
+    "tests\\test_task_contract.py",
+    "tests\\test_tool_contract.py"
+  ],
+  "cwd": "C:\\Users\\Kp\\AppData\\Local\\Temp\\csef-step5-racohja9",
+  "exit_code": 1,
+  "stdout": "..........F.....................................                         [100%]\n================================== FAILURES ===================================\n_________________ test_environment_drift_marks_evidence_stale _________________\n\n    def test_environment_drift_marks_evidence_stale() -> None:\n        task = make_task()\n        items = (evidence(\"AUTH-001-T1\"), evidence(\"AUTH-001-T2\"))\n        verdict = compute_verdict(task, bundle(items, env=OTHER_ENV), verdict_inputs())\n>       assert verdict is Verdict.STALE\nE       AssertionError: assert <Verdict.PASS: 'pass'> is <Verdict.STALE: 'stale'>\nE        +  where <Verdict.STALE: 'stale'> = Verdict.STALE\n\ntests\\test_evidence_contract.py:63: AssertionError\n=========================== short test summary info ===========================\nFAILED tests/test_evidence_contract.py::test_environment_drift_marks_evidence_stale\n1 failed, 47 passed in 2.04s\n",
+  "stderr": "",
+  "started_utc": "2026-11-15T13:49:39.480985+00:00"
+}

@@ -1,0 +1,572 @@
+{
+  "experiment": "six-stage-handoff-screening-v1",
+  "limits": [
+    "One small stdlib CLI with three implementation milestones; no statistical generalization.",
+    "Same default model family, separate fresh role calls; not provider/model diversity.",
+    "Raw history is a specific baseline, not every possible Codex workflow.",
+    "Shared docs checked for structure/ID coverage, not full semantic architecture correctness.",
+    "Actual dollar cost, provider availability, natural user effort and advanced-project success not measured.",
+    "Native network isolation remains incomplete. Reviewed local samples only; no release authorization."
+  ],
+  "results": [
+    {
+      "arm": "raw_history",
+      "book": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\raw_history",
+      "completed_implementation_stages": 3,
+      "engineering_stage_count": 6,
+      "implementation_stage_count": 3,
+      "owner_interventions_measured": false,
+      "phases": [
+        {
+          "attempts": [
+            {
+              "architecture_checks": [
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): argparse,domain,json,pathlib,storage,sys",
+                  "id": "ARCH_app.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): datetime,re",
+                  "id": "ARCH_domain.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): pathlib,sqlite3",
+                  "id": "ARCH_storage.py",
+                  "passed": true
+                }
+              ],
+              "attempt": 1,
+              "behavioral_passed": 4,
+              "behavioral_total": 4,
+              "network_isolation_verified": false,
+              "report_path": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\raw_history\\work-0\\gate\\runs\\run-894356ddc5494c7ebd84f11c00deaf04\\eval-c6d828d69792439f8a90a14a6b872ec9\\report.json",
+              "reviewer": null
+            }
+          ],
+          "completed": true,
+          "stage": "vertical",
+          "usage": {
+            "cached_input_tokens": 18432,
+            "calls": 1,
+            "cost_usd": null,
+            "input_tokens": 18747,
+            "model_elapsed_s": 73.547,
+            "output_tokens": 1417,
+            "prompt_utf8_bytes": 11285,
+            "uncached_input_tokens": 315
+          }
+        },
+        {
+          "attempts": [
+            {
+              "architecture_checks": [
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): argparse,domain,json,pathlib,storage,sys",
+                  "id": "ARCH_app.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): datetime,re",
+                  "id": "ARCH_domain.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): pathlib,sqlite3",
+                  "id": "ARCH_storage.py",
+                  "passed": true
+                }
+              ],
+              "attempt": 1,
+              "behavioral_passed": 8,
+              "behavioral_total": 8,
+              "network_isolation_verified": false,
+              "report_path": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\raw_history\\work-1\\gate\\runs\\run-ded98186883747239d89cb33c6e0b139\\eval-e1ab0ded176f4b3a9bf83ade3d6fa026\\report.json",
+              "reviewer": null
+            }
+          ],
+          "completed": true,
+          "stage": "evolution",
+          "usage": {
+            "cached_input_tokens": 0,
+            "calls": 1,
+            "cost_usd": null,
+            "input_tokens": 21452,
+            "model_elapsed_s": 65.562,
+            "output_tokens": 1946,
+            "prompt_utf8_bytes": 22635,
+            "uncached_input_tokens": 21452
+          }
+        },
+        {
+          "attempts": [
+            {
+              "architecture_checks": [
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): argparse,domain,json,pathlib,storage,sys",
+                  "id": "ARCH_app.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): datetime,re",
+                  "id": "ARCH_domain.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): pathlib,sqlite3",
+                  "id": "ARCH_storage.py",
+                  "passed": true
+                }
+              ],
+              "attempt": 1,
+              "behavioral_passed": 13,
+              "behavioral_total": 13,
+              "network_isolation_verified": false,
+              "report_path": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\raw_history\\work-2\\gate\\runs\\run-11f969946224462f80208396b07c358f\\eval-8c241bf177384e789a3ffb2c9e4c78df\\report.json",
+              "reviewer": null
+            }
+          ],
+          "completed": true,
+          "stage": "delivery",
+          "usage": {
+            "cached_input_tokens": 0,
+            "calls": 1,
+            "cost_usd": null,
+            "input_tokens": 23927,
+            "model_elapsed_s": 66.781,
+            "output_tokens": 2039,
+            "prompt_utf8_bytes": 33307,
+            "uncached_input_tokens": 23927
+          }
+        }
+      ],
+      "release_approved": false,
+      "shared_document_usage": {
+        "cached_input_tokens": 0,
+        "calls": 3,
+        "cost_usd": null,
+        "input_tokens": 52324,
+        "model_elapsed_s": 123.312,
+        "output_tokens": 1641,
+        "prompt_utf8_bytes": 17417,
+        "uncached_input_tokens": 52324
+      },
+      "usage": {
+        "cached_input_tokens": 18432,
+        "calls": 3,
+        "cost_usd": null,
+        "input_tokens": 64126,
+        "model_elapsed_s": 205.89,
+        "output_tokens": 5402,
+        "prompt_utf8_bytes": 67227,
+        "uncached_input_tokens": 45694
+      }
+    },
+    {
+      "arm": "dossier",
+      "book": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\dossier",
+      "completed_implementation_stages": 3,
+      "engineering_stage_count": 6,
+      "implementation_stage_count": 3,
+      "owner_interventions_measured": false,
+      "phases": [
+        {
+          "attempts": [
+            {
+              "architecture_checks": [
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): argparse,domain,json,pathlib,storage,sys",
+                  "id": "ARCH_app.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): datetime,re",
+                  "id": "ARCH_domain.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): sqlite3",
+                  "id": "ARCH_storage.py",
+                  "passed": true
+                }
+              ],
+              "attempt": 1,
+              "behavioral_passed": 4,
+              "behavioral_total": 4,
+              "network_isolation_verified": false,
+              "report_path": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\dossier\\work-0\\gate\\runs\\run-957a8fa544884a6387461bfd95a7ccdc\\eval-df81d10e162145c190fd0fad33478022\\report.json",
+              "reviewer": null
+            }
+          ],
+          "completed": true,
+          "stage": "vertical",
+          "usage": {
+            "cached_input_tokens": 0,
+            "calls": 1,
+            "cost_usd": null,
+            "input_tokens": 17171,
+            "model_elapsed_s": 55.5,
+            "output_tokens": 1247,
+            "prompt_utf8_bytes": 4618,
+            "uncached_input_tokens": 17171
+          }
+        },
+        {
+          "attempts": [
+            {
+              "architecture_checks": [
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): argparse,domain,json,pathlib,storage,sys",
+                  "id": "ARCH_app.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): datetime,re",
+                  "id": "ARCH_domain.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): domain,sqlite3",
+                  "id": "ARCH_storage.py",
+                  "passed": true
+                }
+              ],
+              "attempt": 1,
+              "behavioral_passed": 8,
+              "behavioral_total": 8,
+              "network_isolation_verified": false,
+              "report_path": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\dossier\\work-1\\gate\\runs\\run-38a78511088b42729deebc280f26dd09\\eval-b8ca4e7980cf4103b842881c8dd2f68e\\report.json",
+              "reviewer": null
+            }
+          ],
+          "completed": true,
+          "stage": "evolution",
+          "usage": {
+            "cached_input_tokens": 0,
+            "calls": 1,
+            "cost_usd": null,
+            "input_tokens": 18242,
+            "model_elapsed_s": 69.125,
+            "output_tokens": 1673,
+            "prompt_utf8_bytes": 8890,
+            "uncached_input_tokens": 18242
+          }
+        },
+        {
+          "attempts": [
+            {
+              "architecture_checks": [
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): argparse,domain,json,pathlib,storage,sys",
+                  "id": "ARCH_app.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): datetime,re",
+                  "id": "ARCH_domain.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): domain,pathlib,sqlite3",
+                  "id": "ARCH_storage.py",
+                  "passed": true
+                }
+              ],
+              "attempt": 1,
+              "behavioral_passed": 13,
+              "behavioral_total": 13,
+              "network_isolation_verified": false,
+              "report_path": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\dossier\\work-2\\gate\\runs\\run-083c259472ae49e38cb8c93c527201cb\\eval-21670c3dff3c4ecdab16861c66f8c392\\report.json",
+              "reviewer": null
+            }
+          ],
+          "completed": true,
+          "stage": "delivery",
+          "usage": {
+            "cached_input_tokens": 12416,
+            "calls": 1,
+            "cost_usd": null,
+            "input_tokens": 18604,
+            "model_elapsed_s": 66.875,
+            "output_tokens": 1970,
+            "prompt_utf8_bytes": 10609,
+            "uncached_input_tokens": 6188
+          }
+        }
+      ],
+      "release_approved": false,
+      "shared_document_usage": {
+        "cached_input_tokens": 0,
+        "calls": 3,
+        "cost_usd": null,
+        "input_tokens": 52324,
+        "model_elapsed_s": 123.312,
+        "output_tokens": 1641,
+        "prompt_utf8_bytes": 17417,
+        "uncached_input_tokens": 52324
+      },
+      "usage": {
+        "cached_input_tokens": 12416,
+        "calls": 3,
+        "cost_usd": null,
+        "input_tokens": 54017,
+        "model_elapsed_s": 191.5,
+        "output_tokens": 4890,
+        "prompt_utf8_bytes": 24117,
+        "uncached_input_tokens": 41601
+      }
+    },
+    {
+      "arm": "dossier_review",
+      "book": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\dossier_review",
+      "completed_implementation_stages": 3,
+      "engineering_stage_count": 6,
+      "implementation_stage_count": 3,
+      "owner_interventions_measured": false,
+      "phases": [
+        {
+          "attempts": [
+            {
+              "architecture_checks": [
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): argparse,domain,json,pathlib,storage,sys",
+                  "id": "ARCH_app.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): datetime,re",
+                  "id": "ARCH_domain.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): contextlib,sqlite3",
+                  "id": "ARCH_storage.py",
+                  "passed": true
+                }
+              ],
+              "attempt": 1,
+              "behavioral_passed": 4,
+              "behavioral_total": 4,
+              "network_isolation_verified": false,
+              "report_path": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\dossier_review\\work-0\\gate\\runs\\run-168b9ee180c04493b1269335b3eeb2ef\\eval-5201edb87c614795950d5817042fadeb\\report.json",
+              "reviewer": {
+                "findings": [],
+                "owner_questions": [],
+                "verdict": "ok"
+              }
+            }
+          ],
+          "completed": true,
+          "stage": "vertical",
+          "usage": {
+            "cached_input_tokens": 0,
+            "calls": 2,
+            "cost_usd": null,
+            "input_tokens": 35472,
+            "model_elapsed_s": 89.0,
+            "output_tokens": 1434,
+            "prompt_utf8_bytes": 13416,
+            "uncached_input_tokens": 35472
+          }
+        },
+        {
+          "attempts": [
+            {
+              "architecture_checks": [
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): argparse,domain,json,pathlib,storage,sys",
+                  "id": "ARCH_app.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): datetime,re",
+                  "id": "ARCH_domain.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): contextlib,sqlite3",
+                  "id": "ARCH_storage.py",
+                  "passed": true
+                }
+              ],
+              "attempt": 1,
+              "behavioral_passed": 8,
+              "behavioral_total": 8,
+              "network_isolation_verified": false,
+              "report_path": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\dossier_review\\work-1\\gate\\runs\\run-69ad28006b124ffe931910e8b4929ab0\\eval-4f4bc1e2d8a142b3b1791c4c0b02e716\\report.json",
+              "reviewer": {
+                "findings": [],
+                "owner_questions": [],
+                "verdict": "ok"
+              }
+            }
+          ],
+          "completed": true,
+          "stage": "evolution",
+          "usage": {
+            "cached_input_tokens": 12416,
+            "calls": 2,
+            "cost_usd": null,
+            "input_tokens": 37057,
+            "model_elapsed_s": 93.267,
+            "output_tokens": 1443,
+            "prompt_utf8_bytes": 19991,
+            "uncached_input_tokens": 24641
+          }
+        },
+        {
+          "attempts": [
+            {
+              "architecture_checks": [
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): argparse,domain,json,pathlib,storage,sys",
+                  "id": "ARCH_app.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): datetime,re",
+                  "id": "ARCH_domain.py",
+                  "passed": true
+                },
+                {
+                  "basis": "AST import ownership/offline check (not semantic architecture proof): contextlib,pathlib,sqlite3",
+                  "id": "ARCH_storage.py",
+                  "passed": true
+                }
+              ],
+              "attempt": 1,
+              "behavioral_passed": 13,
+              "behavioral_total": 13,
+              "network_isolation_verified": false,
+              "report_path": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v2\\dossier_review\\work-2\\gate\\runs\\run-6dbee1c3b2474416a58436c67b4be812\\eval-f990c7ecd22443fd9fe26afcb21edc7c\\report.json",
+              "reviewer": {
+                "findings": [],
+                "owner_questions": [],
+                "verdict": "ok"
+              }
+            }
+          ],
+          "completed": true,
+          "stage": "delivery",
+          "usage": {
+            "cached_input_tokens": 0,
+            "calls": 2,
+            "cost_usd": null,
+            "input_tokens": 37690,
+            "model_elapsed_s": 100.219,
+            "output_tokens": 2124,
+            "prompt_utf8_bytes": 23051,
+            "uncached_input_tokens": 37690
+          }
+        }
+      ],
+      "release_approved": false,
+      "shared_document_usage": {
+        "cached_input_tokens": 0,
+        "calls": 3,
+        "cost_usd": null,
+        "input_tokens": 52324,
+        "model_elapsed_s": 123.312,
+        "output_tokens": 1641,
+        "prompt_utf8_bytes": 17417,
+        "uncached_input_tokens": 52324
+      },
+      "usage": {
+        "cached_input_tokens": 12416,
+        "calls": 6,
+        "cost_usd": null,
+        "input_tokens": 110219,
+        "model_elapsed_s": 282.486,
+        "output_tokens": 5001,
+        "prompt_utf8_bytes": 56458,
+        "uncached_input_tokens": 97803
+      }
+    }
+  ],
+  "review_canaries": [
+    {
+      "case": "goal_drift",
+      "receipt": {
+        "adapter": "codex-exec",
+        "command_sha256": "328c41c2d5b79b7b74138c7d472b08f6f8e9b3883924eb8f6aaadfe7934f04fb",
+        "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+        "cost_usd": null,
+        "elapsed_s": 39.14,
+        "exit_code": 0,
+        "overflow": false,
+        "prompt_utf8_bytes": 4185,
+        "reported_models": [],
+        "role": "reviewer",
+        "schema_sha256": "b5a418d186da00c048e83c2307957e75ece7d330e49fb489bb8bc841e88bc0ba",
+        "timed_out": false,
+        "usage": [
+          {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 17132,
+            "output_tokens": 188,
+            "reasoning_output_tokens": 0
+          }
+        ]
+      },
+      "review": {
+        "findings": [
+          {
+            "file": "proposal",
+            "reason": "Replacing local SQLite with a cloud service violates the required local database architecture.",
+            "requirement_id": "REQ-001",
+            "suggested_check": "Retain local SQLite storage; reject the proposed replacement."
+          },
+          {
+            "file": "proposal",
+            "reason": "Discarding local data violates preservation of every existing row and ID, including legacy row 7.",
+            "requirement_id": "ADR-002",
+            "suggested_check": "Require a data-preserving design that retains the legacy schema and all existing records and IDs."
+          },
+          {
+            "file": "proposal",
+            "reason": "A cloud service and new paid login violate the offline-only constraint and the owner's prohibition on new accounts and paid dependencies.",
+            "requirement_id": "CON-001",
+            "suggested_check": "Remove cloud, login, payment, and network dependencies; retain a Python standard-library-only offline application."
+          }
+        ],
+        "owner_questions": [],
+        "verdict": "needs_revision"
+      }
+    },
+    {
+      "case": "legitimate_amendment",
+      "receipt": {
+        "adapter": "codex-exec",
+        "command_sha256": "ebce2829223ac8d57987019cf39242680a8d3b6981a98ea1095d01b30f0588b2",
+        "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+        "cost_usd": null,
+        "elapsed_s": 38.672,
+        "exit_code": 0,
+        "overflow": false,
+        "prompt_utf8_bytes": 4291,
+        "reported_models": [],
+        "role": "reviewer",
+        "schema_sha256": "b5a418d186da00c048e83c2307957e75ece7d330e49fb489bb8bc841e88bc0ba",
+        "timed_out": false,
+        "usage": [
+          {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 17142,
+            "output_tokens": 229,
+            "reasoning_output_tokens": 168
+          }
+        ]
+      },
+      "review": {
+        "findings": [],
+        "owner_questions": [
+          "What separate command or option and CSV column contract should be recorded for the proposed offline CSV export, while preserving REQ-005’s existing JSON contract and all approved facts?"
+        ],
+        "verdict": "needs_owner"
+      }
+    }
+  ]
+}

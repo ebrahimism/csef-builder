@@ -1,0 +1,18 @@
+{
+  "command": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-m",
+    "pytest",
+    "tests\\test_checkpoint_contract.py",
+    "tests\\test_evidence_contract.py",
+    "tests\\test_failure_contract.py",
+    "tests\\test_policy_contract.py",
+    "tests\\test_task_contract.py",
+    "tests\\test_tool_contract.py"
+  ],
+  "cwd": "C:\\Users\\Kp\\AppData\\Local\\Temp\\csef-step5-bvdxaxhr",
+  "exit_code": 1,
+  "stdout": "........................F.FF....................                         [100%]\n================================== FAILURES ===================================\n__________________ test_deny_beats_allow_regardless_of_order __________________\n\n    def test_deny_beats_allow_regardless_of_order() -> None:\n>       assert resolve(Decision.ALLOW, Decision.DENY) is Decision.DENY\nE       AssertionError: assert <Decision.ALLOW: 'allow'> is <Decision.DENY: 'deny'>\nE        +  where <Decision.ALLOW: 'allow'> = resolve(<Decision.ALLOW: 'allow'>, <Decision.DENY: 'deny'>)\nE        +    where <Decision.ALLOW: 'allow'> = Decision.ALLOW\nE        +    and   <Decision.DENY: 'deny'> = Decision.DENY\nE        +  and   <Decision.DENY: 'deny'> = Decision.DENY\n\ntests\\test_policy_contract.py:24: AssertionError\n___________ test_immutable_path_cannot_be_softened_by_an_allow_rule ___________\n\n    def test_immutable_path_cannot_be_softened_by_an_allow_rule() -> None:\n        policy = make_policy()\n        allowed = policy.model_copy(\n            update={\n                \"tools\": {\n                    **policy.tools,\n                    \"edit_project_files\": policy.tools[\"edit_project_files\"].model_copy(\n                        update={\"paths\": (\".csef/acceptance/**\",)}\n                    ),\n                }\n            }\n        )\n>       assert decide(allowed, \"edit_project_files\", path=\".csef/acceptance/auth.yaml\") is Decision.DENY\nE       AssertionError: assert <Decision.ALLOW: 'allow'> is <Decision.DENY: 'deny'>\nE        +  where <Decision.ALLOW: 'allow'> = decide(Policy(policy_version=1, policy_hash='sha256:72993b6cb83904d39a8c73bd0651aa6251288ede5dbc2c7bcbdc54cc5bbf5d77', execut...OP: 'stop'>), protection=Protection(immutable_paths=('.csef/policy.yaml', '.csef/acceptance/**', '.csef/evidence/**'))), 'edit_project_files', path='.csef/acceptance/auth.yaml')\nE        +  and   <Decision.DENY: 'deny'> = Decision.DENY\n\ntests\\test_policy_contract.py:45: AssertionError\n_________________ test_write_outside_declared_scope_is_denied _________________\n\n    def test_write_outside_declared_scope_is_denied() -> None:\n        policy = make_policy()\n>       assert decide(policy, \"edit_project_files\", path=\"infra/prod.tf\") is Decision.DENY\nE       AssertionError: assert <Decision.ALLOW: 'allow'> is <Decision.DENY: 'deny'>\nE        +  where <Decision.ALLOW: 'allow'> = decide(Policy(policy_version=1, policy_hash='sha256:72993b6cb83904d39a8c73bd0651aa6251288ede5dbc2c7bcbdc54cc5bbf5d77', execut...OP: 'stop'>), protection=Protection(immutable_paths=('.csef/policy.yaml', '.csef/acceptance/**', '.csef/evidence/**'))), 'edit_project_files', path='infra/prod.tf')\nE        +  and   <Decision.DENY: 'deny'> = Decision.DENY\n\ntests\\test_policy_contract.py:50: AssertionError\n=========================== short test summary info ===========================\nFAILED tests/test_policy_contract.py::test_deny_beats_allow_regardless_of_order\nFAILED tests/test_policy_contract.py::test_immutable_path_cannot_be_softened_by_an_allow_rule\nFAILED tests/test_policy_contract.py::test_write_outside_declared_scope_is_denied\n3 failed, 45 passed in 2.66s\n",
+  "stderr": "",
+  "started_utc": "2026-11-15T13:49:23.547485+00:00"
+}

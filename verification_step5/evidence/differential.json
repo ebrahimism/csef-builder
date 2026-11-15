@@ -1,0 +1,11 @@
+{
+  "command": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "verification_step5/differential.py"
+  ],
+  "cwd": "F:\\cffmam",
+  "exit_code": 1,
+  "stdout": "{\"cases\": 130, \"divergences\": 2, \"primary_normative_failures\": 1, \"reference_normative_failures\": 0, \"pending\": 1}\n",
+  "stderr": "",
+  "started_utc": "2026-11-15T13:49:21.077709+00:00"
+}

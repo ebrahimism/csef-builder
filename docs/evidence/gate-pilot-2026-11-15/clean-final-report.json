@@ -1,0 +1,292 @@
+{
+  "boundary": {
+    "backend": "codex-native-windows",
+    "checks": {
+      "control_read_denied": true,
+      "control_write_denied": true,
+      "loopback_denied": false,
+      "scratch_write": true,
+      "snapshot_write_denied": true,
+      "source_read": true
+    },
+    "execution_root": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\csef-execution\\3c201853e8cd4beea05d260678d7e7cc",
+    "file_boundary_verified": true,
+    "network_isolation_verified": false,
+    "process": {
+      "command_sha256": "0ed7129028fd23165f700f041e84a3b91082ef4c6c5e2b5af68daef332b38490",
+      "elapsed_s": 2.266,
+      "exit_code": 0,
+      "overflow": false,
+      "stderr": "",
+      "stdout": "{\"source_read\": true, \"scratch_write\": true, \"control_read_denied\": true, \"control_write_denied\": true, \"snapshot_write_denied\": true, \"loopback_denied\": false}\r\n",
+      "timed_out": false
+    },
+    "scope": "observed read/write/loopback probes, not proof against all sandbox escapes",
+    "verified": false
+  },
+  "cases": [
+    {
+      "actual_json": {},
+      "command_sha256": "c402a08e0de2c9d6fd433eaa7034c8966a934ab03a00a8e85245b296493b902b",
+      "elapsed_s": 2.11,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {},
+      "id": "EMPTY",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 1
+      },
+      "command_sha256": "7ff52e2b1c9b72675cb2027f042d4a9a7757e8dfcaa61e295162d8822cd28d49",
+      "elapsed_s": 2.063,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 1
+      },
+      "id": "ADD_HOSTING",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 1}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 2
+      },
+      "command_sha256": "ec1201be7ab688f268f6889a95606cb9f87bb7c9ece4bc73915b5475452fdf97",
+      "elapsed_s": 2.078,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 2
+      },
+      "id": "ADD_HOSTING_AGAIN",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 2}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 3
+      },
+      "command_sha256": "2c666f169b504763de7ab51219c65b88d544ebafb0189ac2be56b7a992cec11a",
+      "elapsed_s": 2.109,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 3
+      },
+      "id": "ADD_UNICODE",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 3}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 4
+      },
+      "command_sha256": "e4954cce83f2c3c423a190a3d7c4bde52586a75415872dfe14eae150bf9869a6",
+      "elapsed_s": 2.125,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 4
+      },
+      "id": "ADD_OTHER_MONTH",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 4}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "hosting": 150000,
+        "دامنه": 200000
+      },
+      "command_sha256": "c402a08e0de2c9d6fd433eaa7034c8966a934ab03a00a8e85245b296493b902b",
+      "elapsed_s": 2.172,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "hosting": 150000,
+        "دامنه": 200000
+      },
+      "id": "REPORT_JAN",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"hosting\": 150000, \"دامنه\": 200000}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "hosting": 999
+      },
+      "command_sha256": "1602483c18b435826e97e3b74bd4a407767175a9cc15acde117b31d730063605",
+      "elapsed_s": 2.046,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "hosting": 999
+      },
+      "id": "REPORT_FEB",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"hosting\": 999}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "bd5e1a3677f3f1ca205dfff34c1e2c67cfc40ea71077e6dc39d444e7a28b7794",
+      "elapsed_s": 2.094,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_NEGATIVE",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "bd0f609df49b58aff2740fb3e79048c9c2ff6abcee0738754d60a3b0b9c6308c",
+      "elapsed_s": 2.016,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_ZERO",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "a1daf0a04c24c4ee46adfa925949f8d1968a0a36f15d35c19f0f1e05f7cf21df",
+      "elapsed_s": 2.11,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_DATE",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "0907292cbfe66d6a66b98fd6ba0c94e36558beade1232909b83540737ee89f7b",
+      "elapsed_s": 2.047,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_CATEGORY",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "009459dd3e89350a2ec065c67754845015b6749e6d88d77180682b8fe9acb6bc",
+      "elapsed_s": 2.063,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_MONTH",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "3225441af6442d0c3ecaf65d00205c4bb95c83e0f523b062711992aa9596d585",
+      "elapsed_s": 2.031,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_NONCANONICAL_DATE",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "hosting": 150000,
+        "دامنه": 200000
+      },
+      "command_sha256": "c402a08e0de2c9d6fd433eaa7034c8966a934ab03a00a8e85245b296493b902b",
+      "elapsed_s": 2.11,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "hosting": 150000,
+        "دامنه": 200000
+      },
+      "id": "FINAL_PERSISTENCE",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"hosting\": 150000, \"دامنه\": 200000}\r\n",
+      "timed_out": false
+    }
+  ],
+  "error": null,
+  "evaluation_id": "eval-c557874e133040f9abffb74d58990d53",
+  "finished_at": "2026-11-15T15:10:00.889250+00:00",
+  "measurement_only": true,
+  "run_id": "run-7c827c74aa3a4bbd88f43a5f89b6206b",
+  "source_manifest": {
+    "expenses.py": "620c553d49baba3bb85ac3e130e4c25c80b9e3a8d077c25986397edd0ffceebe"
+  },
+  "source_sha256": "07fb2dbde3b2a1d00faaa61333f0c09f0914e3233ac141c6f036732276f63257",
+  "spec_sha256": "224ec188cff794e1ee2fb14b13d3129e60c62403e939b117e5b6f5c0879fbff1",
+  "status": "review"
+}

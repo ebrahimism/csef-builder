@@ -1,0 +1,18 @@
+{
+  "command": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-m",
+    "pytest",
+    "tests\\test_checkpoint_contract.py",
+    "tests\\test_evidence_contract.py",
+    "tests\\test_failure_contract.py",
+    "tests\\test_policy_contract.py",
+    "tests\\test_task_contract.py",
+    "tests\\test_tool_contract.py"
+  ],
+  "cwd": "C:\\Users\\Kp\\AppData\\Local\\Temp\\csef-step5-x34zxl3c",
+  "exit_code": 0,
+  "stdout": "................................................                         [100%]\n48 passed in 2.12s\n",
+  "stderr": "",
+  "started_utc": "2026-11-15T13:49:51.782205+00:00"
+}

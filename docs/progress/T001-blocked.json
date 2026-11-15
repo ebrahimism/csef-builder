@@ -1,0 +1,24 @@
+{
+  "task_id": "T001",
+  "status": "blocked",
+  "acceptance": "گزارش مبنا قابل بازتولید باشد؛ وضعیت ۱۳۳ آزمون دوباره در محیط ثابت ثبت شود؛ هیچ فایل کاربر حذف نشود.",
+  "evidence": {
+    "inventory": "docs/evidence/baseline-vnext/manifest.json",
+    "full_check_receipt": ".csef-build/checks/62ec9fdc2dd441f89a0a5a7e4b571438/receipt.json",
+    "full_check": {
+      "cases": 134,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "passed"
+    }
+  },
+  "limitations": [
+    "Historical count 133 is not the current full-suite result: T001 adds one inventory test, and the current controller receipt records 134 passing cases.",
+    "The inventory is an integrity record, not proof of authorship, safety, release approval, or host isolation.",
+    "Git was initialized locally, but Git refused normal staging because this filesystem does not record ownership and the repository is not trusted by the existing Git configuration.",
+    "No existing Git user.name or user.email was available. This task does not invent an identity or change global Git configuration."
+  ],
+  "secret_review": "A keyword scan of repository candidate content found only documented terminology and test sentinels; no credential value was identified. No file was staged.",
+  "required_owner_action": "Provide an existing permitted Git identity and authorize a normal ownership-trust remedy, or configure them outside this task; then resume T001 and stage/commit after a fresh review."
+}

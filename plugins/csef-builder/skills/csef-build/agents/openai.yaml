@@ -1,0 +1,4 @@
+interface:
+  display_name: "CSEF Build"
+  short_description: "Build CSEF with goals, checks and evidence"
+  default_prompt: "Use $csef-build to continue the authorized CSEF backlog from stored progress."

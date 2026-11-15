@@ -1,0 +1,682 @@
+{
+  "schema_version": 1,
+  "status": "proposed_target_layout",
+  "note": "Logical responsibilities, not an instruction to create empty files.",
+  "modules": [
+    {
+      "id": "M001",
+      "group": "contracts",
+      "path": "src/csef_gate/contracts.py",
+      "purpose": "ProjectRevision، StageSpec، Proposal، ModelReceipt، VerificationReceipt و خطاهای نوع‌دار",
+      "task": "T003",
+      "note": "موجودها به‌تدریج پشت schema نسخه‌دار می‌روند",
+      "api": "ProjectRevision; StageSpec; ModelRequest/Result; ChangeProposal; ExecutionReceipt; VerificationRecord"
+    },
+    {
+      "id": "M002",
+      "group": "persistence",
+      "path": "src/csef_gate/persistence/sqlite.py",
+      "purpose": "تراکنش‌ها و repository واحد کنترل",
+      "task": "T003",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "transaction(); project_repository(); run_repository(); promote_transaction()"
+    },
+    {
+      "id": "M003",
+      "group": "persistence",
+      "path": "src/csef_gate/persistence/migrations.py",
+      "purpose": "مهاجرت نسخه‌دار و backup پیش از تغییر",
+      "task": "T003",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "preflight(); migrate(from_version, to_version); rollback_copy()"
+    },
+    {
+      "id": "M004",
+      "group": "persistence",
+      "path": "src/csef_gate/persistence/artifacts.py",
+      "purpose": "ذخیرهٔ محتوایی فایل با digest و محدودیت اندازه",
+      "task": "T004",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "put(bytes); get(hash); verify(manifest); export_allowed()"
+    },
+    {
+      "id": "M005",
+      "group": "persistence",
+      "path": "src/csef_gate/persistence/events.py",
+      "purpose": "ثبت intent/outcome و رویدادهای پایدار",
+      "task": "T004",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "append_intent(); append_outcome(); replay(project_id)"
+    },
+    {
+      "id": "M006",
+      "group": "persistence",
+      "path": "src/csef_gate/persistence/leases.py",
+      "purpose": "قفل پروژه/مرحله و جلوگیری از اجرای متناقض",
+      "task": "T004",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "acquire(project_id); heartbeat(); release()"
+    },
+    {
+      "id": "M007",
+      "group": "lifecycle",
+      "path": "src/csef_gate/lifecycle/projects.py",
+      "purpose": "ساخت و خواندن پرونده، نسخه و scope",
+      "task": "T005",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "create(); current_revision(); status(); assert_revision()"
+    },
+    {
+      "id": "M008",
+      "group": "lifecycle",
+      "path": "src/csef_gate/lifecycle/requirements.py",
+      "purpose": "منشأ نیاز، اهمیت و وضعیت پذیرش",
+      "task": "T005",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "record_statement(); propose(); accept(); supersede()"
+    },
+    {
+      "id": "M009",
+      "group": "lifecycle",
+      "path": "src/csef_gate/lifecycle/decisions.py",
+      "purpose": "ADR و گزینه‌های ردشده با دلیل",
+      "task": "T005",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "propose_adr(); adopt_decision(); affected_requirements()"
+    },
+    {
+      "id": "M010",
+      "group": "lifecycle",
+      "path": "src/csef_gate/lifecycle/questions.py",
+      "purpose": "پرسش‌های باز، پاسخ و اصلاح پاسخ",
+      "task": "T006",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "ask_if_material(); answer(); revise_answer(); unresolved()"
+    },
+    {
+      "id": "M011",
+      "group": "lifecycle",
+      "path": "src/csef_gate/lifecycle/change_control.py",
+      "purpose": "پیشنهاد تغییر و invalidation وابستگی‌ها",
+      "task": "T008",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "propose_change(); authorize_change(); impact(); invalidate_descendants()"
+    },
+    {
+      "id": "M012",
+      "group": "workflow",
+      "path": "src/csef_gate/workflow/engine.py",
+      "purpose": "هماهنگی نقش، پیشنهاد، ارزیابی و تحویل",
+      "task": "T007",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "run_stage(); dispatch_role(); validate_outputs(); complete_handoff()"
+    },
+    {
+      "id": "M013",
+      "group": "workflow",
+      "path": "src/csef_gate/workflow/stages.py",
+      "purpose": "ثبت مرحله، پیش‌شرط و نمودار وابستگی",
+      "task": "T007",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "register(); eligible_stages(); assert_dependencies()"
+    },
+    {
+      "id": "M014",
+      "group": "workflow",
+      "path": "src/csef_gate/workflow/handoffs.py",
+      "purpose": "بستهٔ تحویل با source/spec/policy hashes",
+      "task": "T007",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "build_packet(); verify_bytes(); consume_current()"
+    },
+    {
+      "id": "M015",
+      "group": "workflow",
+      "path": "src/csef_gate/workflow/recovery.py",
+      "purpose": "resume و reconciliation نتیجهٔ نامعلوم",
+      "task": "T008",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "reconcile_intent(); resume(); classify_unknown()"
+    },
+    {
+      "id": "M016",
+      "group": "context",
+      "path": "src/csef_gate/context/index.py",
+      "purpose": "ایندکس فایل/هش/نماد و FTS5",
+      "task": "T009",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "index_snapshot(); ast_symbols(); changed_files()"
+    },
+    {
+      "id": "M017",
+      "group": "context",
+      "path": "src/csef_gate/context/retrieval.py",
+      "purpose": "بازیابی فایل‌ها و اسناد مرتبط با کار جاری",
+      "task": "T009",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "search_text(); related_files(); mandatory_facts()"
+    },
+    {
+      "id": "M018",
+      "group": "context",
+      "path": "src/csef_gate/context/packets.py",
+      "purpose": "سقف زمینه، facts اجباری و حذف صریح",
+      "task": "T010",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "compile_packet(); enforce_budget(); disclose_omissions()"
+    },
+    {
+      "id": "M019",
+      "group": "context",
+      "path": "src/csef_gate/context/traceability.py",
+      "purpose": "اتصال نیاز به تصمیم، کد و معیار مشاهده",
+      "task": "T010",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "link_requirement(); uncovered_requirements(); stale_links()"
+    },
+    {
+      "id": "M020",
+      "group": "engineering",
+      "path": "src/csef_gate/engineering/interview.py",
+      "purpose": "مصاحبهٔ نقش‌محور با سؤال ضروری",
+      "task": "T011",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "extract_statements(); detect_conflicts(); choose_questions()"
+    },
+    {
+      "id": "M021",
+      "group": "engineering",
+      "path": "src/csef_gate/engineering/architecture.py",
+      "purpose": "گزینه‌ها، NFR و ADR پیشنهادی",
+      "task": "T012",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "compare_options(); propose_adr(); scenario_review()"
+    },
+    {
+      "id": "M022",
+      "group": "engineering",
+      "path": "src/csef_gate/engineering/planning.py",
+      "purpose": "برش عمودی، ریسک، ترتیب و معیار ساخت",
+      "task": "T012",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "vertical_slices(); dependency_plan(); stage_criteria()"
+    },
+    {
+      "id": "M023",
+      "group": "engineering",
+      "path": "src/csef_gate/engineering/templates.py",
+      "purpose": "قالب‌های وابسته به نوع محصول، نه وب اجباری",
+      "task": "T012",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "select(product_kind); render(); resolve_override()"
+    },
+    {
+      "id": "M024",
+      "group": "providers",
+      "path": "src/csef_gate/providers/base.py",
+      "purpose": "ModelProvider Protocol و request/response مشترک",
+      "task": "T013",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "ModelProvider; ModelCapabilities; ModelRequest; ModelResult"
+    },
+    {
+      "id": "M025",
+      "group": "providers",
+      "path": "src/csef_gate/providers/registry.py",
+      "purpose": "قابلیت، شناسه و تنظیمات فراهم‌کننده",
+      "task": "T014",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "register(); resolve_route(); require_capabilities()"
+    },
+    {
+      "id": "M026",
+      "group": "providers",
+      "path": "src/csef_gate/providers/codex_cli.py",
+      "purpose": "تولید schema-bound با ورود موجود Codex",
+      "task": "T013",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "generate_schema(); parse_events(); capture_usage()"
+    },
+    {
+      "id": "M027",
+      "group": "providers",
+      "path": "src/csef_gate/providers/openai_compatible.py",
+      "purpose": "Responses و Chat با endpoint انتخاب‌شده",
+      "task": "T015",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "generate_responses(); generate_chat(); translate_errors()"
+    },
+    {
+      "id": "M028",
+      "group": "providers",
+      "path": "src/csef_gate/providers/ollama.py",
+      "purpose": "درخواست به مدل محلیِ از قبل نصب‌شده",
+      "task": "T017",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "generate_local(); list_local_models(); probe_schema()"
+    },
+    {
+      "id": "M029",
+      "group": "providers",
+      "path": "src/csef_gate/providers/health.py",
+      "purpose": "probe، timeout و circuit breaker",
+      "task": "T014",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "probe(); record_failure(); circuit_state(); retry_after()"
+    },
+    {
+      "id": "M030",
+      "group": "providers",
+      "path": "src/csef_gate/providers/router.py",
+      "purpose": "انتخاب بر اساس نقش، کیفیت، هزینه و سیاست داده",
+      "task": "T016",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "select_for_role(); permitted_fallbacks(); stop_if_unpriced()"
+    },
+    {
+      "id": "M031",
+      "group": "providers",
+      "path": "src/csef_gate/providers/usage.py",
+      "purpose": "usage واقعی، cached/uncached و نتیجهٔ نامعلوم",
+      "task": "T016",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "record_reported_usage(); mark_unknown(); aggregate()"
+    },
+    {
+      "id": "M032",
+      "group": "providers",
+      "path": "src/csef_gate/providers/pricing.py",
+      "purpose": "قیمت نسخه‌دار و رزرو/تسویهٔ هزینه",
+      "task": "T016",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "price_snapshot(); reserve_upper_bound(); settle_once()"
+    },
+    {
+      "id": "M033",
+      "group": "providers",
+      "path": "src/csef_gate/providers/secrets.py",
+      "purpose": "ارجاع به اعتبارنامه بدون قراردادن در prompt/guest",
+      "task": "T015",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "resolve_reference(); scoped_environment(); redact()"
+    },
+    {
+      "id": "M034",
+      "group": "coding",
+      "path": "src/csef_gate/coding/base.py",
+      "purpose": "CodingAgent Protocol مستقل از LLM transport",
+      "task": "T018",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "CodingAgent; TaskPacket; SourceSnapshot; ChangeProposal"
+    },
+    {
+      "id": "M035",
+      "group": "coding",
+      "path": "src/csef_gate/coding/codex.py",
+      "purpose": "ترجمهٔ کار محدود به درخواست عامل موجود",
+      "task": "T018",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "propose_scoped_change(); parse_proposal(); cancel_attempt()"
+    },
+    {
+      "id": "M036",
+      "group": "coding",
+      "path": "src/csef_gate/coding/proposals.py",
+      "purpose": "proposal با base revision و عملیات فایل مشخص",
+      "task": "T018",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "validate_envelope(); bind_base_revision(); diff_summary()"
+    },
+    {
+      "id": "M037",
+      "group": "coding",
+      "path": "src/csef_gate/coding/scope.py",
+      "purpose": "allowlist، traversal، reparse و تست‌های محافظت‌شده",
+      "task": "T018",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "validate_path(); assert_allowed_changes(); protect_oracle()"
+    },
+    {
+      "id": "M038",
+      "group": "coding",
+      "path": "src/csef_gate/coding/apply.py",
+      "purpose": "اعمال اتمیک/قابل‌بررسی تغییر به candidate",
+      "task": "T018",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "stage_operations(); apply_to_candidate(); verify_result_tree()"
+    },
+    {
+      "id": "M039",
+      "group": "coding",
+      "path": "src/csef_gate/coding/impact.py",
+      "purpose": "اثر تغییر بر قرارداد و آزمون و اسناد",
+      "task": "T020",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "changed_contracts(); affected_tests(); affected_documents()"
+    },
+    {
+      "id": "M040",
+      "group": "coding",
+      "path": "src/csef_gate/coding/aider.py",
+      "purpose": "آداپتر جایگزین مشروط به spike",
+      "task": "T020",
+      "note": "مشروط",
+      "api": "probe_cli(); propose_in_workspace(); export_candidate_diff()"
+    },
+    {
+      "id": "M041",
+      "group": "workspace",
+      "path": "src/csef_gate/workspace/git.py",
+      "purpose": "وضعیت Git، worktree، diff و بازگشت محدود",
+      "task": "T019",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "inspect_status(); create_owned_worktree(); diff(); rollback_owned()"
+    },
+    {
+      "id": "M042",
+      "group": "workspace",
+      "path": "src/csef_gate/workspace/github.py",
+      "purpose": "خواندن remote و PR در scope صریح",
+      "task": "T031",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "read_repository(); read_issue(); read_ci(); create_scoped_draft_pr()"
+    },
+    {
+      "id": "M043",
+      "group": "workspace",
+      "path": "src/csef_gate/workspace/snapshots.py",
+      "purpose": "manifest کامل نسخهٔ تست‌شده",
+      "task": "T019",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "snapshot_source(); fingerprint_tree(); assert_no_unexpected_files()"
+    },
+    {
+      "id": "M044",
+      "group": "execution",
+      "path": "src/csef_gate/execution/base.py",
+      "purpose": "ExecutionProvider و ExecutionReceipt",
+      "task": "T021",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "provision(); execute(); collect(); cancel(); destroy()"
+    },
+    {
+      "id": "M045",
+      "group": "execution",
+      "path": "src/csef_gate/execution/native.py",
+      "purpose": "حفظ مسیر فعلی فقط با capability مشاهده‌شده",
+      "task": "T021",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "probe_observed_capabilities(); execute_reviewed_local_only()"
+    },
+    {
+      "id": "M046",
+      "group": "execution",
+      "path": "src/csef_gate/execution/hyperv.py",
+      "purpose": "ایجاد/یافتن/reset مهمان اختصاصی با تنظیم صریح",
+      "task": "T022",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "inspect_host(); create_or_attach_guest(); reset_guest(); destroy_owned_guest()"
+    },
+    {
+      "id": "M047",
+      "group": "execution",
+      "path": "src/csef_gate/execution/ssh_guest.py",
+      "purpose": "کانال مدیریتی محدود و outcome شناخته/نامعلوم",
+      "task": "T022",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "execute_allowlisted_request(); capture_outcome(); reconcile_disconnect()"
+    },
+    {
+      "id": "M048",
+      "group": "execution",
+      "path": "src/csef_gate/execution/transfer.py",
+      "purpose": "انتقال manifest و خروجی allowlist",
+      "task": "T023",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "pack_allowed_inputs(); validate_archive(); unpack_inside_root(); collect_allowed_outputs()"
+    },
+    {
+      "id": "M049",
+      "group": "execution",
+      "path": "src/csef_gate/execution/profiles.py",
+      "purpose": "شبکه/فایل/منبع و تفکیک guest/host",
+      "task": "T021",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "resolve_profile(); validate_network_scope(); validate_resource_limits()"
+    },
+    {
+      "id": "M050",
+      "group": "execution",
+      "path": "src/csef_gate/execution/probes.py",
+      "purpose": "positive/negative controls مرز اجرا",
+      "task": "T024",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "positive_controls(); deny_host_files(); deny_host_network(); deny_baseline_writes()"
+    },
+    {
+      "id": "M051",
+      "group": "verification",
+      "path": "src/csef_gate/verification/plan.py",
+      "purpose": "تبدیل معیارها به کارهای ارزیاب مورد اعتماد",
+      "task": "T025",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "compile_criteria(); validate_nonempty(); required_check_ids()"
+    },
+    {
+      "id": "M052",
+      "group": "verification",
+      "path": "src/csef_gate/verification/runner.py",
+      "purpose": "اجرای ابزار و جمع‌آوری خروجی واقعی",
+      "task": "T025",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "execute_checks(); capture_reports(); bounded_output()"
+    },
+    {
+      "id": "M053",
+      "group": "verification",
+      "path": "src/csef_gate/verification/python_pack.py",
+      "purpose": "pytest، Ruff و mypy با parser مشخص",
+      "task": "T025",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "pytest_plan(); parse_junit(); ruff_plan(); mypy_plan()"
+    },
+    {
+      "id": "M054",
+      "group": "verification",
+      "path": "src/csef_gate/verification/web_pack.py",
+      "purpose": "ساخت وب و Playwright در guest",
+      "task": "T033",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "build_plan(); browser_plan(); parse_playwright_report()"
+    },
+    {
+      "id": "M055",
+      "group": "verification",
+      "path": "src/csef_gate/verification/architecture.py",
+      "purpose": "قواعد وابستگی و بررسی API/schema",
+      "task": "T026",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "import_rules(); contract_compatibility(); data_owner_rules()"
+    },
+    {
+      "id": "M056",
+      "group": "verification",
+      "path": "src/csef_gate/verification/verdict.py",
+      "purpose": "PASS/FAIL/REVIEW/STALE/UNKNOWN با شواهد کامل",
+      "task": "T027",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "evaluate_complete_evidence(); stale_reasons(); require_review()"
+    },
+    {
+      "id": "M057",
+      "group": "verification",
+      "path": "src/csef_gate/verification/authority.py",
+      "purpose": "ارتقای اتمیک از رکورد معتبر، نه PASS ورودی",
+      "task": "T027",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "verify_and_record(); promote_from_store(); consume_approval_once()"
+    },
+    {
+      "id": "M058",
+      "group": "reviewing",
+      "path": "src/csef_gate/reviewing/policy.py",
+      "purpose": "انتخاب نقطهٔ بازبینی با سیاست صریح",
+      "task": "T028",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "route_review(); required_signals(); policy_version()"
+    },
+    {
+      "id": "M059",
+      "group": "reviewing",
+      "path": "src/csef_gate/reviewing/semantic.py",
+      "purpose": "درخواست مستقل بازبین و ارجاع به facts",
+      "task": "T028",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "review_against_facts(); compare_proposal(); owner_questions()"
+    },
+    {
+      "id": "M060",
+      "group": "reviewing",
+      "path": "src/csef_gate/reviewing/findings.py",
+      "purpose": "شدت، شاهد، پیشنهاد اصلاح و dissent",
+      "task": "T028",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "normalize_findings(); bind_evidence(); classify_dissent()"
+    },
+    {
+      "id": "M061",
+      "group": "interfaces",
+      "path": "src/csef_gate/interfaces/cli.py",
+      "purpose": "فرمان‌ها و سازگاری csef.py فعلی",
+      "task": "T007",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "project_commands(); run_commands(); export_packet()"
+    },
+    {
+      "id": "M062",
+      "group": "interfaces",
+      "path": "src/csef_gate/interfaces/mcp.py",
+      "purpose": "ابزارهای کنترل‌شده برای همین محیط چت",
+      "task": "T029",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "project_create(); project_message(); question_answer(); stage_run(); verification_get()"
+    },
+    {
+      "id": "M063",
+      "group": "interfaces",
+      "path": "src/csef_gate/interfaces/api.py",
+      "purpose": "API مشترک اختیاری برای UI محلی",
+      "task": "T030",
+      "note": "مشروط",
+      "api": "project_endpoints(); run_events(); local_auth(); artifact_download()"
+    },
+    {
+      "id": "M064",
+      "group": "integrations",
+      "path": "src/csef_gate/integrations/spec_kit.py",
+      "purpose": "import/export و bridge محدود Spec Kit",
+      "task": "T002",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "import_spec(); export_approved_packet(); map_workflow_step(); verify_roundtrip()"
+    },
+    {
+      "id": "M065",
+      "group": "integrations",
+      "path": "src/csef_gate/integrations/litellm.py",
+      "purpose": "مسیر اختیاری gateway بدون تغییر core",
+      "task": "T037",
+      "note": "بعداً",
+      "api": "generate_via_gateway(); normalize_usage(); enforce_route_policy()"
+    },
+    {
+      "id": "M066",
+      "group": "integrations",
+      "path": "src/csef_gate/integrations/openhands.py",
+      "purpose": "مسیر اختیاری SDK پشت CodingAgent",
+      "task": "T038",
+      "note": "بعداً",
+      "api": "propose_via_sdk(); constrain_workspace(); normalize_events()"
+    },
+    {
+      "id": "M067",
+      "group": "delivery",
+      "path": "src/csef_gate/delivery/bundle.py",
+      "purpose": "بستهٔ خروجی با manifest، lock و راهنما",
+      "task": "T032",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "build_manifest(); package_source(); generate_runbook(); clean_install_smoke()"
+    },
+    {
+      "id": "M068",
+      "group": "delivery",
+      "path": "src/csef_gate/delivery/backup.py",
+      "purpose": "backup سازگار SQLite و artifact",
+      "task": "T032",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "backup_sqlite(); backup_referenced_artifacts(); verify_backup()"
+    },
+    {
+      "id": "M069",
+      "group": "delivery",
+      "path": "src/csef_gate/delivery/restore.py",
+      "purpose": "restore و آزمون قابلیت استفادهٔ نسخهٔ تحویلی",
+      "task": "T032",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "restore_to_new_location(); verify_integrity(); recovery_smoke()"
+    },
+    {
+      "id": "M070",
+      "group": "observability",
+      "path": "src/csef_gate/observability/events.py",
+      "purpose": "پیشرفت و مصرف به زبان قابل فهم",
+      "task": "T034",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "project_progress(); usage_summary(); explain_block()"
+    },
+    {
+      "id": "M071",
+      "group": "observability",
+      "path": "src/csef_gate/observability/redaction.py",
+      "purpose": "حذف اسرار و سیاست نگهداری داده",
+      "task": "T034",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "redact_secrets(); apply_retention(); export_safe_logs()"
+    },
+    {
+      "id": "M072",
+      "group": "evaluation",
+      "path": "src/csef_gate/evaluation/corpus.py",
+      "purpose": "سناریو و oracle نهایی جدا از توسعه",
+      "task": "T035",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "load_frozen_cases(); split_development_holdout(); version_oracle()"
+    },
+    {
+      "id": "M073",
+      "group": "evaluation",
+      "path": "src/csef_gate/evaluation/runner.py",
+      "purpose": "اجرای جفتی روش‌ها با بودجهٔ یکسان",
+      "task": "T035",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "paired_runs(); fixed_budget(); randomize_order(); record_interventions()"
+    },
+    {
+      "id": "M074",
+      "group": "evaluation",
+      "path": "src/csef_gate/evaluation/metrics.py",
+      "purpose": "کیفیت، مصرف، هزینهٔ معلوم و دخالت کاربر",
+      "task": "T035",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "quality_outcomes(); known_cost(); unknown_cost(); owner_active_minutes()"
+    },
+    {
+      "id": "M075",
+      "group": "verification",
+      "path": "src/csef_gate/verification/security.py",
+      "purpose": "اجرای بررسی اسرار و وابستگی شناخته‌شده بدون ادعای ممیزی کامل امنیت",
+      "task": "T026",
+      "note": "برنامه‌ریزی‌شده",
+      "api": "scan_secret_diff(); audit_locked_dependencies(); normalize_findings()"
+    }
+  ]
+}

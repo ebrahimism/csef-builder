@@ -1,0 +1,14 @@
+{
+  "name": "csef-builder",
+  "version": "0.1.0",
+  "description": "Build CSEF from owner goals and a checked backlog.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "CSEF Builder",
+    "shortDescription": "Build CSEF with checked tasks",
+    "longDescription": "Local engineering workflow for building CSEF itself. Records checks and acceptance evidence without granting release authority.",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "defaultPrompt": ["Use $csef-build to continue the authorized CSEF backlog from stored progress."]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-m",
+    "pytest",
+    "tests\\test_checkpoint_contract.py",
+    "tests\\test_evidence_contract.py",
+    "tests\\test_failure_contract.py",
+    "tests\\test_policy_contract.py",
+    "tests\\test_task_contract.py",
+    "tests\\test_tool_contract.py"
+  ],
+  "cwd": "C:\\Users\\Kp\\AppData\\Local\\Temp\\csef-step5-305ovkk5",
+  "exit_code": 1,
+  "stdout": "............................F...................                         [100%]\n================================== FAILURES ===================================\n_________________________ test_approval_is_single_use _________________________\n\n    def test_approval_is_single_use() -> None:\n        store = AuthorizationStore()\n        store.grant(\n            Authorization(\n                approval_id=\"apr-0001\",\n                invocation_hash=sha(\"inv-hash-1\"),\n                capability=\"install_dependencies\",\n                scope_task_id=\"T-0042\",\n                granted_by=\"human:kp\",\n                granted_at=NOW,\n                expires_at=NOW + timedelta(minutes=30),\n                max_uses=1,\n            )\n        )\n        store.consume(\"apr-0001\", sha(\"inv-hash-1\"), NOW, \"T-0042\")\n>       with pytest.raises(Refused, match=\"replay rejected\"):\nE       Failed: DID NOT RAISE <class 'csef_contracts.common.Refused'>\n\ntests\\test_policy_contract.py:69: Failed\n=========================== short test summary info ===========================\nFAILED tests/test_policy_contract.py::test_approval_is_single_use - Failed: D...\n1 failed, 47 passed in 3.96s\n",
+  "stderr": "",
+  "started_utc": "2026-11-15T13:49:44.860078+00:00"
+}

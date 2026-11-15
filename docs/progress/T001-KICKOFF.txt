@@ -1,0 +1,22 @@
+$csef-build
+
+Execute T001 ONLY in F:\cffmam using the installed csef-builder skill and
+AGENTS.md. This is a real build kickoff, not the earlier read-only smoke test.
+Read status and packet; continue any already-active T001 instead of starting twice.
+Do not start T002 in this invocation. Its instructions are saved in START-PROMPT.txt.
+
+T001 must create a reproducible baseline inventory and honest limitations, record
+the actual current full suite (not a historical count), preserve all existing
+user files, and establish local Git history. Use existing Git identity only;
+do not invent identity, set global configuration, add remotes, push or publish.
+Review candidate files for accidental secrets before staging. Do not stage local
+runtime databases, login files, caches or generated dependency directories.
+Use normal permission handling for protected Git metadata; never bypass approvals.
+
+Keep changes scoped to baseline tooling/tests/docs and Git bookkeeping. Do not
+change owner goals, backlog acceptance, existing behavior/tests, build-kit source
+or Gate security policy. No empty planned-module scaffolding. Do not call paid
+services or external apps. Run focused checks and then the tracker full check.
+Complete T001 only with actual acceptance evidence and a current receipt. If a
+real prerequisite is unavailable, block with the precise reason. Report files,
+checks, Git outcome, remaining limitations and the next task in clear Persian.

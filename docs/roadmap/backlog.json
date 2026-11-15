@@ -1,0 +1,916 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-15",
+  "status": "design_not_implementation",
+  "execution_note": "Planned backlog, not directly executable by current prototype.",
+  "tasks": [
+    {
+      "id": "T001",
+      "phase": "F0",
+      "title": "تثبیت خط مبنا و وضعیت Git",
+      "depends_on": [],
+      "goals": [
+        "REQ-104",
+        "REQ-106"
+      ],
+      "scope": "ثبت نسخهٔ فعلی، شواهد، فایل‌های موجود و موارد ناقص؛ ایجاد تاریخچهٔ کد با حفظ همهٔ فایل‌ها.",
+      "acceptance": "گزارش مبنا قابل بازتولید باشد؛ وضعیت ۱۳۳ آزمون دوباره در محیط ثابت ثبت شود؛ هیچ فایل کاربر حذف نشود.",
+      "status": "planned",
+      "files": [
+        "docs/evidence/baseline-vnext/manifest.json"
+      ],
+      "tests": [
+        "tests/integration/test_baseline_inventory.py"
+      ]
+    },
+    {
+      "id": "T002",
+      "phase": "F0",
+      "title": "آزمایش استفادهٔ مجدد از Spec Kit",
+      "depends_on": [
+        "T001"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-106"
+      ],
+      "scope": "import/export نمونهٔ واقعی و اجرای گردش‌کار محدود؛ آزمون مرز اختیار و بازیابی.",
+      "acceptance": "اسناد نیاز و شناسه‌ها round-trip شوند؛ resume باعث تأیید جعلی یا اثر خارجی تکراری نشود؛ تصمیم استفاده/عدم استفاده ثبت شود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/integrations/spec_kit.py",
+        "integrations/spec-kit/preset/README.md",
+        "integrations/spec-kit/workflows/csef-review.yml"
+      ],
+      "tests": [
+        "tests/integrations/test_spec_kit_roundtrip.py"
+      ]
+    },
+    {
+      "id": "T003",
+      "phase": "F1",
+      "title": "قراردادهای داده و پایگاه کنترل واحد",
+      "depends_on": [
+        "T001"
+      ],
+      "goals": [
+        "REQ-104",
+        "REQ-106"
+      ],
+      "scope": "مدل‌های نسخه‌دار و مهاجرت از دو مخزن فعلی به یک منبع اختیار.",
+      "acceptance": "پروژه و شواهد قدیمی حفظ شوند؛ migration تکرارپذیر و قابل بازگشت باشد؛ ورودی ناشناخته نتواند PASS بسازد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/contracts.py",
+        "src/csef_gate/persistence/sqlite.py",
+        "src/csef_gate/persistence/migrations.py",
+        "schemas/project-v1.json",
+        "schemas/stage-v1.json",
+        "schemas/proposal-v1.json",
+        "schemas/verification-v1.json"
+      ],
+      "tests": [
+        "tests/persistence/test_migrations.py"
+      ]
+    },
+    {
+      "id": "T004",
+      "phase": "F1",
+      "title": "ثبت رویداد، artifact و قفل اجرای هم‌زمان",
+      "depends_on": [
+        "T003"
+      ],
+      "goals": [
+        "REQ-104",
+        "REQ-106"
+      ],
+      "scope": "مخزن محتوایی، event journal، lease و intent/outcome.",
+      "acceptance": "دو کنترل‌کننده نتوانند یک مرحله را هم‌زمان مصرف کنند؛ قطع اجرا اختیار تأیید باقی نگذارد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/persistence/artifacts.py",
+        "src/csef_gate/persistence/events.py",
+        "src/csef_gate/persistence/leases.py"
+      ],
+      "tests": [
+        "tests/persistence/test_crash_and_leases.py"
+      ]
+    },
+    {
+      "id": "T005",
+      "phase": "F1",
+      "title": "نیازمندی و تصمیم با منشأ مشخص",
+      "depends_on": [
+        "T003"
+      ],
+      "goals": [
+        "REQ-104",
+        "REQ-106"
+      ],
+      "scope": "تفکیک گفتهٔ کاربر، فرض، پیشنهاد، تصمیم پذیرفته و نسخهٔ منسوخ.",
+      "acceptance": "پیشنهاد مدل نتواند هدف پذیرفته را عوض کند؛ هر تغییر منشأ و نسخه و آثار مشخص داشته باشد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/lifecycle/projects.py",
+        "src/csef_gate/lifecycle/requirements.py",
+        "src/csef_gate/lifecycle/decisions.py"
+      ],
+      "tests": [
+        "tests/lifecycle/test_fact_authority.py"
+      ]
+    },
+    {
+      "id": "T006",
+      "phase": "F1",
+      "title": "پرسش و پاسخ پایدار و قابل ویرایش",
+      "depends_on": [
+        "T005"
+      ],
+      "goals": [
+        "REQ-103",
+        "REQ-104"
+      ],
+      "scope": "پرسش معنادار، تشخیص سؤال پاسخ‌داده‌شده، ثبت اصلاح پاسخ و تعارض.",
+      "acceptance": "پاسخ ویرایش‌شده به نیاز متناظر وصل شود؛ سؤال قدیمی با پاسخ معلوم تکرار نشود؛ API تا پاسخ، مدل را دوباره فراخوانی نکند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/lifecycle/questions.py"
+      ],
+      "tests": [
+        "tests/lifecycle/test_question_revisions.py"
+      ]
+    },
+    {
+      "id": "T007",
+      "phase": "F1",
+      "title": "کنترل‌کنندهٔ مرحله‌ای عمومی",
+      "depends_on": [
+        "T004",
+        "T005",
+        "T006",
+        "T002"
+      ],
+      "goals": [
+        "REQ-103",
+        "REQ-106"
+      ],
+      "scope": "وصل‌کردن ProjectBook، دستیار، عامل، ارزیاب و تحویل در یک مسیر؛ ۶ یا بیشتر مرحله.",
+      "acceptance": "از گفتگوی نمونه تا یک برش کامل، بدون دستکاری دستی پایگاه اجرا شود؛ هیچ مرحلهٔ وابسته از خروجی نامعتبر استفاده نکند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/workflow/engine.py",
+        "src/csef_gate/workflow/stages.py",
+        "src/csef_gate/workflow/handoffs.py",
+        "src/csef_gate/interfaces/cli.py"
+      ],
+      "tests": [
+        "tests/integration/test_chat_to_handoff.py"
+      ]
+    },
+    {
+      "id": "T008",
+      "phase": "F1",
+      "title": "ادامه پس از قطع و ابطال وابستگی‌ها",
+      "depends_on": [
+        "T007"
+      ],
+      "goals": [
+        "REQ-104",
+        "REQ-106"
+      ],
+      "scope": "resume، شمارش تلاش پایدار، invalidation و آشتی نتیجهٔ نامعلوم.",
+      "acceptance": "در نقاط قبل/بعد از مدل، patch، تست و تحویل قطع شود؛ ادامه بدون پذیرش کهنه و بدون تکرار عملیات غیرقابل‌برگشت باشد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/lifecycle/change_control.py",
+        "src/csef_gate/workflow/recovery.py"
+      ],
+      "tests": [
+        "tests/integration/test_resume_boundaries.py"
+      ]
+    },
+    {
+      "id": "T009",
+      "phase": "F2",
+      "title": "ایندکس سبک مخزن و تازگی دانش",
+      "depends_on": [
+        "T005"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-104"
+      ],
+      "scope": "مسیر/هش/نشانه‌ها/ماژول‌ها و SQLite FTS5؛ بدون پایگاه برداری اجباری.",
+      "acceptance": "پس از تغییر فایل یا شاخه، سند/خلاصهٔ کهنه شناسایی شود؛ فایل حذف‌شده به‌عنوان واقعیت جاری بازیابی نشود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/context/index.py",
+        "src/csef_gate/context/retrieval.py"
+      ],
+      "tests": [
+        "tests/context/test_index_freshness.py"
+      ]
+    },
+    {
+      "id": "T010",
+      "phase": "F2",
+      "title": "بستهٔ زمینه و ردیابی هدف تا آزمون",
+      "depends_on": [
+        "T009",
+        "T007"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-104",
+        "REQ-106"
+      ],
+      "scope": "facts اجباری، کد مرتبط، اسناد مرتبط، فهرست موارد حذف‌شده و requirement trace.",
+      "acceptance": "سقف زمینه هدف حیاتی را نبرد؛ منبع هر ادعا قابل بازیابی باشد؛ حذف اطلاعات صریح و قابل جبران باشد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/context/packets.py",
+        "src/csef_gate/context/traceability.py"
+      ],
+      "tests": [
+        "tests/context/test_goal_preservation.py"
+      ]
+    },
+    {
+      "id": "T011",
+      "phase": "F2",
+      "title": "مصاحبهٔ مهندسی و پیش‌فرض‌های کم‌اصطکاک",
+      "depends_on": [
+        "T006",
+        "T010"
+      ],
+      "goals": [
+        "REQ-103",
+        "REQ-105"
+      ],
+      "scope": "ترجمهٔ هدف طبیعی به مسئله، سناریو، معیار موفقیت و مجهول‌های مؤثر.",
+      "acceptance": "در موارد متناقض، سؤال لازم و دلیل آن تولید شود؛ انتخاب پوشه/فریم‌ورک بی‌دلیل به کاربر واگذار نشود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/engineering/interview.py",
+        "templates/brief.md",
+        "templates/questions.md"
+      ],
+      "tests": [
+        "tests/engineering/test_interview_cases.py"
+      ]
+    },
+    {
+      "id": "T012",
+      "phase": "F2",
+      "title": "معماری، قرارداد و برنامهٔ برش‌های عمودی",
+      "depends_on": [
+        "T011",
+        "T002"
+      ],
+      "goals": [
+        "REQ-105",
+        "REQ-106"
+      ],
+      "scope": "ADR، مالکیت داده، گزینه‌های ردشده، NFR، قرارداد و ترتیب ساخت قابل تطبیق.",
+      "acceptance": "معماری با سناریو و محدودیت مرتبط باشد؛ وابستگی‌ها و معیار هر برش روشن باشند؛ مدل صرفاً با ذکر شناسه‌ها امتیاز کیفیت نگیرد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/engineering/architecture.py",
+        "src/csef_gate/engineering/planning.py",
+        "src/csef_gate/engineering/templates.py",
+        "templates/adr.md",
+        "templates/contracts.md",
+        "templates/task.md",
+        "templates/handoff.md",
+        "templates/release.md"
+      ],
+      "tests": [
+        "tests/engineering/test_architecture_scenarios.py"
+      ]
+    },
+    {
+      "id": "T013",
+      "phase": "F3",
+      "title": "پروتکل مدل و استخراج آداپتر Codex",
+      "depends_on": [
+        "T003"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-102"
+      ],
+      "scope": "یکسان‌کردن دو مسیر مدل فعلی؛ جداکردن ModelProvider از CodingAgent.",
+      "acceptance": "receipt یکسان و budget intent برای همهٔ نقش‌ها؛ تنظیم ورود/فایل کاربر بدون اجازه تغییر نکند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/providers/base.py",
+        "src/csef_gate/providers/codex_cli.py"
+      ],
+      "tests": [
+        "tests/providers/test_codex_contract.py"
+      ]
+    },
+    {
+      "id": "T014",
+      "phase": "F3",
+      "title": "قابلیت و سلامت فراهم‌کننده",
+      "depends_on": [
+        "T013"
+      ],
+      "goals": [
+        "REQ-102",
+        "REQ-107"
+      ],
+      "scope": "capability probe، timeout، خطاهای نوع‌دار، health و circuit breaker.",
+      "acceptance": "JSON/schema/اندازهٔ زمینه/لغو/usage هر مسیر با درخواست کوچک تأیید شود؛ اختلال باعث حلقهٔ retry نشود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/providers/registry.py",
+        "src/csef_gate/providers/health.py"
+      ],
+      "tests": [
+        "tests/providers/test_capability_failures.py"
+      ]
+    },
+    {
+      "id": "T015",
+      "phase": "F3",
+      "title": "درگاه OpenAI-compatible و AvalAI",
+      "depends_on": [
+        "T014"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-102"
+      ],
+      "scope": "آداپتر SDK رسمی با endpoint صریح و آزمون Responses/Chat به‌صورت جدا.",
+      "acceptance": "هیچ درخواست به endpoint اشتباه نرود؛ مدل ناسازگار به‌جای ادعای موفقیت غیرفعال شود؛ کلید به کد تولیدی نرسد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/providers/openai_compatible.py",
+        "src/csef_gate/providers/secrets.py"
+      ],
+      "tests": [
+        "tests/providers/test_compatible_routes.py"
+      ]
+    },
+    {
+      "id": "T016",
+      "phase": "F3",
+      "title": "بودجه، قیمت، انتخاب نقش و failover",
+      "depends_on": [
+        "T014",
+        "T015"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-102",
+        "REQ-107"
+      ],
+      "scope": "reserve/settle، قیمت نسخه‌دار، cache usage و fallback هم‌سطح با سیاست داده.",
+      "acceptance": "هزینهٔ نامعلوم صفر حساب نشود؛ سقف/تلاش/مهلت پایدار باشند؛ fallback گران‌تر یا خارج از سیاست بی‌صدا رخ ندهد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/providers/router.py",
+        "src/csef_gate/providers/usage.py",
+        "src/csef_gate/providers/pricing.py",
+        "config/providers.example.toml",
+        "config/budgets.example.toml"
+      ],
+      "tests": [
+        "tests/providers/test_budget_and_fallback.py"
+      ]
+    },
+    {
+      "id": "T017",
+      "phase": "F3",
+      "title": "آزمایش مدل محلی Ollama",
+      "depends_on": [
+        "T014",
+        "T016"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-102"
+      ],
+      "scope": "نمونهٔ محدود محلی و اندازه‌گیری توان حافظه، کیفیت، مصرف و تأخیر.",
+      "acceptance": "با اینترنت قطع و مدلِ از قبل موجود، درخواست واقعی انجام شود؛ کیفیت نقش مستقل سنجیده شود؛ ضعیف‌بودن مدل با local بودن پنهان نشود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/providers/ollama.py"
+      ],
+      "tests": [
+        "tests/providers/test_ollama_offline.py"
+      ]
+    },
+    {
+      "id": "T018",
+      "phase": "F4",
+      "title": "پیشنهاد تغییر نسخه‌بسته و اعمال محدود",
+      "depends_on": [
+        "T007",
+        "T010",
+        "T013"
+      ],
+      "goals": [
+        "REQ-104",
+        "REQ-105"
+      ],
+      "scope": "proposal با base revision، مسیرهای مجاز، حذف/جابجایی صریح و diff.",
+      "acceptance": "patch برای نسخهٔ دیگر یا خارج از محدوده رد شود؛ تست/بودجه/سیاست پذیرش توسط عامل قابل تضعیف نباشند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/coding/base.py",
+        "src/csef_gate/coding/codex.py",
+        "src/csef_gate/coding/proposals.py",
+        "src/csef_gate/coding/scope.py",
+        "src/csef_gate/coding/apply.py"
+      ],
+      "tests": [
+        "tests/coding/test_revision_and_scope.py"
+      ]
+    },
+    {
+      "id": "T019",
+      "phase": "F4",
+      "title": "Git workspace، worktree و بازگشت",
+      "depends_on": [
+        "T018"
+      ],
+      "goals": [
+        "REQ-104",
+        "REQ-106"
+      ],
+      "scope": "کار روی شاخه/نسخهٔ جدا، diff قابل بازبینی و حفظ تغییرات موجود کاربر.",
+      "acceptance": "پروژهٔ dirty بی‌صدا پاک نشود؛ rollback فقط نسخهٔ تحت مالکیت اجرا را تغییر دهد؛ نام شاخه/commit به شواهد وصل شود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/workspace/git.py",
+        "src/csef_gate/workspace/snapshots.py"
+      ],
+      "tests": [
+        "tests/workspace/test_dirty_worktree_recovery.py"
+      ]
+    },
+    {
+      "id": "T020",
+      "phase": "F4",
+      "title": "تحلیل اثر و اتصال عامل جایگزین",
+      "depends_on": [
+        "T018",
+        "T019",
+        "T016"
+      ],
+      "goals": [
+        "REQ-102",
+        "REQ-104"
+      ],
+      "scope": "impact graph و spike آداپتر Aider؛ مسیر import پیشنهاد از عامل بیرونی حفظ شود.",
+      "acceptance": "هیچ عامل جایگزین مستقیم در کنترل‌پلین ننویسد؛ با عوض‌شدن عامل، هدف و oracle ثابت بمانند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/coding/impact.py",
+        "src/csef_gate/coding/aider.py"
+      ],
+      "tests": [
+        "tests/integrations/test_alternative_agent.py"
+      ]
+    },
+    {
+      "id": "T021",
+      "phase": "F5",
+      "title": "قرارداد محیط اجرا و پروفایل تهدید",
+      "depends_on": [
+        "T003",
+        "T018"
+      ],
+      "goals": [
+        "REQ-104",
+        "REQ-105"
+      ],
+      "scope": "ExecutionProvider، محدودیت منبع، تفکیک شبکهٔ مهمان و میزبان، lifecycle محیط.",
+      "acceptance": "برنامهٔ وب بتواند loopback مهمان داشته باشد ولی میزبان/اسرار در دسترس نباشند؛ نبود قابلیت باعث توقف شود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/execution/base.py",
+        "src/csef_gate/execution/native.py",
+        "src/csef_gate/execution/profiles.py",
+        "profiles/execution/guest-default.json"
+      ],
+      "tests": [
+        "tests/execution/test_profile_contract.py"
+      ]
+    },
+    {
+      "id": "T022",
+      "phase": "F5",
+      "title": "محیط VM اختصاصی و مدیریت اتصال",
+      "depends_on": [
+        "T021"
+      ],
+      "goals": [
+        "REQ-105",
+        "REQ-106"
+      ],
+      "scope": "پروفایل Hyper-V و Linux guest، اتصال مدیریتی محدود و image digest.",
+      "acceptance": "کد مهمان به فایل/سرویس میزبان و DB کنترل نرسد؛ مسیر تست فایل، شبکه، resource و پاک‌سازی خروجی‌ها ثبت شود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/execution/hyperv.py",
+        "src/csef_gate/execution/ssh_guest.py",
+        "scripts/vm/provision.ps1",
+        "scripts/vm/guest-bootstrap.sh"
+      ],
+      "tests": [
+        "tests/system/test_guest_boundary.py"
+      ]
+    },
+    {
+      "id": "T023",
+      "phase": "F5",
+      "title": "انتقال ورودی و خروجی مجاز",
+      "depends_on": [
+        "T022"
+      ],
+      "goals": [
+        "REQ-104",
+        "REQ-105"
+      ],
+      "scope": "manifest محتوا، انتقال امن فایل، مقابله با traversal/reparse/archive bomb.",
+      "acceptance": "فایل خارج از allowlist، symlink و خروجی بیش از سقف رد شوند؛ digest منبع اجراشده با پیشنهاد یکی باشد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/execution/transfer.py"
+      ],
+      "tests": [
+        "tests/execution/test_transfer_adversarial.py"
+      ]
+    },
+    {
+      "id": "T024",
+      "phase": "F5",
+      "title": "probes واقعی و بازیابی محیط",
+      "depends_on": [
+        "T022",
+        "T023"
+      ],
+      "goals": [
+        "REQ-105",
+        "REQ-106"
+      ],
+      "scope": "آزمون escape محدود، دسترسی میزبان، قطع SSH، process tree و reset محیط.",
+      "acceptance": "مرزهای ادعاشده با positive/negative control سنجیده شوند؛ قطع ارتباط UNKNOWN بدهد و به PASS تبدیل نشود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/execution/probes.py"
+      ],
+      "tests": [
+        "tests/system/test_environment_recovery.py"
+      ]
+    },
+    {
+      "id": "T025",
+      "phase": "F6",
+      "title": "طرح و اجرای ارزیابی Python",
+      "depends_on": [
+        "T018",
+        "T021"
+      ],
+      "goals": [
+        "REQ-105",
+        "REQ-106"
+      ],
+      "scope": "criterion typed، parser خروجی، pytest/Ruff/mypy در محیط مجاز.",
+      "acceptance": "exit صفر با تست خالی/skip حیاتی/گزارش جعلی قبول نشود؛ همهٔ معیارهای لازم outcome داشته باشند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/verification/plan.py",
+        "src/csef_gate/verification/runner.py",
+        "src/csef_gate/verification/python_pack.py"
+      ],
+      "tests": [
+        "tests/verification/test_report_failure_modes.py"
+      ]
+    },
+    {
+      "id": "T026",
+      "phase": "F6",
+      "title": "قواعد معماری و پذیرش مستقل",
+      "depends_on": [
+        "T010",
+        "T012",
+        "T025"
+      ],
+      "goals": [
+        "REQ-104",
+        "REQ-105",
+        "REQ-107"
+      ],
+      "scope": "dependency rules، تست رگرسیون، holdout و بررسی traceability.",
+      "acceptance": "تخلف لایه، حذف نیاز حیاتی و migration مخرب کشف شوند؛ صحت معماری با AST صرف اعلام نشود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/verification/architecture.py",
+        "src/csef_gate/verification/security.py",
+        "config/architecture-rules.example.json"
+      ],
+      "tests": [
+        "tests/verification/test_architecture_regressions.py"
+      ]
+    },
+    {
+      "id": "T027",
+      "phase": "F6",
+      "title": "اختیار تأیید و checkpoint واقعی",
+      "depends_on": [
+        "T004",
+        "T008",
+        "T024",
+        "T025"
+      ],
+      "goals": [
+        "REQ-104",
+        "REQ-106"
+      ],
+      "scope": "verify-and-promote اتمیک با رکورد کنترل‌کننده؛ بدون permit قابل جعل.",
+      "acceptance": "گزارش/هش/ورودی PASS ساختگی، replay، نسخهٔ متفاوت و نتیجهٔ UNKNOWN نتوانند تأیید بگیرند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/verification/verdict.py",
+        "src/csef_gate/verification/authority.py"
+      ],
+      "tests": [
+        "tests/verification/test_forged_authority.py"
+      ]
+    },
+    {
+      "id": "T028",
+      "phase": "F6",
+      "title": "بازبین دوم با سیاست ریسک و سؤال ضروری",
+      "depends_on": [
+        "T010",
+        "T016",
+        "T026"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-103",
+        "REQ-107"
+      ],
+      "scope": "severity و دلیل، ارجاع به fact/source، ثبت dissent و مسیر سؤال انسانی.",
+      "acceptance": "اختلاف بازبین خودکار به رأی‌گیری یا تأیید تبدیل نشود؛ بررسی ماشینی در حالت بدون مدل هم باقی بماند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/reviewing/policy.py",
+        "src/csef_gate/reviewing/semantic.py",
+        "src/csef_gate/reviewing/findings.py"
+      ],
+      "tests": [
+        "tests/reviewing/test_risk_and_dissent.py"
+      ]
+    },
+    {
+      "id": "T029",
+      "phase": "F7",
+      "title": "اتصال همین چت از طریق MCP",
+      "depends_on": [
+        "T007",
+        "T011",
+        "T028"
+      ],
+      "goals": [
+        "REQ-102",
+        "REQ-103"
+      ],
+      "scope": "ابزارهای پروژه/پرسش/پیشرفت/اجرا/گزارش با SDK رسمی MCP.",
+      "acceptance": "دو مشتری پشتیبانی‌شده روی نسخهٔ قفل‌شده آزمایش شوند؛ tool خام shell وجود نداشته باشد؛ نوشتن بدون scope ممنوع باشد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/interfaces/mcp.py",
+        "examples/mcp/client-configuration.example.json"
+      ],
+      "tests": [
+        "tests/interfaces/test_mcp_client_contract.py"
+      ]
+    },
+    {
+      "id": "T030",
+      "phase": "F7",
+      "title": "API محلی و رابط سادهٔ اختیاری",
+      "depends_on": [
+        "T029"
+      ],
+      "goals": [
+        "REQ-103"
+      ],
+      "scope": "فقط اگر مسیر چت کافی نبود: FastAPI و صفحهٔ گفتگوی ساده با همان سرویس‌ها.",
+      "acceptance": "کاربر بدون ترمینال هدف/پاسخ/توقف/خروجی را مدیریت کند؛ مجوزها در API و MCP یکسان بمانند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/interfaces/api.py",
+        "ui/index.html",
+        "ui/chat.js",
+        "ui/styles.css"
+      ],
+      "tests": [
+        "tests/interfaces/test_local_api_authority.py"
+      ]
+    },
+    {
+      "id": "T031",
+      "phase": "F7",
+      "title": "GitHub read-only و PR محدود",
+      "depends_on": [
+        "T019",
+        "T027"
+      ],
+      "goals": [
+        "REQ-102",
+        "REQ-106"
+      ],
+      "scope": "خواندن repo/issue/CI، سپس PR draft فقط در scope صریح کاربر.",
+      "acceptance": "شاخهٔ اشتباه/مجوز ناکافی/تغییر diff، عملیات انتشار را متوقف کنند؛ merge/deploy خودکار پیش‌فرض نباشد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/workspace/github.py"
+      ],
+      "tests": [
+        "tests/workspace/test_remote_scope.py"
+      ]
+    },
+    {
+      "id": "T032",
+      "phase": "F8",
+      "title": "بستهٔ تحویل، backup و restore",
+      "depends_on": [
+        "T027",
+        "T031"
+      ],
+      "goals": [
+        "REQ-105",
+        "REQ-106"
+      ],
+      "scope": "ZIP/نسخهٔ Git، راهنمای نصب، lock، محدودیت‌ها و backup قابل بازیابی.",
+      "acceptance": "نصب در محیط تمیز و بازگردانی پروژه+DB+artifact آزمایش شود؛ اسرار و دادهٔ واقعی وارد بسته نشوند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/delivery/bundle.py",
+        "src/csef_gate/delivery/backup.py",
+        "src/csef_gate/delivery/restore.py",
+        "docs/RUNBOOK.fa.md",
+        "docs/BACKUP-RESTORE.fa.md"
+      ],
+      "tests": [
+        "tests/delivery/test_clean_install_and_restore.py"
+      ]
+    },
+    {
+      "id": "T033",
+      "phase": "F8",
+      "title": "قالب پروژه‌های API و وب و Playwright",
+      "depends_on": [
+        "T022",
+        "T025",
+        "T026"
+      ],
+      "goals": [
+        "REQ-105"
+      ],
+      "scope": "افزودن فقط دو خانوادهٔ بعدی: Python API و وب کوچک JS/TS؛ browser tests در مهمان.",
+      "acceptance": "مسیر واقعی کاربر، داده و ارتقا سنجیده شوند؛ قالب‌ها به محصول CLI تحمیل نشوند؛ مدلِ صرفاً ظاهر‌ساز قبول نشود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/verification/web_pack.py"
+      ],
+      "tests": [
+        "tests/system/test_web_journey.py"
+      ]
+    },
+    {
+      "id": "T034",
+      "phase": "F8",
+      "title": "گزارش، حفظ حریم داده و نگهداری لاگ",
+      "depends_on": [
+        "T004",
+        "T016"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-103"
+      ],
+      "scope": "رویداد قابل فهم، redaction، retention و مشاهدهٔ جزئیات اختیاری.",
+      "acceptance": "کلید/متن حساس پیش‌فرض در لاگ نباشد؛ مصرف و زمان و تصمیم رد/قبول قابل دنبال‌کردن باشند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/observability/events.py",
+        "src/csef_gate/observability/redaction.py"
+      ],
+      "tests": [
+        "tests/observability/test_redaction_and_retention.py"
+      ]
+    },
+    {
+      "id": "T035",
+      "phase": "F9",
+      "title": "مقایسهٔ منصفانه روی پروژه‌های متفاوت",
+      "depends_on": [
+        "T028",
+        "T032",
+        "T033",
+        "T034"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-103",
+        "REQ-104",
+        "REQ-105"
+      ],
+      "scope": "direct agent در برابر CSEF هدفمند؛ دادهٔ جدا، تکرار جفتی و دخالت واقعی کاربر.",
+      "acceptance": "هزینهٔ واقعی/واحدنامعلوم، زمان فعال کاربر، باگ تحویل و توقف نابجا گزارش شوند؛ نتیجهٔ منفی هم منتشر شود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/evaluation/corpus.py",
+        "src/csef_gate/evaluation/runner.py",
+        "src/csef_gate/evaluation/metrics.py",
+        "experiments/corpus/manifest.json",
+        "experiments/protocol-vnext.json"
+      ],
+      "tests": [
+        "tests/evaluation/test_frozen_protocol.py"
+      ]
+    },
+    {
+      "id": "T036",
+      "phase": "F9",
+      "title": "بستهٔ نصب و CI پروژهٔ CSEF",
+      "depends_on": [
+        "T003",
+        "T027",
+        "T029",
+        "T035"
+      ],
+      "goals": [
+        "REQ-102",
+        "REQ-103",
+        "REQ-106"
+      ],
+      "scope": "قفل وابستگی، smoke نصب، migration، offline state و artifact انتشار.",
+      "acceptance": "نصب روی ماشین تمیز، اجرای نمونه، resume و uninstall بدون از بین بردن پروژهٔ کاربر تأیید شوند.",
+      "status": "planned",
+      "files": [
+        "uv.lock",
+        ".github/workflows/ci.yml",
+        "scripts/install.ps1",
+        "scripts/install.sh",
+        "THIRD_PARTY_NOTICES.md"
+      ],
+      "tests": [
+        "tests/system/test_package_smoke.py"
+      ]
+    },
+    {
+      "id": "T037",
+      "phase": "LATER",
+      "title": "آزمایش LiteLLM پس از نیاز چنددرگاهی",
+      "depends_on": [
+        "T016",
+        "T035"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-102"
+      ],
+      "scope": "فقط اگر درگاه سبک نگهداری‌پذیر نبود: SDK/Proxy پشت همان interface.",
+      "acceptance": "فایدهٔ اقتصادی و بار عملیاتی مقایسه و اجزای دارای مجوز متفاوت تفکیک شوند؛ gateway اختیار تأیید نگیرد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/integrations/litellm.py"
+      ],
+      "tests": [
+        "tests/integrations/test_litellm_route_parity.py"
+      ]
+    },
+    {
+      "id": "T038",
+      "phase": "LATER",
+      "title": "آزمایش OpenHands SDK و بازیابی چندزبانه",
+      "depends_on": [
+        "T020",
+        "T035"
+      ],
+      "goals": [
+        "REQ-102",
+        "REQ-105"
+      ],
+      "scope": "آداپتر SDK و tree-sitter فقط با نیاز اثبات‌شدهٔ مخزن بزرگ/چندزبانه.",
+      "acceptance": "با معیار یکسان از مسیر ساده بهتر باشد؛ failure و provenance همان قرارداد کنترل را رعایت کنند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/integrations/openhands.py"
+      ],
+      "tests": [
+        "tests/integrations/test_openhands_contract.py"
+      ]
+    }
+  ]
+}

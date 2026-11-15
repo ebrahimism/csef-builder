@@ -1,0 +1,292 @@
+{
+  "boundary": {
+    "backend": "codex-native-windows",
+    "checks": {
+      "control_read_denied": true,
+      "control_write_denied": true,
+      "loopback_denied": false,
+      "scratch_write": true,
+      "snapshot_write_denied": true,
+      "source_read": true
+    },
+    "execution_root": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\csef-execution\\4c91af74bf3b4e5083cae2685c1bd4c6",
+    "file_boundary_verified": true,
+    "network_isolation_verified": false,
+    "process": {
+      "command_sha256": "044c6bfe126df14ce1daa5de6cba71d4c96936696d8d9b9f613523ceb324e115",
+      "elapsed_s": 2.469,
+      "exit_code": 0,
+      "overflow": false,
+      "stderr": "",
+      "stdout": "{\"source_read\": true, \"scratch_write\": true, \"control_read_denied\": true, \"control_write_denied\": true, \"snapshot_write_denied\": true, \"loopback_denied\": false}\r\n",
+      "timed_out": false
+    },
+    "scope": "observed read/write/loopback probes, not proof against all sandbox escapes",
+    "verified": false
+  },
+  "cases": [
+    {
+      "actual_json": {
+        "total": 0
+      },
+      "command_sha256": "f58cc3b9ffd166c950566a031c7df7f9e44fcb7668e3bb92a1f89b4230bf1ba8",
+      "elapsed_s": 2.203,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {},
+      "id": "EMPTY",
+      "overflow": false,
+      "passed": false,
+      "stderr": "",
+      "stdout": "{\"total\": 0}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 1
+      },
+      "command_sha256": "dcba89ee45da895a6062359d9e1995edbb92b909e07460a5dcb64592ab5b78b7",
+      "elapsed_s": 2.141,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 1
+      },
+      "id": "ADD_HOSTING",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 1}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 2
+      },
+      "command_sha256": "c17cd3c81544e3fcd76468c337eac7daac05a8d8e34c497b49dbecc45b8493b5",
+      "elapsed_s": 2.219,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 2
+      },
+      "id": "ADD_HOSTING_AGAIN",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 2}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 3
+      },
+      "command_sha256": "95c3d9156484f664ed65021593774068617eb4a4aff83289f253c6dd4e360d79",
+      "elapsed_s": 2.265,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 3
+      },
+      "id": "ADD_UNICODE",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 3}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 4
+      },
+      "command_sha256": "5fbb5d1d5022e9f248e021a6c6a4c01bd46ce8d9bec2ecee0713a6f5d954b45f",
+      "elapsed_s": 2.265,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 4
+      },
+      "id": "ADD_OTHER_MONTH",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 4}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "total": 350999
+      },
+      "command_sha256": "f58cc3b9ffd166c950566a031c7df7f9e44fcb7668e3bb92a1f89b4230bf1ba8",
+      "elapsed_s": 2.125,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "hosting": 150000,
+        "دامنه": 200000
+      },
+      "id": "REPORT_JAN",
+      "overflow": false,
+      "passed": false,
+      "stderr": "",
+      "stdout": "{\"total\": 350999}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "total": 350999
+      },
+      "command_sha256": "4ed6904160d6badcb4d37c7989a491a03832ef6c6ae9467b479f96205a428fad",
+      "elapsed_s": 2.219,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "hosting": 999
+      },
+      "id": "REPORT_FEB",
+      "overflow": false,
+      "passed": false,
+      "stderr": "",
+      "stdout": "{\"total\": 350999}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "d2a8bf48454223791e2e058d5c1d7e29fad03b7320639c28504a606586f275d3",
+      "elapsed_s": 2.109,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_NEGATIVE",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "877fc5c55a5b3863c4d930a9efa6ecaf8740c3234c5a4d9d88bc6cf5029bbad3",
+      "elapsed_s": 2.25,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_ZERO",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "7a238f1b88e863a98cd77051e9c3c04af5948000e14af3b55d27e9456f41cd26",
+      "elapsed_s": 2.172,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_DATE",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "25f9eecd4bd913be0774e5b2abb1735f3db8d835a8050806a1a8a46e468a9446",
+      "elapsed_s": 2.172,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_CATEGORY",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "e247dfdff2a5befa62bb784ea6a38384cbb839033a22c73eadb10dcbbd3bed94",
+      "elapsed_s": 2.219,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_MONTH",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 5
+      },
+      "command_sha256": "8e37167f37ea52245630a025638c3bc6c13ae2f2dac365f2b6a83be84527b264",
+      "elapsed_s": 2.235,
+      "exit_code": 0,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "REJECT_NONCANONICAL_DATE",
+      "overflow": false,
+      "passed": false,
+      "stderr": "",
+      "stdout": "{\"id\": 5}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "total": 351009
+      },
+      "command_sha256": "f58cc3b9ffd166c950566a031c7df7f9e44fcb7668e3bb92a1f89b4230bf1ba8",
+      "elapsed_s": 2.281,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "hosting": 150000,
+        "دامنه": 200000
+      },
+      "id": "FINAL_PERSISTENCE",
+      "overflow": false,
+      "passed": false,
+      "stderr": "",
+      "stdout": "{\"total\": 351009}\r\n",
+      "timed_out": false
+    }
+  ],
+  "error": null,
+  "evaluation_id": "eval-36abe6ee757b423da847d85ae6b9d0dc",
+  "finished_at": "2026-11-15T15:01:09.045447+00:00",
+  "measurement_only": true,
+  "run_id": "run-fc2a514c05764d52918cd4d4b5777154",
+  "source_manifest": {
+    "expenses.py": "eea4c30e3b24be92c5c92e8c56d78261aa4942eae063f187b13d2e979844e021"
+  },
+  "source_sha256": "37b7fb1cfc7d083adf3ae3f28231f952c0d295a5cb818af5f37959025bb8dd1c",
+  "spec_sha256": "224ec188cff794e1ee2fb14b13d3129e60c62403e939b117e5b6f5c0879fbff1",
+  "status": "fail"
+}

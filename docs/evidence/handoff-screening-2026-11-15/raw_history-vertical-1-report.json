@@ -1,0 +1,114 @@
+{
+  "boundary": {
+    "backend": "codex-native-windows",
+    "checks": {
+      "control_read_denied": true,
+      "control_write_denied": true,
+      "loopback_denied": false,
+      "scratch_write": true,
+      "snapshot_write_denied": true,
+      "source_read": true
+    },
+    "execution_root": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\csef-execution\\39f051a70e6d4efe962d02ec8f0f5bce",
+    "file_boundary_verified": true,
+    "network_isolation_verified": false,
+    "process": {
+      "command_sha256": "6951da03d76fd775ff6b62eec31ade96ce75294ff4ad0aae9a233829777e4580",
+      "elapsed_s": 2.422,
+      "exit_code": 0,
+      "overflow": false,
+      "stderr": "",
+      "stdout": "{\"source_read\": true, \"scratch_write\": true, \"control_read_denied\": true, \"control_write_denied\": true, \"snapshot_write_denied\": true, \"loopback_denied\": false}\r\n",
+      "timed_out": false
+    },
+    "scope": "observed read/write/loopback probes, not proof against all sandbox escapes",
+    "verified": false
+  },
+  "cases": [
+    {
+      "actual_json": {
+        "legacy": 500
+      },
+      "command_sha256": "f9df00d43c8536e2e3aad1d7092c1648823f1d712647a48d15c184d2eff9dc00",
+      "elapsed_s": 2.766,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "legacy": 500
+      },
+      "id": "LEGACY",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"legacy\": 500}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 8
+      },
+      "command_sha256": "e25d3843701796536855fb2dde12b44d3ddd66a8ade3b37c9c45e8019b7faaec",
+      "elapsed_s": 2.094,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 8
+      },
+      "id": "ADD",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 8}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "hosting": 2500
+      },
+      "command_sha256": "75abb230cd82cd6917c0582b9d2ffcc6792c21585dbb29d8cd49e12e73e8ef0a",
+      "elapsed_s": 2.14,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "hosting": 2500
+      },
+      "id": "REPORT",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"hosting\": 2500}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "459d5104a4678fb6047a53c4b9215884f6e7ba968fd90d4f339e4c8a2e3d1896",
+      "elapsed_s": 2.11,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "INVALID",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    }
+  ],
+  "error": null,
+  "evaluation_id": "eval-c6d828d69792439f8a90a14a6b872ec9",
+  "finished_at": "2026-11-15T15:48:30.330878+00:00",
+  "measurement_only": true,
+  "run_id": "run-894356ddc5494c7ebd84f11c00deaf04",
+  "source_manifest": {
+    "app.py": "6c0f2b0d5e4cb066458f77d3e1b17e73f41b57d96dca913819b9d54372fa3301",
+    "domain.py": "c20ee0204933726dbec0c8fa9b2986f7c93e7541971f81d6a569bc28debd71b6",
+    "storage.py": "6f0fee31b2ad5064061ff5d3e23b03dfd2ea29fce650de0c73319004e4aa90f6"
+  },
+  "source_sha256": "eb94f35a4af0e9ef6673dcaf040bdb679c40be4b6469d98936e5342016968d59",
+  "spec_sha256": "b1227da06017de6f09bc209a7d84d31b6d4debb2e701e675a30013e6e6502ef4",
+  "status": "review"
+}

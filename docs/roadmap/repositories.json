@@ -1,0 +1,410 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-15",
+  "note": "Metadata and selected primary sources inspected. Observed heads are research snapshots, not tested dependency locks. No integration installed or activated in this documentation task.",
+  "repositories": [
+    {
+      "repo": "openai/codex",
+      "url": "https://github.com/openai/codex",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "Apache-2.0",
+      "head_observed": "5cb38e79842a0e0a6dca5bb97874163e8ee50129",
+      "checked_date": "2026-11-15",
+      "decision": "موجود؛ توسعهٔ آداپتر",
+      "role": "عامل کدنویسی اصلی با CLI نصب‌شده",
+      "task_ids": [
+        "T013",
+        "T018"
+      ],
+      "note": "آزمون schema، timeout، usage، نسخه و محدودیت ابزار؛ ورود کاربر بازنویسی نشود.",
+      "integration_tested": "bounded_pilot_only"
+    },
+    {
+      "repo": "github/spec-kit",
+      "url": "https://github.com/github/spec-kit",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": "2ee2b1e8005905db05f5717300a469b3068b908f",
+      "checked_date": "2026-11-15",
+      "decision": "آزمایش اجباری پیش از گسترش orchestration",
+      "role": "قالب، import/export و workflow/extension محدود",
+      "task_ids": [
+        "T002",
+        "T012"
+      ],
+      "note": "نیاز/شناسه/ADR حفظ شود؛ حالت Converged یا ورودی approve اختیار CSEF نیست؛ قالب آزمون اختیاری باید override شود.",
+      "integration_tested": false
+    },
+    {
+      "repo": "pydantic/pydantic",
+      "url": "https://github.com/pydantic/pydantic",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": "cd1d8be820a8036818d6e82603a3ab07e0f855b5",
+      "checked_date": "2026-11-15",
+      "decision": "وابستگی موجود؛ توسعهٔ استفاده",
+      "role": "schemaهای ورودی/خروجی نسخه‌دار",
+      "task_ids": [
+        "T003"
+      ],
+      "note": "strict parsing و دادهٔ بسته؛ schema جای احراز منشأ یا مجوز را نمی‌گیرد.",
+      "integration_tested": false
+    },
+    {
+      "repo": "openai/openai-python",
+      "url": "https://github.com/openai/openai-python",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "Apache-2.0",
+      "head_observed": "3dae6090cc31cc64a437fe0bcee740b6d81ed2cc",
+      "checked_date": "2026-11-15",
+      "decision": "انتخاب برای آداپتر مستقیم",
+      "role": "کلاینت API سازگار با endpoint صریح",
+      "task_ids": [
+        "T015"
+      ],
+      "note": "Responses و Chat جدا؛ قابلیت و خطاهای هر مدل آزمایش شود.",
+      "integration_tested": false
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "url": "https://github.com/modelcontextprotocol/python-sdk",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": "77001c96f9507be0f4d009b83210a384a5e08bda",
+      "checked_date": "2026-11-15",
+      "decision": "انتخاب مشروط به آزمون کلاینت",
+      "role": "اتصال همین چت و ابزارهای محدود",
+      "task_ids": [
+        "T029"
+      ],
+      "note": "API شاخهٔ فعلی v2 است؛ نسخه و transport سازگار با میزبان قفل شوند.",
+      "integration_tested": false
+    },
+    {
+      "repo": "git/git",
+      "url": "https://github.com/git/git",
+      "default_branch": "master",
+      "archived": false,
+      "metadata_license": "NOASSERTION",
+      "head_observed": null,
+      "checked_date": "2026-11-15",
+      "decision": "استفاده از CLI؛ نه کپی کد",
+      "role": "workspace، worktree، diff و snapshot",
+      "task_ids": [
+        "T019"
+      ],
+      "note": "خود پوشهٔ F:/cffmam فعلاً Git repo نیست؛ تغییرات موجود پیش از init/import حفظ شوند.",
+      "integration_tested": false
+    },
+    {
+      "repo": "astral-sh/uv",
+      "url": "https://github.com/astral-sh/uv",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "Apache-2.0",
+      "head_observed": "d5c3f174417418c24ec3c276e01b0f62b961b13c",
+      "checked_date": "2026-11-15",
+      "decision": "انتخاب برای بسته‌بندی Python",
+      "role": "محیط تکرارپذیر، lock و نصب ابزار",
+      "task_ids": [
+        "T036"
+      ],
+      "note": "نسخهٔ آزموده و lock دقیق؛ نصب خودکار package نامطمئن ممنوع.",
+      "integration_tested": false
+    },
+    {
+      "repo": "pytest-dev/pytest",
+      "url": "https://github.com/pytest-dev/pytest",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": "50234b4e670064c42a4c29cb6258115a2079ba4c",
+      "checked_date": "2026-11-15",
+      "decision": "موجود در آزمون‌ها؛ توسعهٔ runner",
+      "role": "آزمون رفتاری و رگرسیون",
+      "task_ids": [
+        "T025"
+      ],
+      "note": "گزارش خالی/skip حیاتی یا exit صفر به‌تنهایی پذیرش نیست.",
+      "integration_tested": "existing_test_runner_only"
+    },
+    {
+      "repo": "astral-sh/ruff",
+      "url": "https://github.com/astral-sh/ruff",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": "36b92bb23ebca423672c37501299e06b836a060e",
+      "checked_date": "2026-11-15",
+      "decision": "انتخاب برای Python pack",
+      "role": "lint و قواعد سبک/خطای مشخص",
+      "task_ids": [
+        "T025"
+      ],
+      "note": "موفقیت lint به معنی صحت نیاز نیست.",
+      "integration_tested": false
+    },
+    {
+      "repo": "python/mypy",
+      "url": "https://github.com/python/mypy",
+      "default_branch": "master",
+      "archived": false,
+      "metadata_license": "NOASSERTION",
+      "head_observed": null,
+      "checked_date": "2026-11-15",
+      "decision": "انتخاب برای Python pack",
+      "role": "type checking انتخاب‌شده در قرارداد پروژه",
+      "task_ids": [
+        "T025"
+      ],
+      "note": "خودافزودهٔ بدون پیکربندی همه‌چیز را تضمین نمی‌کند؛ اجزای مجوز در LICENSE تفکیک شده‌اند.",
+      "integration_tested": false
+    },
+    {
+      "repo": "ollama/ollama",
+      "url": "https://github.com/ollama/ollama",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": "15af2b261c14c494d1fe08cf9d0b9e0af1a18c84",
+      "checked_date": "2026-11-15",
+      "decision": "آزمایش محلی؛ نه تضمین صرفه",
+      "role": "مدل محلی برای نقش‌های مناسب",
+      "task_ids": [
+        "T017"
+      ],
+      "note": "سخت‌افزار، مدل دانلودشده، schema، کیفیت و تأخیر؛ cloud و local یکسان فرض نشوند.",
+      "integration_tested": false
+    },
+    {
+      "repo": "Aider-AI/aider",
+      "url": "https://github.com/Aider-AI/aider",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "Apache-2.0",
+      "head_observed": "5dc9490bb35f9729ef2c95d00a19ccd30c26339c",
+      "checked_date": "2026-11-15",
+      "decision": "عامل جایگزین پس از spike",
+      "role": "کدنویسی پشت CodingAgent مستقل",
+      "task_ids": [
+        "T020"
+      ],
+      "note": "کار در candidate/guest؛ auto-commit و test داخلی جای حکم CSEF نیستند.",
+      "integration_tested": false
+    },
+    {
+      "repo": "microsoft/playwright",
+      "url": "https://github.com/microsoft/playwright",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "Apache-2.0",
+      "head_observed": "b4d016aadc5cbd2b898a284307975fe73e05483d",
+      "checked_date": "2026-11-15",
+      "decision": "وقتی پروژهٔ هدف وب است",
+      "role": "آزمون مسیر کاربر و مرورگر داخل guest",
+      "task_ids": [
+        "T033"
+      ],
+      "note": "مرورگر و برنامه در محیط محدود؛ screenshot به‌تنهایی شاهد صحت نیست.",
+      "integration_tested": false
+    },
+    {
+      "repo": "fastapi/fastapi",
+      "url": "https://github.com/fastapi/fastapi",
+      "default_branch": "master",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": "2a1bd230b454a51644c7e2087f525b2dd245edbf",
+      "checked_date": "2026-11-15",
+      "decision": "مشروط؛ API نمونه و UI محلی بعدی",
+      "role": "سرویس محلی روی application service مشترک",
+      "task_ids": [
+        "T030",
+        "T033"
+      ],
+      "note": "بدون عمومی‌کردن سرور، با احراز درخواست و origin؛ حفظ scope در MCP و API.",
+      "integration_tested": false
+    },
+    {
+      "repo": "docker/cli",
+      "url": "https://github.com/docker/cli",
+      "default_branch": "master",
+      "archived": false,
+      "metadata_license": "Apache-2.0",
+      "head_observed": null,
+      "checked_date": "2026-11-15",
+      "decision": "اختیاری درون VM",
+      "role": "محیط ابزار/وابستگی در مهمان",
+      "task_ids": [
+        "T022"
+      ],
+      "note": "میزبان docker.sock یا فایل‌های کنترل mount نشوند؛ نصب و مجوز محصول توزیعی جدا بررسی شود.",
+      "integration_tested": false
+    },
+    {
+      "repo": "moby/moby",
+      "url": "https://github.com/moby/moby",
+      "default_branch": "master",
+      "archived": false,
+      "metadata_license": "Apache-2.0",
+      "head_observed": null,
+      "checked_date": "2026-11-15",
+      "decision": "اختیاری درون VM",
+      "role": "runtime کانتینر داخل مرز VM",
+      "task_ids": [
+        "T022"
+      ],
+      "note": "کانتینر به‌تنهایی پاسخ الزام ایزولاسیون میزبان نیست.",
+      "integration_tested": false
+    },
+    {
+      "repo": "BerriAI/litellm",
+      "url": "https://github.com/BerriAI/litellm",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "NOASSERTION",
+      "head_observed": "09ce4f50ed1298882747c6e279ea6760f1527384",
+      "checked_date": "2026-11-15",
+      "decision": "بعداً و فقط با نیاز اندازه‌گیری‌شده",
+      "role": "gateway/router پشت ModelProvider",
+      "task_ids": [
+        "T037"
+      ],
+      "note": "هسته و enterprise مجوز متفاوت دارند؛ proxy اجباری برای MVP نیست.",
+      "integration_tested": false
+    },
+    {
+      "repo": "OpenHands/software-agent-sdk",
+      "url": "https://github.com/OpenHands/software-agent-sdk",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": "aab6aa5b1e4a3a4da2c505697fe6e4a2283e4560",
+      "checked_date": "2026-11-15",
+      "decision": "بعداً و مشروط به برتری آزمایش",
+      "role": "آداپتر SDK عامل/سرور",
+      "task_ids": [
+        "T038"
+      ],
+      "note": "SDK را از Canvas UI تفکیک کن؛ همهٔ دسترسی‌ها زیر سیاست CSEF بمانند.",
+      "integration_tested": false
+    },
+    {
+      "repo": "OpenHands/OpenHands",
+      "url": "https://github.com/OpenHands/OpenHands",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": null,
+      "checked_date": "2026-11-15",
+      "decision": "مرجع مقایسه؛ نه وابستگی هسته",
+      "role": "رابط/Canvas آماده برای بررسی به‌جای ساخت UI اضافه",
+      "task_ids": [
+        "T038"
+      ],
+      "note": "اگر صرفاً UI آن لازم نیست، نصب کل سیستم توجیه ندارد؛ اجرای گفتگو تمام سرویس را ایزوله نمی‌کند.",
+      "integration_tested": false
+    },
+    {
+      "repo": "tree-sitter/tree-sitter",
+      "url": "https://github.com/tree-sitter/tree-sitter",
+      "default_branch": "master",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": null,
+      "checked_date": "2026-11-15",
+      "decision": "بعد از نیاز واقعی چندزبانه",
+      "role": "ایندکس نماد/وابستگی چند زبان",
+      "task_ids": [
+        "T038"
+      ],
+      "note": "ابتدا ast و FTS5؛ parser قواعد کسب‌وکار را ثابت نمی‌کند.",
+      "integration_tested": false
+    },
+    {
+      "repo": "langchain-ai/langgraph",
+      "url": "https://github.com/langchain-ai/langgraph",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": null,
+      "checked_date": "2026-11-15",
+      "decision": "در v1 انتخاب نشده",
+      "role": "گزینهٔ جایگزین موتور گردش‌کار",
+      "task_ids": [
+        "T007"
+      ],
+      "note": "تا نیاز اثبات نشود دو موتور state و دو منبع حقیقت ایجاد نکنیم.",
+      "integration_tested": false
+    },
+    {
+      "repo": "temporalio/temporal",
+      "url": "https://github.com/temporalio/temporal",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": null,
+      "checked_date": "2026-11-15",
+      "decision": "در v1 انتخاب نشده",
+      "role": "گزینهٔ آینده برای گردش‌کار توزیع‌شده",
+      "task_ids": [
+        "T008"
+      ],
+      "note": "سرویس اضافی برای ابزار شخصی فعلی پرهزینه است؛ زمان‌بندی را جای پذیرش معتبر نگذاریم.",
+      "integration_tested": false
+    },
+    {
+      "repo": "jdx/mise",
+      "url": "https://github.com/jdx/mise",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": null,
+      "checked_date": "2026-11-15",
+      "decision": "در v1 انتخاب نشده",
+      "role": "گزینهٔ آیندهٔ مدیریت toolchain چندزبانه",
+      "task_ids": [
+        "T033"
+      ],
+      "note": "فعلاً image قفل‌شدهٔ مهمان و uv کافی‌اند؛ managerهای تکراری اضافه نشوند.",
+      "integration_tested": false
+    },
+    {
+      "repo": "gitleaks/gitleaks",
+      "url": "https://github.com/gitleaks/gitleaks",
+      "default_branch": "master",
+      "archived": false,
+      "metadata_license": "MIT",
+      "head_observed": null,
+      "checked_date": "2026-11-15",
+      "decision": "انتخاب برای بررسی کیفیت؛ پس از قفل نسخه",
+      "role": "کشف اسرار در diff و بستهٔ تحویل",
+      "task_ids": [
+        "T026"
+      ],
+      "note": "یافتهٔ scanner یک شاهد محدود است؛ نتیجهٔ پاک تضمین نبود آسیب‌پذیری نیست.",
+      "integration_tested": false
+    },
+    {
+      "repo": "pypa/pip-audit",
+      "url": "https://github.com/pypa/pip-audit",
+      "default_branch": "main",
+      "archived": false,
+      "metadata_license": "Apache-2.0",
+      "head_observed": null,
+      "checked_date": "2026-11-15",
+      "decision": "انتخاب برای بررسی کیفیت؛ پس از قفل نسخه",
+      "role": "بررسی آسیب‌پذیری‌های شناخته‌شدهٔ وابستگی Python",
+      "task_ids": [
+        "T026"
+      ],
+      "note": "یافتهٔ scanner یک شاهد محدود است؛ نتیجهٔ پاک تضمین نبود آسیب‌پذیری نیست.",
+      "integration_tested": false
+    }
+  ]
+}

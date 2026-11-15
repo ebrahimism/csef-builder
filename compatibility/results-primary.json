@@ -1,0 +1,44 @@
+{
+  "vector_sha256": "06430918bc96073ab013343b3c0d9e205fbcd8c612e5b8d7079a5660d93beceb",
+  "command": [
+    "python",
+    "compatibility/primary_adapter.py"
+  ],
+  "results": [
+    {
+      "id": "POL-001",
+      "status": "pass",
+      "actual": "deny",
+      "expected": "deny",
+      "basis": "30-policy section 2: deny > ask > allow"
+    },
+    {
+      "id": "POL-002",
+      "status": "pass",
+      "actual": "ask",
+      "expected": "ask",
+      "basis": "30-policy section 2: ask > allow"
+    },
+    {
+      "id": "POL-003",
+      "status": "pass",
+      "actual": "deny",
+      "expected": "deny",
+      "basis": "I6 fail-closed"
+    },
+    {
+      "id": "FAIL-001",
+      "status": "fail",
+      "actual": "unknown",
+      "expected": "bad_input",
+      "basis": "60-failure section 1: bad_input remains distinct"
+    },
+    {
+      "id": "FAIL-002",
+      "status": "pending",
+      "actual": "unknown",
+      "expected": "transient",
+      "basis": "D12: explicit timeout mapping not yet adjudicated"
+    }
+  ]
+}

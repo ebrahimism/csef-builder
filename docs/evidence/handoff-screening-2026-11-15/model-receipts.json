@@ -1,0 +1,503 @@
+[
+  {
+    "book": "dossier",
+    "call_id": 1,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "63a0913dbc4059276c96f50131dcd78d6ed65a4d6dd9aeba092101083aa662a6",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 55.5,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 4618,
+      "reported_models": [],
+      "role": "developer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 17171,
+          "output_tokens": 1247,
+          "reasoning_output_tokens": 70
+        }
+      ]
+    },
+    "role": "developer",
+    "status": "completed"
+  },
+  {
+    "book": "dossier",
+    "call_id": 2,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "7c519530fa4a2d1ae6ae71b45953f75f9c491a9dbf81eca598f7a1438bb5b802",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 69.125,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 8890,
+      "reported_models": [],
+      "role": "developer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 18242,
+          "output_tokens": 1673,
+          "reasoning_output_tokens": 139
+        }
+      ]
+    },
+    "role": "developer",
+    "status": "completed"
+  },
+  {
+    "book": "dossier",
+    "call_id": 3,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "37526f95dcb18f8f5ae4793b589eec8d39219cc0c373b81188e267dd2ecb1cf6",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 66.875,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 10609,
+      "reported_models": [],
+      "role": "developer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 12416,
+          "input_tokens": 18604,
+          "output_tokens": 1970,
+          "reasoning_output_tokens": 88
+        }
+      ]
+    },
+    "role": "developer",
+    "status": "completed"
+  },
+  {
+    "book": "dossier_review",
+    "call_id": 1,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "9a2128a6736d964076c34af1825e85e569c7410fc5db8f36a195c5385d0ec788",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 56.172,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 4618,
+      "reported_models": [],
+      "role": "developer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 17179,
+          "output_tokens": 1372,
+          "reasoning_output_tokens": 85
+        }
+      ]
+    },
+    "role": "developer",
+    "status": "completed"
+  },
+  {
+    "book": "dossier_review",
+    "call_id": 2,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "b9de2347ae5e08500862d72f8f5d43d3a474f31d496fc8392411c143c0f49ba9",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 32.828,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 8798,
+      "reported_models": [],
+      "role": "reviewer",
+      "schema_sha256": "b5a418d186da00c048e83c2307957e75ece7d330e49fb489bb8bc841e88bc0ba",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 18293,
+          "output_tokens": 62,
+          "reasoning_output_tokens": 36
+        }
+      ]
+    },
+    "role": "reviewer",
+    "status": "completed"
+  },
+  {
+    "book": "dossier_review",
+    "call_id": 3,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "39c9046d86effe0a51ac6bfb4e70b42a0f727116184974a296f0da4f3f6b46ef",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 57.188,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 9386,
+      "reported_models": [],
+      "role": "developer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 12416,
+          "input_tokens": 18361,
+          "output_tokens": 1391,
+          "reasoning_output_tokens": 101
+        }
+      ]
+    },
+    "role": "developer",
+    "status": "completed"
+  },
+  {
+    "book": "dossier_review",
+    "call_id": 4,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "a27ce40daa73ae46def5d95f9c3cc0bb1e7e7ad65f0a9a21da8008804b0674e7",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 36.079,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 10605,
+      "reported_models": [],
+      "role": "reviewer",
+      "schema_sha256": "b5a418d186da00c048e83c2307957e75ece7d330e49fb489bb8bc841e88bc0ba",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 18696,
+          "output_tokens": 52,
+          "reasoning_output_tokens": 26
+        }
+      ]
+    },
+    "role": "reviewer",
+    "status": "completed"
+  },
+  {
+    "book": "dossier_review",
+    "call_id": 5,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "b190f60e1ee0c0db81759c2366a7530d78b325be691b6991574cfa2aaa8fa128",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 65.313,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 11203,
+      "reported_models": [],
+      "role": "developer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 18740,
+          "output_tokens": 2053,
+          "reasoning_output_tokens": 93
+        }
+      ]
+    },
+    "role": "developer",
+    "status": "completed"
+  },
+  {
+    "book": "dossier_review",
+    "call_id": 6,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "4bcf818046c3bd13e0d751c0da59fb0d15c1c8850844c5eec2c83226a4701855",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 34.906,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 11848,
+      "reported_models": [],
+      "role": "reviewer",
+      "schema_sha256": "b5a418d186da00c048e83c2307957e75ece7d330e49fb489bb8bc841e88bc0ba",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 18950,
+          "output_tokens": 71,
+          "reasoning_output_tokens": 45
+        }
+      ]
+    },
+    "role": "reviewer",
+    "status": "completed"
+  },
+  {
+    "book": "dossier_review",
+    "call_id": 7,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "328c41c2d5b79b7b74138c7d472b08f6f8e9b3883924eb8f6aaadfe7934f04fb",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 39.14,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 4185,
+      "reported_models": [],
+      "role": "reviewer",
+      "schema_sha256": "b5a418d186da00c048e83c2307957e75ece7d330e49fb489bb8bc841e88bc0ba",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 17132,
+          "output_tokens": 188,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "role": "reviewer",
+    "status": "completed"
+  },
+  {
+    "book": "dossier_review",
+    "call_id": 8,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "ebce2829223ac8d57987019cf39242680a8d3b6981a98ea1095d01b30f0588b2",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 38.672,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 4291,
+      "reported_models": [],
+      "role": "reviewer",
+      "schema_sha256": "b5a418d186da00c048e83c2307957e75ece7d330e49fb489bb8bc841e88bc0ba",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 17142,
+          "output_tokens": 229,
+          "reasoning_output_tokens": 168
+        }
+      ]
+    },
+    "role": "reviewer",
+    "status": "completed"
+  },
+  {
+    "book": "raw_history",
+    "call_id": 1,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "e3dc0279be44b363ad897c6dd4217fe486a72d2f50ef98da2715a9e4dc7e7961",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 73.547,
+      "exit_code": 0,
+      "new_provider_call": false,
+      "overflow": false,
+      "prompt_utf8_bytes": 11285,
+      "reported_models": [],
+      "reused_from": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v1\\raw_history\\model_calls\\001-developer",
+      "role": "developer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 18432,
+          "input_tokens": 18747,
+          "output_tokens": 1417,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "role": "developer-reused",
+    "status": "completed"
+  },
+  {
+    "book": "raw_history",
+    "call_id": 2,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "3d2826d5fda83c130fecbebd2ee3500150e97e702c01c5e6357791f6c7e93cf2",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 65.562,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 22635,
+      "reported_models": [],
+      "role": "developer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 21452,
+          "output_tokens": 1946,
+          "reasoning_output_tokens": 69
+        }
+      ]
+    },
+    "role": "developer",
+    "status": "completed"
+  },
+  {
+    "book": "raw_history",
+    "call_id": 3,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "107be1ce09ca0f01822b9b1b7d040d1350994c3f22cb4d68fa4083beec9c7382",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 66.781,
+      "exit_code": 0,
+      "overflow": false,
+      "prompt_utf8_bytes": 33307,
+      "reported_models": [],
+      "role": "developer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 23927,
+          "output_tokens": 2039,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "role": "developer",
+    "status": "completed"
+  },
+  {
+    "book": "shared",
+    "call_id": 1,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "4aa9bf4d30b52b552eb111c5fd8715ee551904436fd76b399fa62e8686a3e571",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 40.906,
+      "exit_code": 0,
+      "new_provider_call": false,
+      "overflow": false,
+      "prompt_utf8_bytes": 3529,
+      "reported_models": [],
+      "reused_from": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v1\\shared\\model_calls\\001-designer",
+      "role": "designer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 16920,
+          "output_tokens": 525,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "role": "designer-reused",
+    "status": "completed"
+  },
+  {
+    "book": "shared",
+    "call_id": 2,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "74da547d86dbd5ba30dfb2c3e8447adc647e28f1f6db3dbfd67cf70fc29acee0",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 40.422,
+      "exit_code": 0,
+      "new_provider_call": false,
+      "overflow": false,
+      "prompt_utf8_bytes": 5830,
+      "reported_models": [],
+      "reused_from": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v1\\shared\\model_calls\\002-designer",
+      "role": "designer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 17449,
+          "output_tokens": 511,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "role": "designer-reused",
+    "status": "completed"
+  },
+  {
+    "book": "shared",
+    "call_id": 3,
+    "receipt": {
+      "adapter": "codex-exec",
+      "command_sha256": "537c54d4344261866be5becb722dfe0fb2dbf322234ae485a7aead778ec2fb5a",
+      "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+      "cost_usd": null,
+      "elapsed_s": 41.984,
+      "exit_code": 0,
+      "new_provider_call": false,
+      "overflow": false,
+      "prompt_utf8_bytes": 8058,
+      "reported_models": [],
+      "reused_from": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v1\\shared\\model_calls\\003-designer",
+      "role": "designer",
+      "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+      "timed_out": false,
+      "usage": [
+        {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 17955,
+          "output_tokens": 605,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    "role": "designer-reused",
+    "status": "completed"
+  }
+]

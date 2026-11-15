@@ -1,0 +1,137 @@
+{
+  "status": "executed-audit-snapshot-not-release-certification",
+  "date": "2026-11-15",
+  "python": "3.11.9",
+  "pydantic": "2.14.3",
+  "pytest": "8.4.2",
+  "files": [
+    {
+      "path": "F:\\cffmam\\src\\csef_contracts\\__init__.py",
+      "sha256": "adb9bf77871ddd6b74ebfa64370c7dbd81f752a2262e84d99b2371486de8ed51"
+    },
+    {
+      "path": "F:\\cffmam\\src\\csef_contracts\\checkpoint.py",
+      "sha256": "30234678f016ca9e6baf58fafa4ddce6399975d8f3f0e4d8c97d15637f1ef582"
+    },
+    {
+      "path": "F:\\cffmam\\src\\csef_contracts\\common.py",
+      "sha256": "b55bf9cc2c0f292e0b097ad3ccc7b8448434c0177e95412109ae5cef25b467a7"
+    },
+    {
+      "path": "F:\\cffmam\\src\\csef_contracts\\evidence.py",
+      "sha256": "1719fafaacc8cf1c390b54433cd11af5872e1375740e5840ccc4570abedf06e1"
+    },
+    {
+      "path": "F:\\cffmam\\src\\csef_contracts\\failure.py",
+      "sha256": "a2997369b409322f4b463e116a86c0b05d40c45c48156e73530caa734acab424"
+    },
+    {
+      "path": "F:\\cffmam\\src\\csef_contracts\\policy.py",
+      "sha256": "b512b3618beca96f2fefdd79729be5c023a8344a682b258f1fb21b656ccca6fd"
+    },
+    {
+      "path": "F:\\cffmam\\src\\csef_contracts\\task.py",
+      "sha256": "225346f49764002bf0dc61e8163a86d618444875e512ab78d23b1b29e56a2f86"
+    },
+    {
+      "path": "F:\\cffmam\\src\\csef_contracts\\tool.py",
+      "sha256": "254273a774cbbe01170731c8f904f4f97c1cfaac932be6ce8d8fbdc3f7ffc262"
+    },
+    {
+      "path": "F:\\cffmam\\tests\\support.py",
+      "sha256": "63690e7e33ee9bdd0bbf15bbf0686259ee20ad2a00f52b7a2187a9b7b76ecdd9"
+    },
+    {
+      "path": "F:\\cffmam\\tests\\test_checkpoint_contract.py",
+      "sha256": "311058d050419fd02920e1c129a11dbc995c4bdf6bd1b3749f0dcc9eea53c34c"
+    },
+    {
+      "path": "F:\\cffmam\\tests\\test_evidence_contract.py",
+      "sha256": "6752cc4bf1b269f7be10387b11f64efdc5bd36e8e2c0dcc5dd63cac4093b4506"
+    },
+    {
+      "path": "F:\\cffmam\\tests\\test_failure_contract.py",
+      "sha256": "b58df80157cda7566e0834d37e7cd0c89983c5321597c1c5bbdc56bc7dd1511b"
+    },
+    {
+      "path": "F:\\cffmam\\tests\\test_policy_contract.py",
+      "sha256": "9779e16ca07bc1581f4c894aed528dbbf95779af6321b54e40667b98991eba92"
+    },
+    {
+      "path": "F:\\cffmam\\tests\\test_task_contract.py",
+      "sha256": "a4ccab00f9097e1ec33aaaf4263aeb26c754404a8f822deee2d8487d9ed776fe"
+    },
+    {
+      "path": "F:\\cffmam\\tests\\test_tool_contract.py",
+      "sha256": "a71c43b8cf053c2fa3d746895e82fd26e3bad2740e2ed81576a115591f07004e"
+    },
+    {
+      "path": "F:\\cffmam\\tests\\audit\\conftest.py",
+      "sha256": "8659c4f6af34a32f61ecc29774fd873cf628e7e0828ce9ff04773418357a6cc6"
+    },
+    {
+      "path": "F:\\cffmam\\tests\\audit\\test_residual_gaps.py",
+      "sha256": "8f6df311ccd797ea35c856179f7a2a165b4253aaf727b102e01fea34f0a02008"
+    },
+    {
+      "path": "F:\\cffmam\\tests\\compatibility\\test_runner.py",
+      "sha256": "f4f0ce6ff40d1ff74ad5786e2022f506cd32a47ce58644804950c7048fbdac60"
+    },
+    {
+      "path": "F:\\cffmam\\docs\\contracts\\00-invariants.md",
+      "sha256": "c3d2c96610a42d91dc87522bf92a341568bf7b3a4fd79fddcca1efd05b1b6f43"
+    },
+    {
+      "path": "F:\\cffmam\\docs\\contracts\\10-task.md",
+      "sha256": "155f2b8dc23ed4b19f0657a96a9a43d32baccaf39c50dd73bb993f8751f9435c"
+    },
+    {
+      "path": "F:\\cffmam\\docs\\contracts\\20-tool.md",
+      "sha256": "913084648a3bd13dae4b564d1c78e207cef43224159bb234b8771d8143bff826"
+    },
+    {
+      "path": "F:\\cffmam\\docs\\contracts\\30-policy.md",
+      "sha256": "850813c88832b59d32abbeb5bdd7b083c809da8028e6a079fee4ea70fee1b3a4"
+    },
+    {
+      "path": "F:\\cffmam\\docs\\contracts\\40-evidence.md",
+      "sha256": "435f205237b512e0c385d2529c52642aa3768360df346a0914c9a31de001538c"
+    },
+    {
+      "path": "F:\\cffmam\\docs\\contracts\\50-checkpoint.md",
+      "sha256": "77b56c57ea65ba661e7a994182504caee14777634b911360287ff0843056cfaf"
+    },
+    {
+      "path": "F:\\cffmam\\docs\\contracts\\60-failure.md",
+      "sha256": "fda1926e971d472f48b8c32661609c22b56f9e0fe84acaaaaa84c19a0349d0f2"
+    },
+    {
+      "path": "F:\\cffmam\\docs\\contracts\\70-independent-compatibility.md",
+      "sha256": "7bdae19f45656fc7bc79864d9cf672b0230ea40fbb274778269e07c6d7ff1247"
+    },
+    {
+      "path": "F:\\cffmam\\docs\\OPEN-DECISIONS.md",
+      "sha256": "6fa4c4214836cf7a81d286a8ce97d883f710ffa5bd554a92654de10d48ff63b6"
+    },
+    {
+      "path": "F:\\cffmam\\compatibility\\primary_adapter.py",
+      "sha256": "95af4bdc5f991705c8f755120720158a1a7c098a024b629c35fed351512619f2"
+    },
+    {
+      "path": "F:\\cffmam\\compatibility\\run.py",
+      "sha256": "3a84cfa6a16467c71aa8388d25aabba0a5f71356e0ea3b6aa566453a1737e61c"
+    },
+    {
+      "path": "F:\\cffmam\\compatibility\\vectors.json",
+      "sha256": "06430918bc96073ab013343b3c0d9e205fbcd8c612e5b8d7079a5660d93beceb"
+    },
+    {
+      "path": "F:\\cffmam\\compatibility\\results-primary.json",
+      "sha256": "fcd1568cd800163b7d1ac168c84a6d7a176f1a5c29b4aaa4e12ec70c6d1e5091"
+    },
+    {
+      "path": "F:\\cffmam\\pyproject.toml",
+      "sha256": "62206fd10c1d2fd352dc217648fba02953f8975a1870a8b628ad986144469ed2"
+    }
+  ]
+}

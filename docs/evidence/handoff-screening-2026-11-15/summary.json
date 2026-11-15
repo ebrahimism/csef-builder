@@ -1,0 +1,175 @@
+{
+  "behavioral_quality_improvement_observed": false,
+  "dossier_total_input_reduction_pct": 8.68,
+  "dossier_uncached_input_reduction_pct": 4.18,
+  "excluded_infrastructure_note": "The first layout could not run its read-only child working directory. Code-generation error scores from that attempt are invalid. Four source calls/doc artifacts were reused; extra completed model receipts are retained. This development overhead is excluded from the steady-state arm comparison, not represented as savings.",
+  "excluded_infrastructure_receipts": [
+    {
+      "receipt": {
+        "adapter": "codex-exec",
+        "command_sha256": "c170e86adb6cbe4bb1e164d722e805a4c58d6b9141f0129a91b049a8b812f3f0",
+        "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+        "cost_usd": null,
+        "elapsed_s": 54.266,
+        "exit_code": 0,
+        "overflow": false,
+        "prompt_utf8_bytes": 4618,
+        "reported_models": [],
+        "role": "developer",
+        "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+        "timed_out": false,
+        "usage": [
+          {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 17165,
+            "output_tokens": 1217,
+            "reasoning_output_tokens": 147
+          }
+        ]
+      },
+      "receipt_path": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v1\\dossier\\model_calls\\001-developer\\receipt.json"
+    },
+    {
+      "receipt": {
+        "adapter": "codex-exec",
+        "command_sha256": "35de3ef122fe1430f82433b33c727da122c1be5920f476e79633ea06b93e11d6",
+        "cost_note": "Existing CLI account; tokens are usage, not a measured dollar price.",
+        "cost_usd": null,
+        "elapsed_s": 66.454,
+        "exit_code": 0,
+        "overflow": false,
+        "prompt_utf8_bytes": 16992,
+        "reported_models": [],
+        "role": "developer",
+        "schema_sha256": "f157d64a4e40ed108ebf7a7e86e8342026b1003443ad2995a63ade3b2d36b6e3",
+        "timed_out": false,
+        "usage": [
+          {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 20074,
+            "output_tokens": 1539,
+            "reasoning_output_tokens": 87
+          }
+        ]
+      },
+      "receipt_path": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\handoff-screening-v1\\raw_history\\model_calls\\002-developer\\receipt.json"
+    }
+  ],
+  "infrastructure_call_statuses": [
+    {
+      "book": "dossier",
+      "call_id": 1,
+      "role": "developer",
+      "status": "completed"
+    },
+    {
+      "book": "raw_history",
+      "call_id": 1,
+      "role": "developer",
+      "status": "completed"
+    },
+    {
+      "book": "raw_history",
+      "call_id": 2,
+      "role": "developer",
+      "status": "completed"
+    },
+    {
+      "book": "shared",
+      "call_id": 1,
+      "role": "designer",
+      "status": "completed"
+    },
+    {
+      "book": "shared",
+      "call_id": 2,
+      "role": "designer",
+      "status": "completed"
+    },
+    {
+      "book": "shared",
+      "call_id": 3,
+      "role": "designer",
+      "status": "completed"
+    }
+  ],
+  "infrastructure_interrupted_call_cost_unknown": false,
+  "notes": [
+    "One small stdlib CLI with three implementation milestones; no statistical generalization.",
+    "Same default model family, separate fresh role calls; not provider/model diversity.",
+    "Raw history is a specific baseline, not every possible Codex workflow.",
+    "Shared docs checked for structure/ID coverage, not full semantic architecture correctness.",
+    "Actual dollar cost, provider availability, natural user effort and advanced-project success not measured.",
+    "Native network isolation remains incomplete. Reviewed local samples only; no release authorization."
+  ],
+  "owner_effort_measured": false,
+  "protocol": "six-stage-handoff-screening-v2",
+  "recommended_policy": {
+    "always_reviewer_available": true,
+    "fresh_stage_handoffs": true,
+    "mechanical_checks": "continuous",
+    "model_reviewer": "targeted_at_engineering_and_risk_boundaries",
+    "persistent_project_book": true,
+    "selective_policy_quality_validated": false
+  },
+  "release_approved": false,
+  "review_total_input_increase_vs_dossier_pct": 52.85,
+  "rows": [
+    {
+      "arm": "raw_history",
+      "behavioral_passed": 25,
+      "behavioral_total": 25,
+      "completed_coding_stages": 3,
+      "cost_usd": null,
+      "engineering_stages": 6,
+      "including_shared_design": {
+        "cached_input_tokens": 18432,
+        "calls": 6,
+        "evaluation_elapsed_s": 61.609,
+        "input_tokens": 116450,
+        "model_elapsed_s": 329.202,
+        "output_tokens": 7043,
+        "prompt_utf8_bytes": 84644,
+        "uncached_input_tokens": 98018
+      }
+    },
+    {
+      "arm": "dossier",
+      "behavioral_passed": 25,
+      "behavioral_total": 25,
+      "completed_coding_stages": 3,
+      "cost_usd": null,
+      "engineering_stages": 6,
+      "including_shared_design": {
+        "cached_input_tokens": 12416,
+        "calls": 6,
+        "evaluation_elapsed_s": 60.814,
+        "input_tokens": 106341,
+        "model_elapsed_s": 314.812,
+        "output_tokens": 6531,
+        "prompt_utf8_bytes": 41534,
+        "uncached_input_tokens": 93925
+      }
+    },
+    {
+      "arm": "dossier_review",
+      "behavioral_passed": 25,
+      "behavioral_total": 25,
+      "completed_coding_stages": 3,
+      "cost_usd": null,
+      "engineering_stages": 6,
+      "including_shared_design": {
+        "cached_input_tokens": 12416,
+        "calls": 9,
+        "evaluation_elapsed_s": 62.921,
+        "input_tokens": 162543,
+        "model_elapsed_s": 405.798,
+        "output_tokens": 6642,
+        "prompt_utf8_bytes": 73875,
+        "uncached_input_tokens": 150127
+      }
+    }
+  ]
+}

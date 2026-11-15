@@ -1,0 +1,14 @@
+[project]
+name = "csef-contracts"
+version = "0.2.0"
+description = "CSEF independent acceptance gate for existing coding agents, with legacy contract experiments"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2.7"]
+
+[project.scripts]
+csef-gate = "csef_gate.__main__:main"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

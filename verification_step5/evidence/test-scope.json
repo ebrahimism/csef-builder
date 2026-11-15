@@ -1,0 +1,847 @@
+[
+  {
+    "test": "test_promotion_requires_checkpointing_state",
+    "file": "tests\\test_checkpoint_contract.py",
+    "line": 21,
+    "exact_fixture_and_body": "def test_promotion_requires_checkpointing_state() -> None:\n    task = make_task(state=TaskState.VERIFYING)\n    with pytest.raises(Refused, match=\"CHECKPOINTING\"):\n        promote(\n            task,\n            passing_bundle(),\n            Verdict.PASS,\n            checkpoint_id=\"ck-0001\",\n            project_id=\"prj-alpha\",\n            parent=None,\n            commit=REV,\n            policy_hash=POLICY_HASH,\n            at=NOW,\n        )",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='CHECKPOINTING')"
+    ],
+    "exercised_calls": [
+      "make_task",
+      "passing_bundle",
+      "promote",
+      "pytest.raises"
+    ],
+    "unverified": "No signed verifier authority, verified commit binding, durable chain/invalidation, stale ancestor closure, Git/SQLite crash consistency or reproduction."
+  },
+  {
+    "test": "test_review_verdict_cannot_be_promoted",
+    "file": "tests\\test_checkpoint_contract.py",
+    "line": 37,
+    "exact_fixture_and_body": "def test_review_verdict_cannot_be_promoted() -> None:\n    task = make_task(state=TaskState.CHECKPOINTING)\n    with pytest.raises(Refused, match=\"only PASS promotes\"):\n        promote(\n            task,\n            passing_bundle(),\n            Verdict.REVIEW,\n            checkpoint_id=\"ck-0001\",\n            project_id=\"prj-alpha\",\n            parent=None,\n            commit=REV,\n            policy_hash=POLICY_HASH,\n            at=NOW,\n        )",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='only PASS promotes')"
+    ],
+    "exercised_calls": [
+      "make_task",
+      "passing_bundle",
+      "promote",
+      "pytest.raises"
+    ],
+    "unverified": "No signed verifier authority, verified commit binding, durable chain/invalidation, stale ancestor closure, Git/SQLite crash consistency or reproduction."
+  },
+  {
+    "test": "test_bundle_from_another_baseline_is_refused",
+    "file": "tests\\test_checkpoint_contract.py",
+    "line": 53,
+    "exact_fixture_and_body": "def test_bundle_from_another_baseline_is_refused() -> None:\n    from support import sha\n\n    task = make_task(state=TaskState.CHECKPOINTING)\n    foreign = bundle((evidence(\"AUTH-001-T1\"), evidence(\"AUTH-001-T2\")), baseline=sha(\"other-baseline\"))\n    with pytest.raises(Refused, match=\"different acceptance baseline\"):\n        promote(\n            task,\n            foreign,\n            Verdict.PASS,\n            checkpoint_id=\"ck-0001\",\n            project_id=\"prj-alpha\",\n            parent=None,\n            commit=REV,\n            policy_hash=POLICY_HASH,\n            at=NOW,\n        )",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='different acceptance baseline')"
+    ],
+    "exercised_calls": [
+      "bundle",
+      "evidence",
+      "make_task",
+      "promote",
+      "pytest.raises",
+      "sha"
+    ],
+    "unverified": "No signed verifier authority, verified commit binding, durable chain/invalidation, stale ancestor closure, Git/SQLite crash consistency or reproduction."
+  },
+  {
+    "test": "test_happy_path_creates_a_valid_checkpoint",
+    "file": "tests\\test_checkpoint_contract.py",
+    "line": 72,
+    "exact_fixture_and_body": "def test_happy_path_creates_a_valid_checkpoint() -> None:\n    task = make_task(state=TaskState.CHECKPOINTING)\n    checkpoint = promote(\n        task,\n        passing_bundle(),\n        Verdict.PASS,\n        checkpoint_id=\"ck-0001\",\n        project_id=\"prj-alpha\",\n        parent=None,\n        commit=REV,\n        policy_hash=POLICY_HASH,\n        at=NOW,\n    )\n    assert checkpoint.valid\n    assert checkpoint.created_by == \"controller\"\n    assert checkpoint.verdict is Verdict.PASS\n    assert checkpoint.requirements_satisfied == (\"AUTH-001\",)\n\n    chain = CheckpointChain()\n    chain.append(checkpoint)\n    assert chain.head is checkpoint\n    assert chain.valid_head is checkpoint",
+    "predicates": [
+      "checkpoint.valid",
+      "checkpoint.created_by == 'controller'",
+      "checkpoint.verdict is Verdict.PASS",
+      "checkpoint.requirements_satisfied == ('AUTH-001',)",
+      "chain.head is checkpoint",
+      "chain.valid_head is checkpoint"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "CheckpointChain",
+      "chain.append",
+      "make_task",
+      "passing_bundle",
+      "promote"
+    ],
+    "unverified": "No signed verifier authority, verified commit binding, durable chain/invalidation, stale ancestor closure, Git/SQLite crash consistency or reproduction."
+  },
+  {
+    "test": "test_chain_lineage_must_be_linear",
+    "file": "tests\\test_checkpoint_contract.py",
+    "line": 96,
+    "exact_fixture_and_body": "def test_chain_lineage_must_be_linear() -> None:\n    task = make_task(state=TaskState.CHECKPOINTING)\n    first = promote(\n        task, passing_bundle(), Verdict.PASS,\n        checkpoint_id=\"ck-0001\", project_id=\"prj-alpha\", parent=None,\n        commit=REV, policy_hash=POLICY_HASH, at=NOW,\n    )\n    chain = CheckpointChain()\n    chain.append(first)\n\n    stray = first.model_copy(update={\"checkpoint_id\": \"ck-0002\", \"parent\": None})\n    with pytest.raises(Refused, match=\"lineage must be linear\"):\n        chain.append(stray)",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='lineage must be linear')"
+    ],
+    "exercised_calls": [
+      "CheckpointChain",
+      "chain.append",
+      "first.model_copy",
+      "make_task",
+      "passing_bundle",
+      "promote",
+      "pytest.raises"
+    ],
+    "unverified": "No signed verifier authority, verified commit binding, durable chain/invalidation, stale ancestor closure, Git/SQLite crash consistency or reproduction."
+  },
+  {
+    "test": "test_invalidation_is_a_record_not_a_deletion",
+    "file": "tests\\test_checkpoint_contract.py",
+    "line": 111,
+    "exact_fixture_and_body": "def test_invalidation_is_a_record_not_a_deletion() -> None:\n    task = make_task(state=TaskState.CHECKPOINTING)\n    checkpoint = promote(\n        task, passing_bundle(), Verdict.PASS,\n        checkpoint_id=\"ck-0001\", project_id=\"prj-alpha\", parent=None,\n        commit=REV, policy_hash=POLICY_HASH, at=NOW,\n    )\n    invalid = invalidate(checkpoint, InvalidationReason.VERIFY_FAILED)\n    assert checkpoint.invalidated_by is None, \"history is preserved\"\n    assert not invalid.valid\n\n    chain = CheckpointChain()\n    with pytest.raises(Refused, match=\"invalidated checkpoint cannot be appended\"):\n        chain.append(invalid)",
+    "predicates": [
+      "checkpoint.invalidated_by is None",
+      "not invalid.valid"
+    ],
+    "exceptions": [
+      "pytest.raises(Refused, match='invalidated checkpoint cannot be appended')"
+    ],
+    "exercised_calls": [
+      "CheckpointChain",
+      "chain.append",
+      "invalidate",
+      "make_task",
+      "passing_bundle",
+      "promote",
+      "pytest.raises"
+    ],
+    "unverified": "No signed verifier authority, verified commit binding, durable chain/invalidation, stale ancestor closure, Git/SQLite crash consistency or reproduction."
+  },
+  {
+    "test": "test_double_invalidation_is_refused",
+    "file": "tests\\test_checkpoint_contract.py",
+    "line": 127,
+    "exact_fixture_and_body": "def test_double_invalidation_is_refused() -> None:\n    task = make_task(state=TaskState.CHECKPOINTING)\n    checkpoint = promote(\n        task, passing_bundle(), Verdict.PASS,\n        checkpoint_id=\"ck-0001\", project_id=\"prj-alpha\", parent=None,\n        commit=REV, policy_hash=POLICY_HASH, at=NOW,\n    )\n    once = invalidate(checkpoint, InvalidationReason.UNAUTHORIZED_CODE_CHANGE)\n    with pytest.raises(Refused, match=\"already invalidated\"):\n        invalidate(once, InvalidationReason.SECURITY_INCIDENT)",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='already invalidated')"
+    ],
+    "exercised_calls": [
+      "invalidate",
+      "make_task",
+      "passing_bundle",
+      "promote",
+      "pytest.raises"
+    ],
+    "unverified": "No signed verifier authority, verified commit binding, durable chain/invalidation, stale ancestor closure, Git/SQLite crash consistency or reproduction."
+  },
+  {
+    "test": "test_agent_produced_evidence_cannot_be_constructed",
+    "file": "tests\\test_evidence_contract.py",
+    "line": 27,
+    "exact_fixture_and_body": "def test_agent_produced_evidence_cannot_be_constructed() -> None:\n    with pytest.raises(ValidationError):\n        EvidenceRecord(\n            evidence_id=\"ev-00009\",\n            kind=EvidenceKind.TEST_REPORT,\n            criterion_id=\"AUTH-001-T1\",\n            producer=\"agent\",\n            invocation_id=\"inv-000001\",\n            source_revision=REV,\n            env_fingerprint=ENV_FP,\n            sandbox_id=\"sbx-runner-01\",\n            captured_at=NOW,\n            content_hash=sha(\"fake\"),\n            size_bytes=10,\n        )",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(ValidationError)"
+    ],
+    "exercised_calls": [
+      "EvidenceRecord",
+      "pytest.raises",
+      "sha"
+    ],
+    "unverified": "No authenticated writer, stored content/hash recomputation, exit-code evaluation, clean checkout, invocation lookup or per-item environment binding."
+  },
+  {
+    "test": "test_missing_evidence_is_a_failure_not_a_pass",
+    "file": "tests\\test_evidence_contract.py",
+    "line": 44,
+    "exact_fixture_and_body": "def test_missing_evidence_is_a_failure_not_a_pass() -> None:\n    task = make_task()\n    assert compute_verdict(task, bundle(()), verdict_inputs()) is Verdict.FAIL",
+    "predicates": [
+      "compute_verdict(task, bundle(()), verdict_inputs()) is Verdict.FAIL"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "bundle",
+      "compute_verdict",
+      "make_task",
+      "verdict_inputs"
+    ],
+    "unverified": "No authenticated writer, stored content/hash recomputation, exit-code evaluation, clean checkout, invocation lookup or per-item environment binding."
+  },
+  {
+    "test": "test_evidence_from_another_revision_is_a_failure",
+    "file": "tests\\test_evidence_contract.py",
+    "line": 49,
+    "exact_fixture_and_body": "def test_evidence_from_another_revision_is_a_failure() -> None:\n    task = make_task()\n    items = (\n        evidence(\"AUTH-001-T1\", revision=OTHER_REV),\n        evidence(\"AUTH-001-T2\", revision=OTHER_REV),\n    )\n    verdict = compute_verdict(task, bundle(items, revision=REV), verdict_inputs())\n    assert verdict is Verdict.FAIL",
+    "predicates": [
+      "verdict is Verdict.FAIL"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "bundle",
+      "compute_verdict",
+      "evidence",
+      "make_task",
+      "verdict_inputs"
+    ],
+    "unverified": "No authenticated writer, stored content/hash recomputation, exit-code evaluation, clean checkout, invocation lookup or per-item environment binding."
+  },
+  {
+    "test": "test_environment_drift_marks_evidence_stale",
+    "file": "tests\\test_evidence_contract.py",
+    "line": 59,
+    "exact_fixture_and_body": "def test_environment_drift_marks_evidence_stale() -> None:\n    task = make_task()\n    items = (evidence(\"AUTH-001-T1\"), evidence(\"AUTH-001-T2\"))\n    verdict = compute_verdict(task, bundle(items, env=OTHER_ENV), verdict_inputs())\n    assert verdict is Verdict.STALE",
+    "predicates": [
+      "verdict is Verdict.STALE"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "bundle",
+      "compute_verdict",
+      "evidence",
+      "make_task",
+      "verdict_inputs"
+    ],
+    "unverified": "No authenticated writer, stored content/hash recomputation, exit-code evaluation, clean checkout, invocation lookup or per-item environment binding."
+  },
+  {
+    "test": "test_tampered_baseline_is_detected",
+    "file": "tests\\test_evidence_contract.py",
+    "line": 66,
+    "exact_fixture_and_body": "def test_tampered_baseline_is_detected() -> None:\n    task = make_task()\n    items = (evidence(\"AUTH-001-T1\"), evidence(\"AUTH-001-T2\"))\n    tampered = bundle(items, baseline=sha(\"baseline-attacker\"))\n    assert compute_verdict(task, tampered, verdict_inputs()) is Verdict.TAMPER_SUSPECTED",
+    "predicates": [
+      "compute_verdict(task, tampered, verdict_inputs()) is Verdict.TAMPER_SUSPECTED"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "bundle",
+      "compute_verdict",
+      "evidence",
+      "make_task",
+      "sha",
+      "verdict_inputs"
+    ],
+    "unverified": "No authenticated writer, stored content/hash recomputation, exit-code evaluation, clean checkout, invocation lookup or per-item environment binding."
+  },
+  {
+    "test": "test_all_executable_criteria_pass_yields_pass",
+    "file": "tests\\test_evidence_contract.py",
+    "line": 73,
+    "exact_fixture_and_body": "def test_all_executable_criteria_pass_yields_pass() -> None:\n    task = make_task()\n    items = (evidence(\"AUTH-001-T1\"), evidence(\"AUTH-001-T2\"))\n    assert compute_verdict(task, bundle(items), verdict_inputs()) is Verdict.PASS",
+    "predicates": [
+      "compute_verdict(task, bundle(items), verdict_inputs()) is Verdict.PASS"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "bundle",
+      "compute_verdict",
+      "evidence",
+      "make_task",
+      "verdict_inputs"
+    ],
+    "unverified": "No authenticated writer, stored content/hash recomputation, exit-code evaluation, clean checkout, invocation lookup or per-item environment binding."
+  },
+  {
+    "test": "test_non_executable_criterion_forces_review",
+    "file": "tests\\test_evidence_contract.py",
+    "line": 79,
+    "exact_fixture_and_body": "def test_non_executable_criterion_forces_review() -> None:\n    mixed = acceptance(\n        criteria_=criteria() + (Criterion(id=\"AUTH-001-T3\", type=CriterionType.HUMAN),),\n    )\n    task = make_task(acceptance_=mixed)\n    items = (\n        evidence(\"AUTH-001-T1\"),\n        evidence(\"AUTH-001-T2\"),\n        evidence(\"AUTH-001-T3\"),\n    )\n    assert compute_verdict(task, bundle(items), verdict_inputs()) is Verdict.REVIEW",
+    "predicates": [
+      "compute_verdict(task, bundle(items), verdict_inputs()) is Verdict.REVIEW"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "Criterion",
+      "acceptance",
+      "bundle",
+      "compute_verdict",
+      "criteria",
+      "evidence",
+      "make_task",
+      "verdict_inputs"
+    ],
+    "unverified": "No authenticated writer, stored content/hash recomputation, exit-code evaluation, clean checkout, invocation lookup or per-item environment binding."
+  },
+  {
+    "test": "test_truncated_output_is_not_evidence",
+    "file": "tests\\test_evidence_contract.py",
+    "line": 92,
+    "exact_fixture_and_body": "def test_truncated_output_is_not_evidence() -> None:\n    task = make_task()\n    items = (\n        evidence(\"AUTH-001-T1\").model_copy(update={\"truncated\": True}),\n        evidence(\"AUTH-001-T2\"),\n    )\n    assert compute_verdict(task, bundle(items), verdict_inputs()) is Verdict.FAIL",
+    "predicates": [
+      "compute_verdict(task, bundle(items), verdict_inputs()) is Verdict.FAIL"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "bundle",
+      "compute_verdict",
+      "evidence",
+      "evidence('AUTH-001-T1').model_copy",
+      "make_task",
+      "verdict_inputs"
+    ],
+    "unverified": "No authenticated writer, stored content/hash recomputation, exit-code evaluation, clean checkout, invocation lookup or per-item environment binding."
+  },
+  {
+    "test": "test_only_one_criterion_covered_is_not_enough",
+    "file": "tests\\test_evidence_contract.py",
+    "line": 101,
+    "exact_fixture_and_body": "def test_only_one_criterion_covered_is_not_enough() -> None:\n    task = make_task()\n    assert compute_verdict(task, bundle((evidence(\"AUTH-001-T1\"),)), verdict_inputs()) is Verdict.FAIL",
+    "predicates": [
+      "compute_verdict(task, bundle((evidence('AUTH-001-T1'),)), verdict_inputs()) is Verdict.FAIL"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "bundle",
+      "compute_verdict",
+      "evidence",
+      "make_task",
+      "verdict_inputs"
+    ],
+    "unverified": "No authenticated writer, stored content/hash recomputation, exit-code evaluation, clean checkout, invocation lookup or per-item environment binding."
+  },
+  {
+    "test": "test_non_idempotent_unknown_outcome_must_not_be_replayed",
+    "file": "tests\\test_failure_contract.py",
+    "line": 34,
+    "exact_fixture_and_body": "def test_non_idempotent_unknown_outcome_must_not_be_replayed() -> None:\n    action = plan_recovery(invocation(Idempotency.NON_IDEMPOTENT), ExecutionStatus.UNKNOWN, None)\n    assert action is RecoveryAction.STOP_UNKNOWN",
+    "predicates": [
+      "action is RecoveryAction.STOP_UNKNOWN"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "invocation",
+      "plan_recovery"
+    ],
+    "unverified": "No complete error/status cross product, retry budget/backoff, diagnosis requirement, task-state propagation or durable unknown-effect reconciliation."
+  },
+  {
+    "test": "test_idempotent_unknown_outcome_may_be_replayed",
+    "file": "tests\\test_failure_contract.py",
+    "line": 39,
+    "exact_fixture_and_body": "def test_idempotent_unknown_outcome_may_be_replayed() -> None:\n    assert plan_recovery(invocation(Idempotency.IDEMPOTENT), ExecutionStatus.UNKNOWN, None) is RecoveryAction.REPLAY\n    assert plan_recovery(invocation(Idempotency.READ_ONLY), ExecutionStatus.UNKNOWN, None) is RecoveryAction.REPLAY",
+    "predicates": [
+      "plan_recovery(invocation(Idempotency.IDEMPOTENT), ExecutionStatus.UNKNOWN, None) is RecoveryAction.REPLAY",
+      "plan_recovery(invocation(Idempotency.READ_ONLY), ExecutionStatus.UNKNOWN, None) is RecoveryAction.REPLAY"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "invocation",
+      "plan_recovery"
+    ],
+    "unverified": "No complete error/status cross product, retry budget/backoff, diagnosis requirement, task-state propagation or durable unknown-effect reconciliation."
+  },
+  {
+    "test": "test_transient_failure_is_retried_but_product_bug_is_diagnosed",
+    "file": "tests\\test_failure_contract.py",
+    "line": 44,
+    "exact_fixture_and_body": "def test_transient_failure_is_retried_but_product_bug_is_diagnosed() -> None:\n    inv = invocation(Idempotency.READ_ONLY)\n    assert plan_recovery(inv, ExecutionStatus.FAILED, ErrorClass.TRANSIENT) is RecoveryAction.RETRY_TRANSIENT\n    assert plan_recovery(inv, ExecutionStatus.FAILED, ErrorClass.PRODUCT_BUG) is RecoveryAction.DIAGNOSE",
+    "predicates": [
+      "plan_recovery(inv, ExecutionStatus.FAILED, ErrorClass.TRANSIENT) is RecoveryAction.RETRY_TRANSIENT",
+      "plan_recovery(inv, ExecutionStatus.FAILED, ErrorClass.PRODUCT_BUG) is RecoveryAction.DIAGNOSE"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "invocation",
+      "plan_recovery"
+    ],
+    "unverified": "No complete error/status cross product, retry budget/backoff, diagnosis requirement, task-state propagation or durable unknown-effect reconciliation."
+  },
+  {
+    "test": "test_security_class_failures_quarantine_or_escalate",
+    "file": "tests\\test_failure_contract.py",
+    "line": 50,
+    "exact_fixture_and_body": "def test_security_class_failures_quarantine_or_escalate() -> None:\n    inv = invocation(Idempotency.READ_ONLY)\n    assert plan_recovery(inv, ExecutionStatus.FAILED, ErrorClass.SANDBOX_VIOLATION) is RecoveryAction.QUARANTINE\n    assert plan_recovery(inv, ExecutionStatus.DENIED, ErrorClass.POLICY_DENIED) is RecoveryAction.ESCALATE",
+    "predicates": [
+      "plan_recovery(inv, ExecutionStatus.FAILED, ErrorClass.SANDBOX_VIOLATION) is RecoveryAction.QUARANTINE",
+      "plan_recovery(inv, ExecutionStatus.DENIED, ErrorClass.POLICY_DENIED) is RecoveryAction.ESCALATE"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "invocation",
+      "plan_recovery"
+    ],
+    "unverified": "No complete error/status cross product, retry budget/backoff, diagnosis requirement, task-state propagation or durable unknown-effect reconciliation."
+  },
+  {
+    "test": "test_success_is_not_a_recovery_case",
+    "file": "tests\\test_failure_contract.py",
+    "line": 56,
+    "exact_fixture_and_body": "def test_success_is_not_a_recovery_case() -> None:\n    with pytest.raises(ValueError):\n        plan_recovery(invocation(Idempotency.READ_ONLY), ExecutionStatus.OK, None)",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(ValueError)"
+    ],
+    "exercised_calls": [
+      "invocation",
+      "plan_recovery",
+      "pytest.raises"
+    ],
+    "unverified": "No complete error/status cross product, retry budget/backoff, diagnosis requirement, task-state propagation or durable unknown-effect reconciliation."
+  },
+  {
+    "test": "test_identical_failure_twice_blocks_the_third_attempt",
+    "file": "tests\\test_failure_contract.py",
+    "line": 61,
+    "exact_fixture_and_body": "def test_identical_failure_twice_blocks_the_third_attempt() -> None:\n    fingerprints = [sha(\"same\"), sha(\"same\")]\n    assert not next_attempt_allowed(fingerprints, max_identical=2)\n    assert next_attempt_allowed([sha(\"a\"), sha(\"b\")], max_identical=2)",
+    "predicates": [
+      "not next_attempt_allowed(fingerprints, max_identical=2)",
+      "next_attempt_allowed([sha('a'), sha('b')], max_identical=2)"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "next_attempt_allowed",
+      "sha"
+    ],
+    "unverified": "No complete error/status cross product, retry budget/backoff, diagnosis requirement, task-state propagation or durable unknown-effect reconciliation."
+  },
+  {
+    "test": "test_ambiguity_block_cannot_claim_a_guess",
+    "file": "tests\\test_failure_contract.py",
+    "line": 67,
+    "exact_fixture_and_body": "def test_ambiguity_block_cannot_claim_a_guess() -> None:\n    with pytest.raises(ValidationError):\n        AmbiguityBlock(\n            question=\"which hash algorithm?\",\n            blocking_decision=\"hash algorithm\",\n            why_it_matters=\"migration cost later\",\n            guessed=True,\n        )",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(ValidationError)"
+    ],
+    "exercised_calls": [
+      "AmbiguityBlock",
+      "pytest.raises"
+    ],
+    "unverified": "No complete error/status cross product, retry budget/backoff, diagnosis requirement, task-state propagation or durable unknown-effect reconciliation."
+  },
+  {
+    "test": "test_classification_keeps_security_classes_distinct",
+    "file": "tests\\test_failure_contract.py",
+    "line": 77,
+    "exact_fixture_and_body": "def test_classification_keeps_security_classes_distinct() -> None:\n    assert classify_failure(ErrorClass.SANDBOX_VIOLATION, ExecutionStatus.FAILED) is FailureClass.SANDBOX_VIOLATION\n    assert classify_failure(None, ExecutionStatus.UNKNOWN) is FailureClass.UNKNOWN",
+    "predicates": [
+      "classify_failure(ErrorClass.SANDBOX_VIOLATION, ExecutionStatus.FAILED) is FailureClass.SANDBOX_VIOLATION",
+      "classify_failure(None, ExecutionStatus.UNKNOWN) is FailureClass.UNKNOWN"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "classify_failure"
+    ],
+    "unverified": "No complete error/status cross product, retry budget/backoff, diagnosis requirement, task-state propagation or durable unknown-effect reconciliation."
+  },
+  {
+    "test": "test_deny_beats_allow_regardless_of_order",
+    "file": "tests\\test_policy_contract.py",
+    "line": 23,
+    "exact_fixture_and_body": "def test_deny_beats_allow_regardless_of_order() -> None:\n    assert resolve(Decision.ALLOW, Decision.DENY) is Decision.DENY\n    assert resolve(Decision.DENY, Decision.ASK, Decision.ALLOW) is Decision.DENY",
+    "predicates": [
+      "resolve(Decision.ALLOW, Decision.DENY) is Decision.DENY",
+      "resolve(Decision.DENY, Decision.ASK, Decision.ALLOW) is Decision.DENY"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "resolve"
+    ],
+    "unverified": "No durable/distributed accounting, settlement replay, path resolution, concurrent approval consumption, capability join or project cap."
+  },
+  {
+    "test": "test_unknown_capability_is_denied_by_default",
+    "file": "tests\\test_policy_contract.py",
+    "line": 28,
+    "exact_fixture_and_body": "def test_unknown_capability_is_denied_by_default() -> None:\n    policy = make_policy()\n    assert decide(policy, \"deploy_production\") is Decision.DENY",
+    "predicates": [
+      "decide(policy, 'deploy_production') is Decision.DENY"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "decide",
+      "make_policy"
+    ],
+    "unverified": "No durable/distributed accounting, settlement replay, path resolution, concurrent approval consumption, capability join or project cap."
+  },
+  {
+    "test": "test_immutable_path_cannot_be_softened_by_an_allow_rule",
+    "file": "tests\\test_policy_contract.py",
+    "line": 33,
+    "exact_fixture_and_body": "def test_immutable_path_cannot_be_softened_by_an_allow_rule() -> None:\n    policy = make_policy()\n    allowed = policy.model_copy(\n        update={\n            \"tools\": {\n                **policy.tools,\n                \"edit_project_files\": policy.tools[\"edit_project_files\"].model_copy(\n                    update={\"paths\": (\".csef/acceptance/**\",)}\n                ),\n            }\n        }\n    )\n    assert decide(allowed, \"edit_project_files\", path=\".csef/acceptance/auth.yaml\") is Decision.DENY",
+    "predicates": [
+      "decide(allowed, 'edit_project_files', path='.csef/acceptance/auth.yaml') is Decision.DENY"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "decide",
+      "make_policy",
+      "policy.model_copy",
+      "policy.tools['edit_project_files'].model_copy"
+    ],
+    "unverified": "No durable/distributed accounting, settlement replay, path resolution, concurrent approval consumption, capability join or project cap."
+  },
+  {
+    "test": "test_write_outside_declared_scope_is_denied",
+    "file": "tests\\test_policy_contract.py",
+    "line": 48,
+    "exact_fixture_and_body": "def test_write_outside_declared_scope_is_denied() -> None:\n    policy = make_policy()\n    assert decide(policy, \"edit_project_files\", path=\"infra/prod.tf\") is Decision.DENY\n    assert decide(policy, \"edit_project_files\", path=\"src/auth/login.py\") is Decision.ALLOW",
+    "predicates": [
+      "decide(policy, 'edit_project_files', path='infra/prod.tf') is Decision.DENY",
+      "decide(policy, 'edit_project_files', path='src/auth/login.py') is Decision.ALLOW"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "decide",
+      "make_policy"
+    ],
+    "unverified": "No durable/distributed accounting, settlement replay, path resolution, concurrent approval consumption, capability join or project cap."
+  },
+  {
+    "test": "test_approval_is_single_use",
+    "file": "tests\\test_policy_contract.py",
+    "line": 54,
+    "exact_fixture_and_body": "def test_approval_is_single_use() -> None:\n    store = AuthorizationStore()\n    store.grant(\n        Authorization(\n            approval_id=\"apr-0001\",\n            invocation_hash=sha(\"inv-hash-1\"),\n            capability=\"install_dependencies\",\n            scope_task_id=\"T-0042\",\n            granted_by=\"human:kp\",\n            granted_at=NOW,\n            expires_at=NOW + timedelta(minutes=30),\n            max_uses=1,\n        )\n    )\n    store.consume(\"apr-0001\", sha(\"inv-hash-1\"), NOW, \"T-0042\")\n    with pytest.raises(Refused, match=\"replay rejected\"):\n        store.consume(\"apr-0001\", sha(\"inv-hash-1\"), NOW, \"T-0042\")",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='replay rejected')"
+    ],
+    "exercised_calls": [
+      "Authorization",
+      "AuthorizationStore",
+      "pytest.raises",
+      "sha",
+      "store.consume",
+      "store.grant",
+      "timedelta"
+    ],
+    "unverified": "No durable/distributed accounting, settlement replay, path resolution, concurrent approval consumption, capability join or project cap."
+  },
+  {
+    "test": "test_approval_is_bound_to_the_exact_invocation",
+    "file": "tests\\test_policy_contract.py",
+    "line": 73,
+    "exact_fixture_and_body": "def test_approval_is_bound_to_the_exact_invocation() -> None:\n    store = AuthorizationStore()\n    store.grant(\n        Authorization(\n            approval_id=\"apr-0002\",\n            invocation_hash=sha(\"inv-hash-1\"),\n            capability=\"install_dependencies\",\n            scope_task_id=\"T-0042\",\n            granted_by=\"human:kp\",\n            granted_at=NOW,\n        )\n    )\n    with pytest.raises(Refused, match=\"hash mismatch\"):\n        store.consume(\"apr-0002\", sha(\"inv-hash-2\"), NOW, \"T-0042\")",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='hash mismatch')"
+    ],
+    "exercised_calls": [
+      "Authorization",
+      "AuthorizationStore",
+      "pytest.raises",
+      "sha",
+      "store.consume",
+      "store.grant"
+    ],
+    "unverified": "No durable/distributed accounting, settlement replay, path resolution, concurrent approval consumption, capability join or project cap."
+  },
+  {
+    "test": "test_expired_approval_is_refused",
+    "file": "tests\\test_policy_contract.py",
+    "line": 89,
+    "exact_fixture_and_body": "def test_expired_approval_is_refused() -> None:\n    store = AuthorizationStore()\n    store.grant(\n        Authorization(\n            approval_id=\"apr-0003\",\n            invocation_hash=sha(\"inv-hash-1\"),\n            capability=\"install_dependencies\",\n            scope_task_id=\"T-0042\",\n            granted_by=\"human:kp\",\n            granted_at=NOW,\n            expires_at=NOW + timedelta(seconds=1),\n        )\n    )\n    with pytest.raises(Refused, match=\"expired\"):\n        store.consume(\"apr-0003\", sha(\"inv-hash-1\"), NOW + timedelta(minutes=1), \"T-0042\")",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='expired')"
+    ],
+    "exercised_calls": [
+      "Authorization",
+      "AuthorizationStore",
+      "pytest.raises",
+      "sha",
+      "store.consume",
+      "store.grant",
+      "timedelta"
+    ],
+    "unverified": "No durable/distributed accounting, settlement replay, path resolution, concurrent approval consumption, capability join or project cap."
+  },
+  {
+    "test": "test_parallel_reservations_cannot_cross_the_run_limit",
+    "file": "tests\\test_policy_contract.py",
+    "line": 106,
+    "exact_fixture_and_body": "def test_parallel_reservations_cannot_cross_the_run_limit() -> None:\n    ledger = BudgetLedger(per_call_limit_usd=\"0.60\", run_limit_usd=\"1.00\")\n\n    def attempt(_: int) -> bool:\n        try:\n            ledger.reserve(\"0.60\")\n            return True\n        except BudgetExceeded:\n            return False\n\n    with ThreadPoolExecutor(max_workers=12) as pool:\n        results = list(pool.map(attempt, range(24)))\n\n    assert sum(results) == 1, \"exactly one 0.60 reservation fits under a 1.00 cap\"\n    assert ledger.reserved == Decimal(\"0.6000\")",
+    "predicates": [
+      "sum(results) == 1",
+      "ledger.reserved == Decimal('0.6000')"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "BudgetLedger",
+      "Decimal",
+      "ThreadPoolExecutor",
+      "ledger.reserve",
+      "list",
+      "pool.map",
+      "range",
+      "sum"
+    ],
+    "unverified": "No durable/distributed accounting, settlement replay, path resolution, concurrent approval consumption, capability join or project cap."
+  },
+  {
+    "test": "test_actual_cost_may_not_exceed_reservation",
+    "file": "tests\\test_policy_contract.py",
+    "line": 123,
+    "exact_fixture_and_body": "def test_actual_cost_may_not_exceed_reservation() -> None:\n    ledger = BudgetLedger(per_call_limit_usd=\"0.50\", run_limit_usd=\"1.00\")\n    reservation = ledger.reserve(\"0.50\")\n    with pytest.raises(BudgetExceeded, match=\"reserved upper bound\"):\n        ledger.commit(reservation, \"0.75\")",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(BudgetExceeded, match='reserved upper bound')"
+    ],
+    "exercised_calls": [
+      "BudgetLedger",
+      "ledger.commit",
+      "ledger.reserve",
+      "pytest.raises"
+    ],
+    "unverified": "No durable/distributed accounting, settlement replay, path resolution, concurrent approval consumption, capability join or project cap."
+  },
+  {
+    "test": "test_unset_budget_does_not_start",
+    "file": "tests\\test_policy_contract.py",
+    "line": 130,
+    "exact_fixture_and_body": "def test_unset_budget_does_not_start() -> None:\n    with pytest.raises(Refused, match=\"unset\"):\n        Budgets().assert_startable()",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='unset')"
+    ],
+    "exercised_calls": [
+      "Budgets",
+      "Budgets().assert_startable",
+      "pytest.raises"
+    ],
+    "unverified": "No durable/distributed accounting, settlement replay, path resolution, concurrent approval consumption, capability join or project cap."
+  },
+  {
+    "test": "test_illegal_transition_is_refused",
+    "file": "tests\\test_task_contract.py",
+    "line": 17,
+    "exact_fixture_and_body": "def test_illegal_transition_is_refused() -> None:\n    task = make_task()\n    with pytest.raises(Refused, match=\"not allowed\"):\n        task.transition(TaskState.DONE)",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='not allowed')"
+    ],
+    "exercised_calls": [
+      "make_task",
+      "pytest.raises",
+      "task.transition"
+    ],
+    "unverified": "No integrated gateway/guard ordering, all transition pairs, persisted logs, cost guard or real ambiguity detection."
+  },
+  {
+    "test": "test_terminal_state_has_no_exit",
+    "file": "tests\\test_task_contract.py",
+    "line": 23,
+    "exact_fixture_and_body": "def test_terminal_state_has_no_exit() -> None:\n    task = make_task()\n    for target in (TaskState.PLANNED, TaskState.PREPARED):\n        task = task.transition(target)\n    terminal = task.model_copy(update={\"state\": TaskState.DONE})\n    with pytest.raises(Refused, match=\"terminal\"):\n        terminal.transition(TaskState.EXECUTING)",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='terminal')"
+    ],
+    "exercised_calls": [
+      "make_task",
+      "pytest.raises",
+      "task.model_copy",
+      "task.transition",
+      "terminal.transition"
+    ],
+    "unverified": "No integrated gateway/guard ordering, all transition pairs, persisted logs, cost guard or real ambiguity detection."
+  },
+  {
+    "test": "test_ambiguity_blocks_execution",
+    "file": "tests\\test_task_contract.py",
+    "line": 32,
+    "exact_fixture_and_body": "def test_ambiguity_blocks_execution() -> None:\n    task = make_task(\n        state=TaskState.AUTHORIZED,\n        open_decisions=(\"password hash: bcrypt-12 or argon2id?\",),\n    )\n    with pytest.raises(Refused, match=\"BLOCKED_ON_AMBIGUITY\"):\n        task.assert_ready_to_execute()",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='BLOCKED_ON_AMBIGUITY')"
+    ],
+    "exercised_calls": [
+      "make_task",
+      "pytest.raises",
+      "task.assert_ready_to_execute"
+    ],
+    "unverified": "No integrated gateway/guard ordering, all transition pairs, persisted logs, cost guard or real ambiguity detection."
+  },
+  {
+    "test": "test_execution_requires_an_executable_criterion",
+    "file": "tests\\test_task_contract.py",
+    "line": 41,
+    "exact_fixture_and_body": "def test_execution_requires_an_executable_criterion() -> None:\n    human_only = acceptance(\n        criteria_=(Criterion(id=\"UX-001-T1\", type=CriterionType.HUMAN),),\n        requirement_id=\"UX-001\",\n    )\n    task = make_task(state=TaskState.AUTHORIZED, acceptance_=human_only)\n    with pytest.raises(Refused, match=\"no executable acceptance criterion\"):\n        task.assert_ready_to_execute()",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='no executable acceptance criterion')"
+    ],
+    "exercised_calls": [
+      "Criterion",
+      "acceptance",
+      "make_task",
+      "pytest.raises",
+      "task.assert_ready_to_execute"
+    ],
+    "unverified": "No integrated gateway/guard ordering, all transition pairs, persisted logs, cost guard or real ambiguity detection."
+  },
+  {
+    "test": "test_executable_criterion_needs_target_and_exit_code",
+    "file": "tests\\test_task_contract.py",
+    "line": 51,
+    "exact_fixture_and_body": "def test_executable_criterion_needs_target_and_exit_code() -> None:\n    with pytest.raises(ValidationError):\n        Criterion(id=\"AUTH-001-T9\", type=CriterionType.EXECUTABLE, runner=\"pytest\")",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(ValidationError)"
+    ],
+    "exercised_calls": [
+      "Criterion",
+      "pytest.raises"
+    ],
+    "unverified": "No integrated gateway/guard ordering, all transition pairs, persisted logs, cost guard or real ambiguity detection."
+  },
+  {
+    "test": "test_transition_log_records_every_step",
+    "file": "tests\\test_task_contract.py",
+    "line": 56,
+    "exact_fixture_and_body": "def test_transition_log_records_every_step() -> None:\n    task, log = apply_transitions(\n        make_task(),\n        [TaskState.PLANNED, TaskState.PREPARED],\n        NOW,\n    )\n    assert task.state is TaskState.PREPARED\n    assert [(entry.from_state, entry.to_state) for entry in log] == [\n        (TaskState.CREATED, TaskState.PLANNED),\n        (TaskState.PLANNED, TaskState.PREPARED),\n    ]",
+    "predicates": [
+      "task.state is TaskState.PREPARED",
+      "[(entry.from_state, entry.to_state) for entry in log] == [(TaskState.CREATED, TaskState.PLANNED), (TaskState.PLANNED, TaskState.PREPARED)]"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "apply_transitions",
+      "make_task"
+    ],
+    "unverified": "No integrated gateway/guard ordering, all transition pairs, persisted logs, cost guard or real ambiguity detection."
+  },
+  {
+    "test": "test_unregistered_tool_is_refused",
+    "file": "tests\\test_tool_contract.py",
+    "line": 20,
+    "exact_fixture_and_body": "def test_unregistered_tool_is_refused() -> None:\n    registry = ToolRegistry()\n    with pytest.raises(Refused, match=\"not registered\"):\n        registry.get(\"delete_project\")",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='not registered')"
+    ],
+    "exercised_calls": [
+      "ToolRegistry",
+      "pytest.raises",
+      "registry.get"
+    ],
+    "unverified": "No real effect, sandbox, full capability-policy join, journal ordering, closed custom input schema or output validation."
+  },
+  {
+    "test": "test_duplicate_registration_is_refused",
+    "file": "tests\\test_tool_contract.py",
+    "line": 26,
+    "exact_fixture_and_body": "def test_duplicate_registration_is_refused() -> None:\n    registry = ToolRegistry()\n    registry.register(tool_spec())\n    with pytest.raises(Refused, match=\"already registered\"):\n        registry.register(tool_spec())",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='already registered')"
+    ],
+    "exercised_calls": [
+      "ToolRegistry",
+      "pytest.raises",
+      "registry.register",
+      "tool_spec"
+    ],
+    "unverified": "No real effect, sandbox, full capability-policy join, journal ordering, closed custom input schema or output validation."
+  },
+  {
+    "test": "test_process_tool_requires_a_sandbox",
+    "file": "tests\\test_tool_contract.py",
+    "line": 33,
+    "exact_fixture_and_body": "def test_process_tool_requires_a_sandbox() -> None:\n    unsafe = tool_spec(sandbox=SandboxProfile(required=False))\n    with pytest.raises(Refused, match=\"without a sandbox\"):\n        ToolRegistry().register(unsafe)",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='without a sandbox')"
+    ],
+    "exercised_calls": [
+      "SandboxProfile",
+      "ToolRegistry",
+      "ToolRegistry().register",
+      "pytest.raises",
+      "tool_spec"
+    ],
+    "unverified": "No real effect, sandbox, full capability-policy join, journal ordering, closed custom input schema or output validation."
+  },
+  {
+    "test": "test_input_outside_schema_is_rejected",
+    "file": "tests\\test_tool_contract.py",
+    "line": 39,
+    "exact_fixture_and_body": "def test_input_outside_schema_is_rejected() -> None:\n    registry = ToolRegistry()\n    registry.register(tool_spec())\n    with pytest.raises(ValidationError):\n        registry.validate_call(\"run_tests\", {\"target\": 42})\n    with pytest.raises(ValidationError):\n        registry.validate_call(\"run_tests\", {})",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(ValidationError)",
+      "pytest.raises(ValidationError)"
+    ],
+    "exercised_calls": [
+      "ToolRegistry",
+      "pytest.raises",
+      "registry.register",
+      "registry.validate_call",
+      "tool_spec"
+    ],
+    "unverified": "No real effect, sandbox, full capability-policy join, journal ordering, closed custom input schema or output validation."
+  },
+  {
+    "test": "test_valid_input_passes_through_the_gateway",
+    "file": "tests\\test_tool_contract.py",
+    "line": 48,
+    "exact_fixture_and_body": "def test_valid_input_passes_through_the_gateway() -> None:\n    registry = ToolRegistry()\n    registry.register(tool_spec())\n    parsed = registry.validate_call(\"run_tests\", {\"target\": \"tests/test_auth.py\"})\n    assert isinstance(parsed, RunTestsInput)\n    assert parsed.timeout_s == 600",
+    "predicates": [
+      "isinstance(parsed, RunTestsInput)",
+      "parsed.timeout_s == 600"
+    ],
+    "exceptions": [],
+    "exercised_calls": [
+      "ToolRegistry",
+      "isinstance",
+      "registry.register",
+      "registry.validate_call",
+      "tool_spec"
+    ],
+    "unverified": "No real effect, sandbox, full capability-policy join, journal ordering, closed custom input schema or output validation."
+  },
+  {
+    "test": "test_runtime_effect_expansion_is_refused",
+    "file": "tests\\test_tool_contract.py",
+    "line": 56,
+    "exact_fixture_and_body": "def test_runtime_effect_expansion_is_refused() -> None:\n    spec = tool_spec()\n    invocation = Invocation(\n        invocation_id=\"inv-000001\",\n        task_id=\"T-0042\",\n        tool=\"run_tests\",\n        tool_version=1,\n        attempt=1,\n        idempotency_key=sha(\"idem-1\"),\n        input_hash=sha(\"input-1\"),\n        effects=frozenset({Effect.PROCESS, Effect.NETWORK}),\n        idempotency=Idempotency.READ_ONLY,\n    )\n    with pytest.raises(Refused, match=\"runtime effects\"):\n        assert_effects_not_expanded(spec, invocation)",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='runtime effects')"
+    ],
+    "exercised_calls": [
+      "Invocation",
+      "assert_effects_not_expanded",
+      "frozenset",
+      "pytest.raises",
+      "sha",
+      "tool_spec"
+    ],
+    "unverified": "No real effect, sandbox, full capability-policy join, journal ordering, closed custom input schema or output validation."
+  },
+  {
+    "test": "test_network_inside_denied_sandbox_is_refused_at_registration",
+    "file": "tests\\test_tool_contract.py",
+    "line": 73,
+    "exact_fixture_and_body": "def test_network_inside_denied_sandbox_is_refused_at_registration() -> None:\n    spec = ToolSpec(\n        name=\"fetch_deps\",\n        version=1,\n        description_for_model=\"download dependencies\",\n        effects=frozenset({Effect.NETWORK}),\n        capabilities=(\"install_dependencies\",),\n        sandbox=SandboxProfile(required=True, network=True),\n        input_model=RunTestsInput,\n        idempotency=Idempotency.NON_IDEMPOTENT,\n        timeout_s=300,\n    )\n    # network access is a *policy* decision, not a sandbox capability: declaring both\n    # is a contract violation, not a convenience.\n    with pytest.raises(Refused, match=\"network access inside a network-denied sandbox\"):\n        ToolRegistry().register(spec)",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(Refused, match='network access inside a network-denied sandbox')"
+    ],
+    "exercised_calls": [
+      "SandboxProfile",
+      "ToolRegistry",
+      "ToolRegistry().register",
+      "ToolSpec",
+      "frozenset",
+      "pytest.raises"
+    ],
+    "unverified": "No real effect, sandbox, full capability-policy join, journal ordering, closed custom input schema or output validation."
+  },
+  {
+    "test": "test_invocation_requires_hashes_not_free_text",
+    "file": "tests\\test_tool_contract.py",
+    "line": 91,
+    "exact_fixture_and_body": "def test_invocation_requires_hashes_not_free_text() -> None:\n    with pytest.raises(ValidationError):\n        Invocation(\n            invocation_id=\"inv-000001\",\n            task_id=\"T-0042\",\n            tool=\"run_tests\",\n            tool_version=1,\n            attempt=1,\n            idempotency_key=\"not-a-hash\",\n            input_hash=\"also-not\",\n            effects=frozenset({Effect.PROCESS}),\n            idempotency=Idempotency.READ_ONLY,\n        )",
+    "predicates": [],
+    "exceptions": [
+      "pytest.raises(ValidationError)"
+    ],
+    "exercised_calls": [
+      "Invocation",
+      "frozenset",
+      "pytest.raises"
+    ],
+    "unverified": "No real effect, sandbox, full capability-policy join, journal ordering, closed custom input schema or output validation."
+  }
+]

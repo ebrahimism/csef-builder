@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "objective": "Repair this real SQLite expense CLI using Python standard library only. Preserve CLI commands: --db PATH add INTEGER_AMOUNT CATEGORY YYYY-MM-DD returns {id: INTEGER}; --db PATH report YYYY-MM returns an object mapping each category to its total, filtered to that month, or {} when empty. Persist data across separate CLI processes. Amount must be strictly positive; blank category, invalid date or invalid month returns exit 2 and {error: invalid_input}, without adding a record. Dates and months must use exactly canonical zero-padded ISO formats (YYYY-MM-DD and YYYY-MM). Preserve Unicode category names exactly. Do not alter the command interface. Only expenses.py may change.",
+  "source_files": ["expenses.py"],
+  "editable_files": ["expenses.py"],
+  "entrypoint": "expenses.py",
+  "max_attempts": 2,
+  "agent_timeout_s": 180,
+  "case_timeout_s": 20,
+  "cases": [
+    {"id": "EMPTY", "args": ["--db", "{scratch}/expenses.db", "report", "2026-01"], "exit_code": 0, "stdout_json": {}},
+    {"id": "ADD_HOSTING", "args": ["--db", "{scratch}/expenses.db", "add", "100000", "hosting", "2026-01-07"], "exit_code": 0, "stdout_json": {"id": 1}},
+    {"id": "ADD_HOSTING_AGAIN", "args": ["--db", "{scratch}/expenses.db", "add", "50000", "hosting", "2026-01-31"], "exit_code": 0, "stdout_json": {"id": 2}},
+    {"id": "ADD_UNICODE", "args": ["--db", "{scratch}/expenses.db", "add", "200000", "دامنه", "2026-01-01"], "exit_code": 0, "stdout_json": {"id": 3}},
+    {"id": "ADD_OTHER_MONTH", "args": ["--db", "{scratch}/expenses.db", "add", "999", "hosting", "2026-02-01"], "exit_code": 0, "stdout_json": {"id": 4}},
+    {"id": "REPORT_JAN", "args": ["--db", "{scratch}/expenses.db", "report", "2026-01"], "exit_code": 0, "stdout_json": {"hosting": 150000, "دامنه": 200000}},
+    {"id": "REPORT_FEB", "args": ["--db", "{scratch}/expenses.db", "report", "2026-02"], "exit_code": 0, "stdout_json": {"hosting": 999}},
+    {"id": "REJECT_NEGATIVE", "args": ["--db", "{scratch}/expenses.db", "add", "-1", "hosting", "2026-01-01"], "exit_code": 2, "stdout_json": {"error": "invalid_input"}},
+    {"id": "REJECT_ZERO", "args": ["--db", "{scratch}/expenses.db", "add", "0", "hosting", "2026-01-01"], "exit_code": 2, "stdout_json": {"error": "invalid_input"}},
+    {"id": "REJECT_DATE", "args": ["--db", "{scratch}/expenses.db", "add", "10", "hosting", "2026-02-30"], "exit_code": 2, "stdout_json": {"error": "invalid_input"}},
+    {"id": "REJECT_CATEGORY", "args": ["--db", "{scratch}/expenses.db", "add", "10", " ", "2026-01-01"], "exit_code": 2, "stdout_json": {"error": "invalid_input"}},
+    {"id": "REJECT_MONTH", "args": ["--db", "{scratch}/expenses.db", "report", "2026-13"], "exit_code": 2, "stdout_json": {"error": "invalid_input"}},
+    {"id": "REJECT_NONCANONICAL_DATE", "args": ["--db", "{scratch}/expenses.db", "add", "10", "hosting", "20260101"], "exit_code": 2, "stdout_json": {"error": "invalid_input"}},
+    {"id": "FINAL_PERSISTENCE", "args": ["--db", "{scratch}/expenses.db", "report", "2026-01"], "exit_code": 0, "stdout_json": {"hosting": 150000, "دامنه": 200000}}
+  ]
+}

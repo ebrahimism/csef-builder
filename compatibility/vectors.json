@@ -1,0 +1,7 @@
+[
+  {"id":"POL-001","status":"normative","basis":"30-policy section 2: deny > ask > allow","request":{"op":"resolve","decisions":["allow","ask","deny"]},"expected":"deny"},
+  {"id":"POL-002","status":"normative","basis":"30-policy section 2: ask > allow","request":{"op":"resolve","decisions":["allow","ask"]},"expected":"ask"},
+  {"id":"POL-003","status":"normative","basis":"I6 fail-closed","request":{"op":"resolve","decisions":[]},"expected":"deny"},
+  {"id":"FAIL-001","status":"normative","basis":"60-failure section 1: bad_input remains distinct","request":{"op":"classify","error":"bad_input","outcome":"failed"},"expected":"bad_input"},
+  {"id":"FAIL-002","status":"proposed","basis":"D12: explicit timeout mapping not yet adjudicated","request":{"op":"classify","error":"timeout","outcome":"failed"},"expected":"transient"}
+]

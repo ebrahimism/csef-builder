@@ -1,0 +1,19 @@
+{
+  "acceptance_rejection": "no completed trusted verification for this run",
+  "checkpoint_count": 0,
+  "control": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\expense-pilot-clean-run",
+  "file_boundary_verified": true,
+  "final_passed": 14,
+  "initial_passed": 9,
+  "model_attempts": 1,
+  "network_isolation_verified": false,
+  "run_id": "run-7c827c74aa3a4bbd88f43a5f89b6206b",
+  "scope": "Local reviewed sample. Behavioral success, no release acceptance. No changes were made during this fresh workflow.",
+  "source_sha256": "07fb2dbde3b2a1d00faaa61333f0c09f0914e3233ac141c6f036732276f63257",
+  "spec_sha256": "224ec188cff794e1ee2fb14b13d3129e60c62403e939b117e5b6f5c0879fbff1",
+  "status": "review",
+  "total": 14,
+  "unattended_workflow_completed": true,
+  "unchanged_acceptance_spec": true,
+  "unchanged_original_source": true
+}

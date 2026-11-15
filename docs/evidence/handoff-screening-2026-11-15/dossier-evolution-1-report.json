@@ -1,0 +1,186 @@
+{
+  "boundary": {
+    "backend": "codex-native-windows",
+    "checks": {
+      "control_read_denied": true,
+      "control_write_denied": true,
+      "loopback_denied": false,
+      "scratch_write": true,
+      "snapshot_write_denied": true,
+      "source_read": true
+    },
+    "execution_root": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\csef-execution\\108a74e19c894d5eac070e9492e8c200",
+    "file_boundary_verified": true,
+    "network_isolation_verified": false,
+    "process": {
+      "command_sha256": "b89ff73286791629fa977b35b97f54652d8be6a78e82c647076ff103aa28682f",
+      "elapsed_s": 2.531,
+      "exit_code": 0,
+      "overflow": false,
+      "stderr": "",
+      "stdout": "{\"source_read\": true, \"scratch_write\": true, \"control_read_denied\": true, \"control_write_denied\": true, \"snapshot_write_denied\": true, \"loopback_denied\": false}\r\n",
+      "timed_out": false
+    },
+    "scope": "observed read/write/loopback probes, not proof against all sandbox escapes",
+    "verified": false
+  },
+  "cases": [
+    {
+      "actual_json": {
+        "legacy": 500
+      },
+      "command_sha256": "30bfb95d72ef875e2fa0af5a99e70d6d58f1236c3adc0c88368af6813c4747e8",
+      "elapsed_s": 2.078,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "legacy": 500
+      },
+      "id": "LEGACY",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"legacy\": 500}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 8
+      },
+      "command_sha256": "51592edaf24b9629e18c188b940b1a576cc5449ecbaeee2ade206695a16aeb67",
+      "elapsed_s": 2.11,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 8
+      },
+      "id": "ADD",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 8}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "hosting": 2500
+      },
+      "command_sha256": "1878ebb7c808c590b4a7c4061007ed25a0dea2bf575479f53fd46eed3c7c48e5",
+      "elapsed_s": 2.344,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "hosting": 2500
+      },
+      "id": "REPORT",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"hosting\": 2500}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "invalid_input"
+      },
+      "command_sha256": "4991173b7bf146976604eb713573411191b7f873c22c45e41b834db6322b5f96",
+      "elapsed_s": 2.062,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "invalid_input"
+      },
+      "id": "INVALID",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 9
+      },
+      "command_sha256": "7073dc3a86e067c6a1b61005a01b3bcb86544a7003de6269a3fc110b3263199c",
+      "elapsed_s": 2.203,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 9
+      },
+      "id": "KEY_ADD",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 9}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "id": 9
+      },
+      "command_sha256": "7073dc3a86e067c6a1b61005a01b3bcb86544a7003de6269a3fc110b3263199c",
+      "elapsed_s": 2.281,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "id": 9
+      },
+      "id": "KEY_REPEAT",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"id\": 9}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "error": "conflict"
+      },
+      "command_sha256": "698cf99ca74739dfba56df30ef8e8610859ae5e73c2ba449d8624e9dbdc004ca",
+      "elapsed_s": 2.125,
+      "exit_code": 2,
+      "expected_exit": 2,
+      "expected_json": {
+        "error": "conflict"
+      },
+      "id": "KEY_CONFLICT",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"error\": \"conflict\"}\r\n",
+      "timed_out": false
+    },
+    {
+      "actual_json": {
+        "hosting": 2600
+      },
+      "command_sha256": "1878ebb7c808c590b4a7c4061007ed25a0dea2bf575479f53fd46eed3c7c48e5",
+      "elapsed_s": 2.094,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "expected_json": {
+        "hosting": 2600
+      },
+      "id": "COUNT_AFTER_RETRY",
+      "overflow": false,
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\"hosting\": 2600}\r\n",
+      "timed_out": false
+    }
+  ],
+  "error": null,
+  "evaluation_id": "eval-b8ca4e7980cf4103b842881c8dd2f68e",
+  "finished_at": "2026-11-15T15:54:13.286016+00:00",
+  "measurement_only": true,
+  "run_id": "run-38a78511088b42729deebc280f26dd09",
+  "source_manifest": {
+    "app.py": "1493f694387b340c1c0b8b6b066bfae526b48dfa1a77b7558bb5bae49c06360c",
+    "domain.py": "9afe47a4a83625c0a6c1abb3f5db134a272fd1facc2405cda8c0033a15b66c14",
+    "storage.py": "765e1e352a882447a37013c387e5b1ff3e790ce2f23b891b51774e84e2e96bcf"
+  },
+  "source_sha256": "4b8e19c23444e0e87be57f803cbfdf7b68f677d7552c6aa6dcda16439fc2b5ad",
+  "spec_sha256": "3c5eb01d40e660ba27ce76f6c7b95b14b625be193830afe371e9a45ed079164e",
+  "status": "review"
+}

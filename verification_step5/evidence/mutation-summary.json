@@ -1,0 +1,42 @@
+[
+  {
+    "name": "deny_precedence",
+    "module": "policy.py",
+    "old": "if Decision.DENY in decisions:",
+    "new": "if False:",
+    "outcome": "killed",
+    "evidence": "mutant_deny_precedence.json"
+  },
+  {
+    "name": "baseline_guard",
+    "module": "checkpoint.py",
+    "old": "if bundle.baseline_hash != task.acceptance.baseline_hash:",
+    "new": "if False:",
+    "outcome": "killed",
+    "evidence": "mutant_baseline_guard.json"
+  },
+  {
+    "name": "environment_guard",
+    "module": "evidence.py",
+    "old": "if bundle.env_fingerprint != inputs.env_fingerprint:",
+    "new": "if False:",
+    "outcome": "killed",
+    "evidence": "mutant_environment_guard.json"
+  },
+  {
+    "name": "approval_replay",
+    "module": "policy.py",
+    "old": "if used >= auth.max_uses:",
+    "new": "if False:",
+    "outcome": "killed",
+    "evidence": "mutant_approval_replay.json"
+  },
+  {
+    "name": "rollback_noop",
+    "module": "policy.py",
+    "old": "self._reserved -= reservation.amount_usd",
+    "new": "self._reserved -= Decimal('0')",
+    "outcome": "survived",
+    "evidence": "mutant_rollback_noop.json"
+  }
+]

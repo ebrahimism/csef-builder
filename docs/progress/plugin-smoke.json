@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "folder": "F:\\cffmam\\.csef-build\\smoke\\b2204524d8964f56ad7e9094e9689172",
+  "result": {
+    "skill_path": "C:\\Users\\Kp\\.codex\\plugins\\cache\\csef-local\\csef-builder\\0.1.0\\skills\\csef-build\\SKILL.md",
+    "next_task": "T001 — نخستین کارِ بدون وابستگی و تنها کار واجد شرایط در وضعیت تازهٔ فعلی است.",
+    "batch": [
+      "T001",
+      "T002"
+    ],
+    "release_authority": false,
+    "reason": "مسیر Skill نصب‌شده (نه fallback مخزن) خوانده شد؛ همچنین AGENTS.md، اهداف مالک، تعریف backlog و START-PROMPT بررسی شدند. طبق دستورهای Skill و START-PROMPT، batch آغازین فقط T001 سپس T002 است؛ T002 به T001 وابسته است. هیچ tracker اجرا یا task شروع نشد و هیچ فایلی تغییر نکرد. Tracker صرفاً ثبت محلی ساخت است و اختیار انتشار، deploy، push، تغییر حساب یا ایجاد release/Gate checkpoint ندارد."
+  },
+  "next_task_id": "T001",
+  "exit_code": 0,
+  "elapsed_s": 65.219,
+  "timed_out": false
+}

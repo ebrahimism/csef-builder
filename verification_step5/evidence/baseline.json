@@ -1,0 +1,19 @@
+{
+  "command": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-m",
+    "pytest",
+    "tests\\test_checkpoint_contract.py",
+    "tests\\test_evidence_contract.py",
+    "tests\\test_failure_contract.py",
+    "tests\\test_policy_contract.py",
+    "tests\\test_task_contract.py",
+    "tests\\test_tool_contract.py",
+    "--junitxml=verification_step5/evidence/baseline.xml"
+  ],
+  "cwd": "F:\\cffmam",
+  "exit_code": 0,
+  "stdout": "................................................                         [100%]\n--- generated xml file: F:\\cffmam\\verification_step5\\evidence\\baseline.xml ----\n48 passed in 1.93s\n",
+  "stderr": "",
+  "started_utc": "2026-11-15T13:49:09.371297+00:00"
+}

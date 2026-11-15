@@ -1,0 +1,23 @@
+{
+  "acceptance_rejection": "no completed trusted verification for this run",
+  "attempts_recorded": 2,
+  "checkpoint_count": 0,
+  "control": "C:\\Users\\Kp\\Documents\\ChatGPT\\cffmam\\csef-control\\expense-pilot",
+  "failed_adapter_startups": 1,
+  "final_passed": 14,
+  "final_status": "review",
+  "generated_file_sha256": "8e2021cbda354cebde29c91fa82dd2283bf845b282adb437798f4a50075d32e9",
+  "initial_passed": 9,
+  "notes": [
+    "The same frozen 14-case suite was used before and after the real Codex proposal.",
+    "The initial adapter startup failed before a model turn and still consumed one attempt.",
+    "The first post-proposal measurement was 12/14 due to evaluator UTF-8 configuration; that execution setting was fixed without changing candidate or acceptance cases.",
+    "All 14 behavioral criteria now pass. Loopback networking remains possible; strict acceptance is refused.",
+    "Single pilot only; no performance advantage or production safety claim."
+  ],
+  "run_id": "run-fc2a514c05764d52918cd4d4b5777154",
+  "source_sha256": "4086235ff7c4896e65d19822d62bb027182ae1a588b4645d6b4bf3e314cc9fb7",
+  "spec_sha256": "224ec188cff794e1ee2fb14b13d3129e60c62403e939b117e5b6f5c0879fbff1",
+  "successful_live_model_calls": 1,
+  "total": 14
+}

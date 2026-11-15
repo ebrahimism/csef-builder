@@ -1,0 +1,1858 @@
+[
+  {
+    "id": "POL-000",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": []
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-001",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow"
+      ]
+    },
+    "expected": "allow"
+  },
+  {
+    "id": "POL-002",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-003",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-004",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "allow"
+  },
+  {
+    "id": "POL-005",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-006",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-007",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-008",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-009",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-010",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-011",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-012",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-013",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "allow"
+  },
+  {
+    "id": "POL-014",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-015",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-016",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-017",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-018",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-019",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-020",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-021",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-022",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-023",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-024",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-025",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-026",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-027",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-028",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-029",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-030",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-031",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-032",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-033",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-034",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-035",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-036",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-037",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-038",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-039",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-040",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "allow"
+  },
+  {
+    "id": "POL-041",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-042",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-043",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-044",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-045",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-046",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-047",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-048",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "allow",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-049",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-050",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-051",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-052",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-053",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-054",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-055",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-056",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-057",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "ask",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-058",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-059",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-060",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-061",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-062",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-063",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-064",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-065",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-066",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "allow",
+        "deny",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-067",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-068",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-069",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-070",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-071",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-072",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-073",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-074",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-075",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "allow",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-076",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-077",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-078",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-079",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-080",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "ask"
+  },
+  {
+    "id": "POL-081",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-082",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-083",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-084",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "ask",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-085",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-086",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-087",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-088",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-089",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-090",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-091",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-092",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-093",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "ask",
+        "deny",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-094",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-095",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-096",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-097",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-098",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-099",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-100",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-101",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-102",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "allow",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-103",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-104",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-105",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-106",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-107",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-108",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-109",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-110",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-111",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "ask",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-112",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "allow",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-113",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "allow",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-114",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "allow",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-115",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "ask",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-116",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "ask",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-117",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "ask",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-118",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "deny",
+        "allow"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-119",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "deny",
+        "ask"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "POL-120",
+    "status": "normative",
+    "basis": "30-policy section 2; empty case I6",
+    "request": {
+      "op": "resolve",
+      "decisions": [
+        "deny",
+        "deny",
+        "deny",
+        "deny"
+      ]
+    },
+    "expected": "deny"
+  },
+  {
+    "id": "CLASS-bad_input",
+    "status": "normative",
+    "basis": "60-failure section 1",
+    "request": {
+      "op": "classify",
+      "error": "bad_input",
+      "outcome": "failed"
+    },
+    "expected": "bad_input"
+  },
+  {
+    "id": "CLASS-transient",
+    "status": "normative",
+    "basis": "60-failure section 1",
+    "request": {
+      "op": "classify",
+      "error": "transient",
+      "outcome": "failed"
+    },
+    "expected": "transient"
+  },
+  {
+    "id": "CLASS-policy_denied",
+    "status": "normative",
+    "basis": "60-failure section 1",
+    "request": {
+      "op": "classify",
+      "error": "policy_denied",
+      "outcome": "failed"
+    },
+    "expected": "policy_denied"
+  },
+  {
+    "id": "CLASS-environment",
+    "status": "normative",
+    "basis": "60-failure section 1",
+    "request": {
+      "op": "classify",
+      "error": "environment",
+      "outcome": "failed"
+    },
+    "expected": "environment"
+  },
+  {
+    "id": "CLASS-product_bug",
+    "status": "normative",
+    "basis": "60-failure section 1",
+    "request": {
+      "op": "classify",
+      "error": "product_bug",
+      "outcome": "failed"
+    },
+    "expected": "product_bug"
+  },
+  {
+    "id": "CLASS-budget_exhausted",
+    "status": "normative",
+    "basis": "60-failure section 1",
+    "request": {
+      "op": "classify",
+      "error": "budget_exhausted",
+      "outcome": "failed"
+    },
+    "expected": "budget_exhausted"
+  },
+  {
+    "id": "CLASS-sandbox_violation",
+    "status": "normative",
+    "basis": "60-failure section 1",
+    "request": {
+      "op": "classify",
+      "error": "sandbox_violation",
+      "outcome": "failed"
+    },
+    "expected": "sandbox_violation"
+  },
+  {
+    "id": "CLASS-unknown",
+    "status": "normative",
+    "basis": "60-failure section 1",
+    "request": {
+      "op": "classify",
+      "error": "unknown",
+      "outcome": "failed"
+    },
+    "expected": "unknown"
+  },
+  {
+    "id": "CONFLICT-001",
+    "status": "normative",
+    "basis": "DEC-002 (docs/decisions/DEC-002-failure-precedence.md)",
+    "request": {
+      "op": "recover",
+      "error": "policy_denied",
+      "outcome": "unknown",
+      "idempotency": "read_only"
+    },
+    "expected": "escalate"
+  }
+]

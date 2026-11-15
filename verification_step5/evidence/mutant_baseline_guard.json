@@ -1,0 +1,18 @@
+{
+  "command": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-m",
+    "pytest",
+    "tests\\test_checkpoint_contract.py",
+    "tests\\test_evidence_contract.py",
+    "tests\\test_failure_contract.py",
+    "tests\\test_policy_contract.py",
+    "tests\\test_task_contract.py",
+    "tests\\test_tool_contract.py"
+  ],
+  "cwd": "C:\\Users\\Kp\\AppData\\Local\\Temp\\csef-step5-o6anlf1d",
+  "exit_code": 1,
+  "stdout": "..F.............................................                         [100%]\n================================== FAILURES ===================================\n________________ test_bundle_from_another_baseline_is_refused _________________\n\n    def test_bundle_from_another_baseline_is_refused() -> None:\n        from support import sha\n    \n        task = make_task(state=TaskState.CHECKPOINTING)\n        foreign = bundle((evidence(\"AUTH-001-T1\"), evidence(\"AUTH-001-T2\")), baseline=sha(\"other-baseline\"))\n>       with pytest.raises(Refused, match=\"different acceptance baseline\"):\nE       Failed: DID NOT RAISE <class 'csef_contracts.common.Refused'>\n\ntests\\test_checkpoint_contract.py:58: Failed\n=========================== short test summary info ===========================\nFAILED tests/test_checkpoint_contract.py::test_bundle_from_another_baseline_is_refused\n1 failed, 47 passed in 3.99s\n",
+  "stderr": "",
+  "started_utc": "2026-11-15T13:49:29.572415+00:00"
+}

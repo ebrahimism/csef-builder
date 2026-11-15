@@ -1,0 +1,19 @@
+{
+  "adapter": "codex-exec",
+  "command_sha256": "b8e571d04056237e72dd5a33b139c9532f9a3fae3e9824ee0536ee1541afa8be",
+  "cost_note": "Uses existing CLI account; no dollar price inferred from tokens.",
+  "cost_usd": null,
+  "elapsed_s": 49.016,
+  "exit_code": 0,
+  "overflow": false,
+  "timed_out": false,
+  "usage": [
+    {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 17055,
+      "output_tokens": 732,
+      "reasoning_output_tokens": 157
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-m",
+    "pytest",
+    "tests/audit",
+    "--junitxml=verification_step5/evidence/negative.xml"
+  ],
+  "cwd": "F:\\cffmam",
+  "exit_code": 0,
+  "stdout": "..................                                                       [100%]\n--- generated xml file: F:\\cffmam\\verification_step5\\evidence\\negative.xml ----\n18 passed in 1.51s\n",
+  "stderr": "",
+  "started_utc": "2026-11-15T13:49:15.548108+00:00"
+}
