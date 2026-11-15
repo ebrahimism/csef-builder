@@ -1,0 +1,16 @@
+{
+  "task_id": "T001",
+  "acceptance": "گزارش مبنا قابل بازتولید باشد؛ وضعیت ۱۳۳ آزمون دوباره در محیط ثابت ثبت شود؛ هیچ فایل کاربر حذف نشود.",
+  "findings": "Reproducible SHA-256 inventory of 139 source files matches the working tree and exact staged Git blobs. Existing files were preserved. The original 133-test baseline was rerun and the final expanded suite passes 138 tests with no failures, errors or skips. Local Git history exists at 1413a623544ad71273fb9893e3938ade9ddc41ba. Separate parent review caught and repaired a permanent-source-freeze test and fabricated process metadata. No owner goal or acceptance was changed.",
+  "evidence": [
+    "docs/evidence/baseline-vnext/manifest.json",
+    "docs/evidence/baseline-vnext/README.md",
+    "docs/progress/T001-final-check.json",
+    "docs/progress/T001-validation.json",
+    "docs/progress/T001-parent-review.md"
+  ],
+  "risks": [
+    "Baseline inventory and local build tracker are bookkeeping, not hostile-code attestation or release approval."
+  ],
+  "independent_review": "docs/progress/T001-parent-review.md"
+}

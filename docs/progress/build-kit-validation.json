@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-15T20:13:04.687004+00:00",
+  "plugin": "csef-builder@csef-local",
+  "version": "0.1.0",
+  "installed_and_enabled": true,
+  "package_sha256": "363da1c444351913a7f5070d190451cda6c32ed629da091d408f2ebc15d34647",
+  "package_files": 6,
+  "package_matches_source_and_installed_cache": true,
+  "skill_validation": "passed",
+  "new_controller_tests": 17,
+  "full_repository_tests": {
+    "cases": 138,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "fresh_codex_skill_discovery": true,
+  "smoke_next_task": "T001",
+  "real_codex_kickoff": "T001 executed by Codex CLI, reviewed and completed by parent session",
+  "T001_status": "done",
+  "baseline_commit": "1413a623544ad71273fb9893e3938ade9ddc41ba",
+  "next_authorized_task": "T002",
+  "next_task_started": false,
+  "scope": "Local build kit for CSEF itself; full 38-task roadmap is not implemented."
+}

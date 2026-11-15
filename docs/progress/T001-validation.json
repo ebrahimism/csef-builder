@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-15T20:13:04.687004+00:00",
+  "task_id": "T001",
+  "status": "verified",
+  "baseline_commit": "1413a623544ad71273fb9893e3938ade9ddc41ba",
+  "inventory_files": 139,
+  "inventory_sha256": "a798365dc6e31e7b32051c88f7c869e1f76de66ce3c37e6603e6c8e64b94ab26",
+  "inventory_verified_against_current_files": true,
+  "staged_git_blobs_verified_byte_for_byte": true,
+  "full_check_id": "059fb00b5e514c4ab43f87b01b80fb03",
+  "counts": {
+    "cases": 138,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "source_sha256": "a3e49b9384ef7a32df9ac79f77aa75ee81ab89e3daf762fdad1804a63a167ff4",
+  "receipt": "docs/progress/T001-final-check.json",
+  "review": "docs/progress/T001-parent-review.md",
+  "git_identity_source": "Existing authenticated GitHub profile; supplied per command, no global configuration change.",
+  "remote_actions": false,
+  "limitations": [
+    "Local engineering evidence, not release authority.",
+    "Windows loopback isolation remains unresolved.",
+    "Historical first-worker blocked report is retained; current runtime state supersedes it."
+  ]
+}
