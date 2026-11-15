@@ -1,0 +1,16 @@
+{
+  "captured_at": "2026-11-15T20:29:37.277710+00:00",
+  "task_started_at": "2026-11-15T20:13:45.498209+00:00",
+  "wall_seconds_since_task_start": 951.78,
+  "native_trial_attempts": 2,
+  "native_trial_process_seconds": 33.36,
+  "full_suite_process_seconds": 108.797,
+  "separate_review_sessions": 1,
+  "review_probe_runs": 1,
+  "review_tokens": null,
+  "total_review_cost": null,
+  "limitations": [
+    "Wall time includes dependency installation, implementation, waiting and checks; it is not active-user time or model inference time.",
+    "Total review effort, tokens and price were not fully instrumented; no savings claim."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "F:\\cffmam\\.csef-build\\spec-kit-env\\Scripts\\python.exe",
+    "F:\\cffmam\\experiments\\spec_kit\\run.py",
+    "--workdir",
+    "F:\\cffmam\\.csef-build\\spec-kit-native-59b99b0ae5454ba78eb18359d5f88a75\\project"
+  ],
+  "process": {
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\r\n  File \"F:\\cffmam\\experiments\\spec_kit\\run.py\", line 141, in <module>\r\n    print(json.dumps(trial(args.workdir.absolute(), Path(__file__).resolve().parents[2]), ensure_ascii=False, indent=2))\r\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"F:\\cffmam\\experiments\\spec_kit\\run.py\", line 99, in trial\r\n    assert rejected.status.value == \"failed\"\r\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\nAssertionError\r\n",
+    "timed_out": false,
+    "overflow": false,
+    "elapsed_s": 18.407
+  },
+  "authority": "local engineering trial only; no release authority"
+}

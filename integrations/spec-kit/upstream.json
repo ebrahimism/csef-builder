@@ -1,0 +1,53 @@
+{
+  "repository": "https://github.com/github/spec-kit",
+  "commit": "2ee2b1e8005905db05f5717300a469b3068b908f",
+  "observed_version": "1.4.1.dev0",
+  "archive_sha256": "e914dddb5908b6c0b8165c76a2cd11bcef833bcc7d7baa5b249035a847f17cf0",
+  "license": "MIT; see upstream/LICENSE",
+  "files": [
+    {
+      "path": "templates/spec-template.md",
+      "sha256": "3945437fc35cd30a5b2bf7beea680337c3516826d3efa5a6b92c4a7eca1ba28e"
+    },
+    {
+      "path": "templates/plan-template.md",
+      "sha256": "dfba43da2b2a207ff8c177a0fba03af074fd45e261696b4b64172041fad2e992"
+    },
+    {
+      "path": "templates/tasks-template.md",
+      "sha256": "1e448e9153462e8c5b5a55231a54c756d870a82950d4dd9425a2bf5b7008a0d9"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "2510b446bc1f0cf9702453075d20cd88631e20e5642658edb7325d9c1eb534f7"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "91aac3a2a15666099a60c240d01aee3960fb8efc0d26b73cddaf76d289a10ffd"
+    },
+    {
+      "path": "src/specify_cli/workflows/engine.py",
+      "sha256": "de219c09638bc226662d6094d319706fabd0e797ec2df5bf5cfb672d223df7df"
+    },
+    {
+      "path": "src/specify_cli/workflows/_execution.py",
+      "sha256": "c7f880f6c765e0fd0d0e445b8bda1970eb03c659c08a5e65f39ffe90b5c7d1ed"
+    },
+    {
+      "path": "src/specify_cli/workflows/step/gate/__init__.py",
+      "sha256": "55da91c2d0cf0cfd674ae5af804e905d93dbed2ac6ea74da84ccbda4dc035474"
+    },
+    {
+      "path": "src/specify_cli/workflows/step/shell/__init__.py",
+      "sha256": "7a7b50e707b3fa333d4c021cc7279560a2c824343b6c367a6b9c08684ad5b712"
+    },
+    {
+      "path": "src/specify_cli/presets/_resolver.py",
+      "sha256": "fbe011e1b5c5f5ea559563afeee47d3250c450b5dfc4851a0f127c7961f7d782"
+    },
+    {
+      "path": "docs/workflows/api.md",
+      "sha256": "64a0a26705c1f3136547d408741eb42f5e8473e326f73b765d8e4aecb909f132"
+    }
+  ]
+}

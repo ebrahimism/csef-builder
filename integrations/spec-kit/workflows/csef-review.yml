@@ -1,0 +1,21 @@
+schema_version: "1.0"
+workflow:
+  id: csef-review
+  name: CSEF document proposal review (local trial)
+  version: "0.1.0"
+inputs:
+  review_verdict:
+    type: string
+    default: ""
+steps:
+  - id: import-proposal
+    type: shell
+    strict: true
+    run: python -m csef_gate.integrations.spec_kit import --book book --bundle exchange
+    timeout: 30
+  - id: review-documents
+    type: gate
+    verdict_input: review_verdict
+    message: Review the document proposal. This choice never authorizes CSEF acceptance or release.
+    options: [approve, reject]
+    on_reject: abort

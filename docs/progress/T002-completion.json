@@ -1,0 +1,31 @@
+{
+  "seq": 16,
+  "at": 1794774595.547404,
+  "task": "T002",
+  "action": "complete",
+  "data": {
+    "authority": "build bookkeeping only; not release approval",
+    "check_id": "e9d17566eb2a49a79c5def52ec4005ee",
+    "evidence": {
+      "docs/progress/T002-final-check.json": "abfab5c412bb68801655bc15a5b540dff4e251338ae9a99bfc3f9b8a4b670312",
+      "docs/progress/T002-independent-review.md": "3ec51f2a99bc7dd99b2dec11d5d33a34b33abaa57d70a81a95ecf1ab91179f8a",
+      "docs/progress/T002-native-receipt.json": "19a269a3233d33013e47dc3db8190fb9e52e9b4f0f82e94da0bae99707fecca6",
+      "docs/progress/T002-native-summary.json": "6f10128e905cc1fdbf7f129eb36727cd1f6da91fee3c22f4e2f96e76b87014f9",
+      "docs/progress/T002-validation.md": "eecb4ee74bff45ef6b8acf50cce622fddd151685781cca2c40b5a67d76cfdceb",
+      "integrations/spec-kit/preset/README.md": "47daa1a39a9e3b4b7d6b0d7cf89f6e35d33b1f689cefc1b743ed18d07dd7bfb6",
+      "integrations/spec-kit/upstream.json": "0af902d66d077e393e35850aab520a62b0402f7b848d036748cacd0d39e0b12f",
+      "integrations/spec-kit/workflows/csef-review.yml": "d0e17ae800e2beac3d925410436cc6bef5f08f5fc21b81c7a64e4addac2c0c72",
+      "tests/integrations/test_spec_kit_roundtrip.py": "f4944385c30e2249d41188741b8dc71609774ed23f5f6dcccf3892c1e0d458b7"
+    },
+    "review_path": "docs/progress/T002-review.json",
+    "review_sha": "8e840e9f34086afe74cf28b7f8a15c2ec24764b74384158f504de8bdfbe95933",
+    "risks": [
+      "Only local document proposal effects are supported; this is not general exactly-once execution or an external-write integration.",
+      "The interruption probe models the lost-result window with KeyboardInterrupt; power loss and storage corruption were not tested.",
+      "The exchange origin is bound to the ProjectBook path, not a durable UUID or cryptographic identity. Relocation needs a fresh export.",
+      "No semantic architecture approval, cost savings, advanced-project success, hostile-code isolation or release authority is established.",
+      "Native Spec Kit shell steps remain outside CSEF ExecutionProvider; only the fixed reviewed trial is run in disposable scratch."
+    ],
+    "source_sha": "8abbe1646df4a7cd030f5e0926f284eeee75f641ab8d0f1dc3716a3f7548c901"
+  }
+}

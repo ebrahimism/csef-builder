@@ -1,0 +1,23 @@
+{
+  "task_id": "T002",
+  "acceptance": "اسناد نیاز و شناسه‌ها round-trip شوند؛ resume باعث تأیید جعلی یا اثر خارجی تکراری نشود؛ تصمیم استفاده/عدم استفاده ثبت شود.",
+  "findings": "Real REQ-101 through REQ-107 plus multiline Persian ADR facts round-trip exactly with the original owner snapshot and all three editable documents. Import stores drafts only in the existing ProjectBook; owner revisions, stage state and Gate authority never change. Transactional revision checks and exact-payload deduplication prevent duplicate proposal effects across restart and concurrent imports. Pinned real Spec Kit 1.4.1.dev0 was installed only in local scratch; its actual source hashes were checked, override resolution was exercised, missing gate verdict stayed paused, native approve never approved CSEF, interruption after proposal commit before workflow completion replayed the same proposal, reject aborted, and stale owner input was refused. Choose selected templates/process plus the proposal adapter; reject native workflow state as CSEF authority. The independent review is recorded separately. Current full-suite receipt e9d17566eb2a49a79c5def52ec4005ee records 153 passes, no failures/errors/skips, and the exact same unchanged source digest as the successful native trial.",
+  "evidence": [
+    "integrations/spec-kit/upstream.json",
+    "integrations/spec-kit/preset/README.md",
+    "integrations/spec-kit/workflows/csef-review.yml",
+    "tests/integrations/test_spec_kit_roundtrip.py",
+    "docs/progress/T002-native-receipt.json",
+    "docs/progress/T002-native-summary.json",
+    "docs/progress/T002-validation.md",
+    "docs/progress/T002-final-check.json"
+  ],
+  "risks": [
+    "Only local document proposal effects are supported; this is not general exactly-once execution or an external-write integration.",
+    "The interruption probe models the lost-result window with KeyboardInterrupt; power loss and storage corruption were not tested.",
+    "The exchange origin is bound to the ProjectBook path, not a durable UUID or cryptographic identity. Relocation needs a fresh export.",
+    "No semantic architecture approval, cost savings, advanced-project success, hostile-code isolation or release authority is established.",
+    "Native Spec Kit shell steps remain outside CSEF ExecutionProvider; only the fixed reviewed trial is run in disposable scratch."
+  ],
+  "independent_review": "docs/progress/T002-independent-review.md"
+}
