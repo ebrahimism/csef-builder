@@ -34,26 +34,21 @@ class ProjectBook:
     def __init__(self, root: Path):
         self.root = root.absolute()
         plain(self.root)
-        self.db = self.root / "project.sqlite3"
-        if not self.db.is_file():
-            raise Refused("project book not initialized")
+        from .persistence.sqlite import database_for
+        self.db = database_for(self.root, "project")
 
     @contextmanager
     def connection(self):
         plain(self.root)
-        con = sqlite3.connect(self.db, timeout=10)
-        con.row_factory = sqlite3.Row
-        try:
-            with con:
-                yield con
-        finally:
-            con.close()
+        from .persistence.sqlite import connection
+        with connection(self.db) as con:
+            yield con
 
     @classmethod
-    def create(cls, root: Path, goal: str, answers=None, facts=None, stages=None):
+    def create(cls, root: Path, goal: str, answers=None, facts=None, stages=None, *, attach=False):
         root = root.absolute()
         plain(root)
-        if root.exists() or not isinstance(goal, str) or not goal.strip():
+        if (root.exists() and not attach) or not isinstance(goal, str) or not goal.strip():
             raise Refused("a new directory and nonempty owner goal are required")
         answers, facts = answers or {}, facts or []
         stages = STAGES if stages is None else stages
@@ -68,17 +63,22 @@ class ProjectBook:
         for fact in facts:
             if set(fact) != {"id", "text", "kind"} or fact["kind"] not in ("requirement", "constraint", "decision") or not isinstance(fact["text"], str):
                 raise Refused("invalid owner fact")
-        root.mkdir(parents=True)
-        with sqlite3.connect(root / "project.sqlite3") as con:
-            con.executescript("""
-                CREATE TABLE revisions(version INTEGER PRIMARY KEY, body TEXT NOT NULL, sha256 TEXT NOT NULL, reason TEXT NOT NULL, created TEXT NOT NULL);
-                CREATE TABLE stages(position INTEGER PRIMARY KEY, name TEXT UNIQUE NOT NULL, status TEXT NOT NULL, version INTEGER, packet_hash TEXT, handoff TEXT);
-                CREATE TABLE changes(id INTEGER PRIMARY KEY, proposal TEXT NOT NULL, status TEXT NOT NULL, created TEXT NOT NULL);
-                CREATE TABLE calls(id INTEGER PRIMARY KEY, role TEXT NOT NULL, status TEXT NOT NULL, receipt TEXT, created TEXT NOT NULL);
-                CREATE TABLE settings(max_calls INTEGER NOT NULL);
-                CREATE TABLE stage_definitions(position INTEGER PRIMARY KEY, name TEXT UNIQUE NOT NULL, title TEXT NOT NULL, role TEXT NOT NULL);
-            """)
+        from .contracts import ProjectRevision, StageSpec, checked
+        from .persistence.sqlite import DATABASE, connection, database_for, initialize
+        for name, title, role in stages:
+            checked(StageSpec, {"name": name, "title": title, "role": role})
+        if attach:
+            if database_for(root, "gate").name != DATABASE:
+                raise Refused("attach requires a versioned unified store")
+        else:
+            root.mkdir(parents=True)
+            initialize(root / DATABASE)
+        with connection(root / DATABASE) as con:
+            con.execute("BEGIN IMMEDIATE")
+            if con.execute("SELECT 1 FROM revisions").fetchone():
+                raise Refused("project is already initialized")
             body = {"goal": goal.strip(), "answers": answers, "facts": facts}
+            checked(ProjectRevision, {"version": 1, "sha256": digest(encoded(body)), **body})
             con.execute("INSERT INTO revisions VALUES(?,?,?,?,?)", (1, encoded(body).decode(), digest(encoded(body)), "owner initialization", now()))
             con.executemany("INSERT INTO stages(position,name,status) VALUES(?,?,?)", [(i, s[0], "pending") for i, s in enumerate(stages)])
             con.executemany("INSERT INTO stage_definitions VALUES(?,?,?,?)", [(i, *s) for i, s in enumerate(stages)])
@@ -89,6 +89,10 @@ class ProjectBook:
         with self.connection() as con:
             row = con.execute("SELECT * FROM revisions ORDER BY version DESC LIMIT 1").fetchone()
         body = json.loads(row["body"])
+        if not isinstance(body, dict) or set(body) != {"goal", "answers", "facts"}:
+            raise Refused("invalid project revision envelope")
+        from .contracts import ProjectRevision, checked
+        checked(ProjectRevision, {"version": row["version"], "sha256": row["sha256"], **body})
         if digest(encoded(body)) != row["sha256"]:
             raise Refused("project revision integrity mismatch")
         return {"version": row["version"], "sha256": row["sha256"], **body}

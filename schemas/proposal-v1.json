@@ -1,0 +1,64 @@
+{
+  "$defs": {
+    "FileChange": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "content"
+      ],
+      "title": "FileChange",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "summary": {
+      "title": "Summary",
+      "type": "string"
+    },
+    "files": {
+      "items": {
+        "$ref": "#/$defs/FileChange"
+      },
+      "maxItems": 40,
+      "minItems": 1,
+      "title": "Files",
+      "type": "array"
+    },
+    "base_revision": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Base Revision"
+    }
+  },
+  "required": [
+    "summary",
+    "files"
+  ],
+  "title": "ChangeProposal",
+  "type": "object"
+}

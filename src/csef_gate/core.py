@@ -142,56 +142,55 @@ class Gate:
     def __init__(self, control: Path):
         self.root = control.absolute()
         plain(self.root)
-        self.db = self.root / "gate.sqlite3"
-        if not self.db.is_file():
-            raise Refused("control store not initialized")
+        from .persistence.sqlite import database_for
+        self.db = database_for(self.root, "gate")
 
     @classmethod
-    def initialize(cls, control: Path, project: Path, spec_path: Path):
+    def initialize(cls, control: Path, project: Path, spec_path: Path, *, attach=False):
         control, project = control.absolute(), project.absolute()
+        plain(control)
+        plain(project)
+        control, project = control.resolve(), project.resolve()
         plain(control)
         plain(project)
         if control == project or control in project.parents or project in control.parents:
             raise Refused("control store and project must be disjoint trees")
-        if control.exists():
+        if control.exists() and not attach:
             raise Refused("control directory must be new")
+        from .persistence.sqlite import DATABASE, connection, database_for, initialize
+        if attach:
+            db = database_for(control, "project")
+            if db.name != DATABASE:
+                raise Refused("attach requires a versioned unified store")
         raw = spec_path.read_bytes()
         if len(raw) > 512_000:
             raise Refused("specification too large")
         spec = read_json(spec_path)
         validate_spec(spec)
         source_hash, files = manifest(project, spec["source_files"])
-        control.mkdir(parents=True)
-        (control / "spec.json").write_bytes(raw)
-        base = control / "baseline"
-        for name in files:
-            out = base / name
-            out.parent.mkdir(parents=True, exist_ok=True)
-            out.write_bytes(file_bytes(project, name))
-        with sqlite3.connect(control / "gate.sqlite3") as con:
-            con.executescript("""
-                CREATE TABLE config(spec_hash TEXT NOT NULL, baseline_hash TEXT NOT NULL, project TEXT NOT NULL);
-                CREATE TABLE runs(id TEXT PRIMARY KEY, status TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, created TEXT NOT NULL);
-                CREATE TABLE evaluations(id TEXT PRIMARY KEY, run_id TEXT NOT NULL, source_hash TEXT NOT NULL,
-                    spec_hash TEXT NOT NULL, status TEXT NOT NULL, snapshot TEXT NOT NULL,
-                    report TEXT NOT NULL, report_hash TEXT, created TEXT NOT NULL);
-                CREATE TABLE attempts(id TEXT PRIMARY KEY, run_id TEXT NOT NULL, status TEXT NOT NULL, artifact TEXT NOT NULL, created TEXT NOT NULL);
-                CREATE TABLE checkpoints(id TEXT PRIMARY KEY, run_id TEXT UNIQUE NOT NULL,
-                    evaluation_id TEXT UNIQUE NOT NULL, source_hash TEXT NOT NULL, spec_hash TEXT NOT NULL,
-                    snapshot TEXT NOT NULL, report_hash TEXT NOT NULL, created TEXT NOT NULL);
-            """)
+        control.mkdir(parents=True, exist_ok=attach)
+        if not attach:
+            initialize(control / DATABASE)
+        with connection(control / DATABASE) as con:
+            con.execute("BEGIN IMMEDIATE")
+            if con.execute("SELECT 1 FROM config").fetchone():
+                raise Refused("Gate is already initialized")
+            if any((control / name).exists() for name in ("spec.json", "baseline", "runs")):
+                raise Refused("Gate files already exist; preserve them")
+            (control / "spec.json").write_bytes(raw)
+            base = control / "baseline"
+            for name in files:
+                out = base / name
+                out.parent.mkdir(parents=True, exist_ok=True)
+                out.write_bytes(file_bytes(project, name))
             con.execute("INSERT INTO config VALUES(?,?,?)", (digest(raw), source_hash, str(project)))
         return cls(control)
 
     @contextmanager
     def connect(self):
-        con = sqlite3.connect(self.db, timeout=10)
-        con.row_factory = sqlite3.Row
-        try:
-            with con:
-                yield con
-        finally:
-            con.close()
+        from .persistence.sqlite import connection
+        with connection(self.db) as con:
+            yield con
 
     def spec(self):
         plain(self.root)
@@ -230,8 +229,10 @@ class Gate:
 
     def apply_proposal(self, run_id, proposal: dict):
         spec, _ = self.spec()
-        if not isinstance(proposal, dict) or set(proposal) != {"summary", "files"} or not isinstance(proposal["summary"], str):
-            raise Refused("invalid proposal envelope")
+        from .contracts import ChangeProposal, checked
+        parsed = checked(ChangeProposal, proposal)
+        if parsed.base_revision is not None and manifest(self.candidate(run_id), spec["source_files"])[0] != parsed.base_revision:
+            raise Refused("proposal base revision is stale")
         files = proposal["files"]
         if not isinstance(files, list) or not 1 <= len(files) <= len(spec["editable_files"]):
             raise Refused("proposal must contain allowed files")
@@ -313,7 +314,9 @@ class Gate:
             error = f"{type(exc).__name__}: {exc}"
         passed = len(results) == len(spec["cases"]) and all(r["passed"] for r in results)
         status = "blocked" if error else ("review" if measure_only else "pass") if passed else "fail"
-        report = {"evaluation_id": evaluation_id, "run_id": run_id, "status": status, "measurement_only": measure_only, "source_sha256": source_hash, "spec_sha256": spec_hash, "source_manifest": files, "boundary": boundary, "error": error, "cases": results, "finished_at": now()}
+        report = {"schema_version": 1, "evaluation_id": evaluation_id, "run_id": run_id, "status": status, "measurement_only": measure_only, "source_sha256": source_hash, "spec_sha256": spec_hash, "source_manifest": files, "boundary": boundary, "error": error, "cases": results, "finished_at": now()}
+        from .contracts import VerificationRecord, checked
+        checked(VerificationRecord, report)
         raw = encoded(report)
         report_path.write_bytes(raw)
         with self.connect() as con:
@@ -338,6 +341,8 @@ class Gate:
             if digest(report_path.read_bytes()) != ev["report_hash"]:
                 raise Refused("verification report was modified")
             report = read_json(report_path)
+            from .contracts import VerificationRecord, checked
+            checked(VerificationRecord, report)
             if (report["evaluation_id"] != ev["id"] or report["run_id"] != run_id or report["status"] != "pass"
                     or report["source_sha256"] != ev["source_hash"] or report["spec_sha256"] != spec_hash
                     or report.get("boundary", {}).get("verified") is not True

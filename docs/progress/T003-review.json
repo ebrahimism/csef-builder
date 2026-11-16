@@ -1,0 +1,20 @@
+{
+  "task_id": "T003",
+  "acceptance": "پروژه و شواهد قدیمی حفظ شوند؛ migration تکرارپذیر و قابل بازگشت باشد؛ ورودی ناشناخته نتواند PASS بسازد.",
+  "findings": "Acceptance addressed by tests and independent source review: both legacy-v0 and split-v1 stores preserve original source bytes, project revisions/facts/handoffs and artifacts; committed WAL is backed up. Unchanged migrations repeat without writes, changed sources/destinations refuse overwrite, and restore-copy recovers pre-migration data into new roots after live-store changes. Shared transaction rollback and orphan rejection are exercised. Historical evaluations are quarantined and accepted runs remain immutable; fresh Gate execution is required. Unknown contract properties, unsupported schema versions, malformed/incomplete manifests and aliased nested roots are refused. The four JSON schemas exactly match runtime models. Focused receipt 4b287233fd6c4c8c850cd254c3aafb3b: 23 passed. Full receipt 0403dee228c146b8a66e938fb0cca5ca: 176 passed, no failures/errors/skips/timeout, identical before/after source a5934c7c6ba9218066d7771ac39cf26fba6d3164ab3edbd4d1526abfcbae3037. These checks use a fake executor for authority regressions and do not establish real execution isolation or release authority. Independent review report is required separately at completion; operational recovery limits remain disclosed.",
+  "evidence": [
+    "docs/progress/T003-handoff.fa.md",
+    "docs/progress/T003-schema-check.json",
+    "docs/progress/T003-focused-check.json",
+    "docs/progress/T003-full-check.json",
+    "tests/persistence/test_migrations.py"
+  ],
+  "risks": [
+    "Offline migration requires all source writers to be stopped; local writable manifests and SQLite are not a hostile-writer security boundary.",
+    "A killed migration may leave a publication lock and private staging; no automatic stale-lock recovery.",
+    "Interrupted Gate attach preserves partial files and refuses retries until inspected; automatic recovery is not implemented.",
+    "Windows loopback isolation remains unresolved; measure-only is REVIEW and no release is authorized.",
+    "UnitExecutor is a test double, not evidence of a real isolated runtime. No cost savings or advanced-project success were measured."
+  ],
+  "independent_review": "docs/progress/T003-independent-review.md"
+}

@@ -1,0 +1,177 @@
+{
+  "$defs": {
+    "JsonValue": {},
+    "VerificationCase": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "exit_code": {
+          "title": "Exit Code",
+          "type": "integer"
+        },
+        "stdout": {
+          "title": "Stdout",
+          "type": "string"
+        },
+        "stderr": {
+          "title": "Stderr",
+          "type": "string"
+        },
+        "expected_exit": {
+          "title": "Expected Exit",
+          "type": "integer"
+        },
+        "expected_json": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "actual_json": {
+          "$ref": "#/$defs/JsonValue",
+          "default": null
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "timed_out": {
+          "default": false,
+          "title": "Timed Out",
+          "type": "boolean"
+        },
+        "overflow": {
+          "default": false,
+          "title": "Overflow",
+          "type": "boolean"
+        },
+        "elapsed_s": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Elapsed S"
+        }
+      },
+      "required": [
+        "id",
+        "exit_code",
+        "stdout",
+        "stderr",
+        "expected_exit",
+        "expected_json",
+        "passed"
+      ],
+      "title": "VerificationCase",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "evaluation_id": {
+      "pattern": "^eval-[0-9a-f]{32}$",
+      "title": "Evaluation Id",
+      "type": "string"
+    },
+    "run_id": {
+      "pattern": "^run-[0-9a-f]{32}$",
+      "title": "Run Id",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail",
+        "review",
+        "blocked"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "measurement_only": {
+      "title": "Measurement Only",
+      "type": "boolean"
+    },
+    "source_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Sha256",
+      "type": "string"
+    },
+    "spec_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Spec Sha256",
+      "type": "string"
+    },
+    "source_manifest": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Source Manifest",
+      "type": "object"
+    },
+    "boundary": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Boundary"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Error"
+    },
+    "cases": {
+      "items": {
+        "$ref": "#/$defs/VerificationCase"
+      },
+      "title": "Cases",
+      "type": "array"
+    },
+    "finished_at": {
+      "title": "Finished At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "evaluation_id",
+    "run_id",
+    "status",
+    "measurement_only",
+    "source_sha256",
+    "spec_sha256",
+    "source_manifest",
+    "boundary",
+    "error",
+    "cases",
+    "finished_at"
+  ],
+  "title": "VerificationRecord",
+  "type": "object"
+}
