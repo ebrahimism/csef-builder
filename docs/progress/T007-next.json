@@ -1,0 +1,72 @@
+{
+  "active": [],
+  "ready": [
+    {
+      "id": "T008",
+      "phase": "F1",
+      "title": "ادامه پس از قطع و ابطال وابستگی‌ها",
+      "depends_on": [
+        "T007"
+      ],
+      "goals": [
+        "REQ-104",
+        "REQ-106"
+      ],
+      "scope": "resume، شمارش تلاش پایدار، invalidation و آشتی نتیجهٔ نامعلوم.",
+      "acceptance": "در نقاط قبل/بعد از مدل، patch، تست و تحویل قطع شود؛ ادامه بدون پذیرش کهنه و بدون تکرار عملیات غیرقابل‌برگشت باشد.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/lifecycle/change_control.py",
+        "src/csef_gate/workflow/recovery.py"
+      ],
+      "tests": [
+        "tests/integration/test_resume_boundaries.py"
+      ]
+    },
+    {
+      "id": "T009",
+      "phase": "F2",
+      "title": "ایندکس سبک مخزن و تازگی دانش",
+      "depends_on": [
+        "T005"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-104"
+      ],
+      "scope": "مسیر/هش/نشانه‌ها/ماژول‌ها و SQLite FTS5؛ بدون پایگاه برداری اجباری.",
+      "acceptance": "پس از تغییر فایل یا شاخه، سند/خلاصهٔ کهنه شناسایی شود؛ فایل حذف‌شده به‌عنوان واقعیت جاری بازیابی نشود.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/context/index.py",
+        "src/csef_gate/context/retrieval.py"
+      ],
+      "tests": [
+        "tests/context/test_index_freshness.py"
+      ]
+    },
+    {
+      "id": "T013",
+      "phase": "F3",
+      "title": "پروتکل مدل و استخراج آداپتر Codex",
+      "depends_on": [
+        "T003"
+      ],
+      "goals": [
+        "REQ-101",
+        "REQ-102"
+      ],
+      "scope": "یکسان‌کردن دو مسیر مدل فعلی؛ جداکردن ModelProvider از CodingAgent.",
+      "acceptance": "receipt یکسان و budget intent برای همهٔ نقش‌ها؛ تنظیم ورود/فایل کاربر بدون اجازه تغییر نکند.",
+      "status": "planned",
+      "files": [
+        "src/csef_gate/providers/base.py",
+        "src/csef_gate/providers/codex_cli.py"
+      ],
+      "tests": [
+        "tests/providers/test_codex_contract.py"
+      ]
+    }
+  ],
+  "blocked": []
+}

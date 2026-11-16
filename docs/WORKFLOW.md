@@ -77,6 +77,31 @@ python csef.py project packet --root C:/path/to/new-project-book --stage discove
 ثبت هدف، پاسخ و مدارک به اینترنت وابسته نیست؛ تولید کد با آداپتر فعلی به Codex و
 دسترسی حساب نیاز دارد. آداپتر فراهم‌کنندهٔ دیگر هنوز ساخته نشده است.
 
+## ادامه از یک مسیر مشترک
+
+سرویس Workflow و فرمان‌های زیر، همان پرونده، دستیار، عامل و ارزیاب را به هم
+وصل می‌کنند. سه جایگاه نخست مدارک نقش‌ها و بقیه برش‌های اجرایی‌اند؛ شش تا ۲۴
+مرحله پشتیبانی می‌شود. pipeline پیش‌فرض همان شش مرحلهٔ بالاست.
+
+```powershell
+python csef.py workflow init --root C:/path/to/new-control --goal 'هدف به زبان خودت'
+python csef.py workflow status --root C:/path/to/new-control
+python csef.py project answer --root C:/path/to/new-control --id users --text 'کاربران هدف'
+python csef.py workflow attach --root C:/path/to/new-control --project C:/path/to/source --spec C:/path/to/acceptance.json
+python csef.py workflow continue --root C:/path/to/new-control --steps 6 --measure-only
+```
+
+پاسخ باقی سؤال‌ها با همان project answer ثبت می‌شود. attach یک oracle از پیش
+نوشته و منجمد می‌کند؛ تولید و کفایت معنایی معیارها خودکار نشده است. پوشهٔ کنترل
+و source باید جدا باشند. continue به adapter فعلی Codex و حساب موجود متصل است
+و تا سؤال باز باشد تماس تازه نمی‌گیرد. مدارک نامعتبر یا بازبینی مردود، مرحلهٔ
+وابسته را متوقف می‌کنند. ready_for_next، مجوز انتشار نیست.
+
+در میزبان ویندوز فعلی، measure-only خروجی اجرایی را REVIEW نگه می‌دارد و
+کنترل‌کننده از آن به مرحلهٔ وابسته نمی‌رود. این محدودیت با پرچم یا ادعای مدل
+برداشته نمی‌شود. engine هرگز checkpoint صادر نمی‌کند. برای API مشترک گفتگو،
+Workflow.create/answer/attach_code/step/run همان عملیات را بدون دستکاری SQL دارند.
+
 ## آزمایش تصمیم‌گیری دربارهٔ هزینهٔ بازبین
 
 `experiments/handoffs/run.py` سه روش را با ورودی/کد/کار/آزمون برابر مقایسه می‌کند:

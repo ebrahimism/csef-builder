@@ -1,0 +1,31 @@
+{
+  "seq": 44,
+  "at": 1794828629.6485834,
+  "task": "T007",
+  "action": "complete",
+  "data": {
+    "authority": "build bookkeeping only; not release approval",
+    "check_id": "11308361700748faa59f8c9111afcf12",
+    "evidence": {
+      "docs/progress/T007-design-notes.fa.md": "845304d63889ddaee65461a9ebc4dea504b97079c18334be8303e49e7aa2dc0f",
+      "docs/progress/T007-focused-check.json": "90c69252d45a9299e15bd554a78fa0b6895305ddfe31d0a37c20837072d6fc86",
+      "docs/progress/T007-full-check.json": "cd00c00b10620da67d3a3811c8717031716bf6d0d39f3e5e0a0d6d39113cbc7c",
+      "docs/progress/T007-handoff.fa.md": "39c802557aa5f80c686d955267df4d19cbec0e8906eade78174986b127d7dbf1",
+      "docs/progress/T007-independent-review.md": "aa9a9080cfaf2c9a2568ddd4a16f558ec4baa2f6599b1c4088decf94f9e3d4db",
+      "docs/progress/T007-packet.json": "45f21573ab8601a197ecbe5f793a9eeb5033347717802d9b63c47bcc8d56f6aa",
+      "tests/integration/test_chat_to_handoff.py": "54ebe04100bea3ce4f46cb4a040adbd9ab0a6d517278d65bfd35b73e5e79b5c8"
+    },
+    "review_path": "docs/progress/T007-review.json",
+    "review_sha": "a1a19cbc031c555e439b9ecccf0bf2fb79b1132790d61c15c8ee161bd15557ca",
+    "risks": [
+      "This is a measured prototype: three document positions followed by executable slices, six to twenty-four stages. Arbitrary semantic role/type routing is not implemented.",
+      "One frozen executable oracle is reused in this slice. Later-stage passage does not by itself demonstrate a new feature or semantic adequacy of the oracle.",
+      "Reference/structure checks do not establish document semantics; architecture and contract review remain required and are not release authority.",
+      "Model replies and boundary probe in the integration fixture are explicit test doubles. The program execution is real; live-model performance, host isolation and advanced-project success were not measured.",
+      "Windows loopback isolation is unresolved. Measurement-only stays REVIEW, dependents stop and the workflow issues no checkpoint or deployment.",
+      "Unknown workers retain their lease for explicit reconciliation; generic automatic crash recovery and additional providers remain later work.",
+      "CLI is connected to the shared service; a standalone nontechnical chat UI and measured owner-effort/cost reductions are not claimed."
+    ],
+    "source_sha": "b113cb3dfb147dcbb3db58cbd2ee336720cd2c8f6a902048669ec6e6df29291d"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "task_id": "T007",
+  "acceptance": "از گفتگوی نمونه تا یک برش کامل، بدون دستکاری دستی پایگاه اجرا شود؛ هیچ مرحلهٔ وابسته از خروجی نامعتبر استفاده نکند.",
+  "findings": "A public Workflow service and CLI now connect versioned intake, the existing role assistant, review routing, the coding agent, Gate and persisted handoffs. A seven-stage acceptance fixture begins with incomplete conversation, answers through the owner API, produces documents and executes a real integer-sum/error CLI in subprocesses; there is no SQL advancement in the positive path. Scripted model responses and an explicitly labeled test-double boundary test orchestration, not live-model success or OS isolation. Document issues and mandatory review failures block dependents; known questions do not create another unanswered wait. Only code handoffs with controller-executed Gate checks are carried forward; model documents spoofing verification/source filenames are ignored. Current validated snapshot bytes are used, and the existing Gate acceptance validation is shared without weakening its conditions. Final revalidation resolves the evaluation and exact source/report/spec/owner binding inside the same writer transaction that records the handoff; races changing proposal or owner between blob preparation and commit are refused. REVIEW never advances dependencies and the engine never calls accept or creates checkpoints. Failed-run continuation preserves candidate and consumed attempt budget. Completion rehashes all artifacts, including valid documents above the source-code size limit. Full receipt 11308361700748faa59f8c9111afcf12 records 237 passed with no failures/errors/skips and identical before/after source. Separate final review and current-source verification are recorded alongside this report.",
+  "evidence": [
+    "docs/progress/T007-packet.json",
+    "docs/progress/T007-design-notes.fa.md",
+    "docs/progress/T007-handoff.fa.md",
+    "docs/progress/T007-focused-check.json",
+    "docs/progress/T007-full-check.json",
+    "docs/progress/T007-independent-review.md",
+    "tests/integration/test_chat_to_handoff.py"
+  ],
+  "risks": [
+    "This is a measured prototype: three document positions followed by executable slices, six to twenty-four stages. Arbitrary semantic role/type routing is not implemented.",
+    "One frozen executable oracle is reused in this slice. Later-stage passage does not by itself demonstrate a new feature or semantic adequacy of the oracle.",
+    "Reference/structure checks do not establish document semantics; architecture and contract review remain required and are not release authority.",
+    "Model replies and boundary probe in the integration fixture are explicit test doubles. The program execution is real; live-model performance, host isolation and advanced-project success were not measured.",
+    "Windows loopback isolation is unresolved. Measurement-only stays REVIEW, dependents stop and the workflow issues no checkpoint or deployment.",
+    "Unknown workers retain their lease for explicit reconciliation; generic automatic crash recovery and additional providers remain later work.",
+    "CLI is connected to the shared service; a standalone nontechnical chat UI and measured owner-effort/cost reductions are not claimed."
+  ],
+  "independent_review": "docs/progress/T007-independent-review.md"
+}

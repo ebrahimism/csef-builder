@@ -1,0 +1,30 @@
+{
+  "seq": 40,
+  "at": 1794827255.0850766,
+  "task": "T006",
+  "action": "complete",
+  "data": {
+    "authority": "build bookkeeping only; not release approval",
+    "check_id": "592019dce36c438ca0251cb9288ee15f",
+    "evidence": {
+      "docs/progress/T006-focused-check.json": "de7d2a0a718011c79f421168dc1c8fa1065355ee58a5ef5d2ee5e203dac4809c",
+      "docs/progress/T006-full-check.json": "cac3a630bc48a5f2ed9d374658e085bdceb5ad22f1899ee6c65db2181b026a55",
+      "docs/progress/T006-handoff.fa.md": "8531e9fed5bdadaeaf41510948451b608248214d88ad4c35deb31ca1e8960ad0",
+      "docs/progress/T006-independent-review.md": "fbc1aaa5fdb0364926936691f8b684e3fb7a3eab19434c5d9e191c975c8e1d19",
+      "docs/progress/T006-interrupted-check.json": "432693e7d7304fbe8b78967df89f679b542b6a93617f4b28ba2f9b94c277d605",
+      "docs/progress/T006-review-focused-check.json": "a85c825143b085a863bbd96f50831ac6f4f4aaec461959a48cb65c00e73a801f",
+      "tests/lifecycle/test_question_revisions.py": "57bc7edade95e98094cda6892a4dc03a005f27620859e91b3318382029768b83"
+    },
+    "review_path": "docs/progress/T006-review.json",
+    "review_sha": "3fa614d42f215f2c157d90632a662dd7525b4f31a2e8e7710eb0d6b8aee34f45",
+    "risks": [
+      "Duplicate detection is mechanical key/text/context matching, not semantic recognition of all paraphrases or completeness of model-selected fact links.",
+      "Owner APIs trust the conversation/controller; source_ref is descriptive and is not independent human authentication or a Harness receipt.",
+      "Legacy unanchored adaptive questions must be refreshed in the unified store before answering. Legacy read-only store inspection is preserved.",
+      "CLI without --version deliberately binds the current revision at command receipt for compatibility; clients needing stale-input detection must supply the expected version.",
+      "One intermediate full check was intentionally interrupted after review findings; its failed receipt is retained and is not completion evidence.",
+      "Windows isolation remains unresolved; measurement-only remains REVIEW, no checkpoint or deployment was authorized by this task."
+    ],
+    "source_sha": "6b9ac74c9917a81229b0591b85ce57a44dd6ecfa9d4423659b073214c418fdf2"
+  }
+}

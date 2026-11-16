@@ -344,36 +344,46 @@ class Gate:
             con.execute("UPDATE runs SET status=? WHERE id=?", ("verified" if status == "pass" else status, run_id))
         return report
 
-    def accept(self, run_id):
-        """No caller-supplied verdict, permit or report can authorize acceptance."""
+    def _verified_in(self, con, run_id):
+        """Resolve current verification under the caller's writer transaction.
+
+        Internal controller operation, not a transferable model-created permit.
+        Both acceptance and stage handoff use this same validation path.
+        """
         spec, spec_hash = self.spec()
         candidate = self.candidate(run_id)
+        run = con.execute("SELECT * FROM runs WHERE id=?", (run_id,)).fetchone()
+        if run["status"] != "verified":
+            raise Refused("no completed trusted verification for this run")
+        ev = con.execute("SELECT * FROM evaluations WHERE run_id=? ORDER BY rowid DESC LIMIT 1", (run_id,)).fetchone()
+        if ev is None or ev["status"] != "pass" or ev["spec_hash"] != spec_hash:
+            raise Refused("no current passing evaluation")
+        report_path, snapshot = Path(ev["report"]), Path(ev["snapshot"])
+        plain(report_path)
+        if digest(report_path.read_bytes()) != ev["report_hash"]:
+            raise Refused("verification report was modified")
+        report = read_json(report_path)
+        from .contracts import VerificationRecord, checked
+        checked(VerificationRecord, report)
+        if (report.get("project_version"), report.get("project_sha256")) != owner_revision(con):
+            raise Refused("verified owner revision changed")
+        if (report["evaluation_id"] != ev["id"] or report["run_id"] != run_id or report["status"] != "pass"
+                or report["measurement_only"] is not False
+                or report["source_sha256"] != ev["source_hash"] or report["spec_sha256"] != spec_hash
+                or report.get("boundary", {}).get("verified") is not True
+                or [r["id"] for r in report["cases"]] != [c["id"] for c in spec["cases"]]
+                or not all(r.get("passed") is True for r in report["cases"])):
+            raise Refused("incomplete verification authority")
+        if manifest(candidate, spec["source_files"])[0] != ev["source_hash"] or manifest(snapshot, spec["source_files"])[0] != ev["source_hash"]:
+            raise Refused("verified source has changed")
+        return ev, report, spec
+
+    def accept(self, run_id):
+        """No caller-supplied verdict, permit or report can authorize acceptance."""
         with self.connect() as con:
             con.execute("BEGIN IMMEDIATE")
-            run = con.execute("SELECT * FROM runs WHERE id=?", (run_id,)).fetchone()
-            if run["status"] != "verified":
-                raise Refused("no completed trusted verification for this run")
-            ev = con.execute("SELECT * FROM evaluations WHERE run_id=? ORDER BY rowid DESC LIMIT 1", (run_id,)).fetchone()
-            if ev is None or ev["status"] != "pass" or ev["spec_hash"] != spec_hash:
-                raise Refused("no current passing evaluation")
-            report_path, snapshot = Path(ev["report"]), Path(ev["snapshot"])
-            plain(report_path)
-            if digest(report_path.read_bytes()) != ev["report_hash"]:
-                raise Refused("verification report was modified")
-            report = read_json(report_path)
-            from .contracts import VerificationRecord, checked
-            checked(VerificationRecord, report)
-            if (report.get("project_version"), report.get("project_sha256")) != owner_revision(con):
-                raise Refused("verified owner revision changed")
-            if (report["evaluation_id"] != ev["id"] or report["run_id"] != run_id or report["status"] != "pass"
-                    or report["source_sha256"] != ev["source_hash"] or report["spec_sha256"] != spec_hash
-                    or report.get("boundary", {}).get("verified") is not True
-                    or [r["id"] for r in report["cases"]] != [c["id"] for c in spec["cases"]]
-                    or not all(r.get("passed") is True for r in report["cases"])):
-                raise Refused("incomplete verification authority")
-            if manifest(candidate, spec["source_files"])[0] != ev["source_hash"] or manifest(snapshot, spec["source_files"])[0] != ev["source_hash"]:
-                raise Refused("verified source has changed")
-            checkpoint = {"id": "ck-" + uuid.uuid4().hex, "run_id": run_id, "evaluation_id": ev["id"], "source_sha256": ev["source_hash"], "spec_sha256": spec_hash, "snapshot": str(snapshot), "report_sha256": ev["report_hash"], "created_at": now()}
+            ev, report, spec = self._verified_in(con, run_id)
+            checkpoint = {"id": "ck-" + uuid.uuid4().hex, "run_id": run_id, "evaluation_id": ev["id"], "source_sha256": ev["source_hash"], "spec_sha256": ev["spec_hash"], "snapshot": ev["snapshot"], "report_sha256": ev["report_hash"], "created_at": now()}
             con.execute("INSERT INTO checkpoints VALUES(?,?,?,?,?,?,?,?)", tuple(checkpoint.values()))
             con.execute("UPDATE runs SET status='accepted' WHERE id=?", (run_id,))
         return checkpoint

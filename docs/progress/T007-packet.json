@@ -1,0 +1,53 @@
+{
+  "task": {
+    "id": "T007",
+    "phase": "F1",
+    "title": "کنترل‌کنندهٔ مرحله‌ای عمومی",
+    "depends_on": [
+      "T004",
+      "T005",
+      "T006",
+      "T002"
+    ],
+    "goals": [
+      "REQ-103",
+      "REQ-106"
+    ],
+    "scope": "وصل‌کردن ProjectBook، دستیار، عامل، ارزیاب و تحویل در یک مسیر؛ ۶ یا بیشتر مرحله.",
+    "acceptance": "از گفتگوی نمونه تا یک برش کامل، بدون دستکاری دستی پایگاه اجرا شود؛ هیچ مرحلهٔ وابسته از خروجی نامعتبر استفاده نکند.",
+    "status": "planned",
+    "files": [
+      "src/csef_gate/workflow/engine.py",
+      "src/csef_gate/workflow/stages.py",
+      "src/csef_gate/workflow/handoffs.py",
+      "src/csef_gate/interfaces/cli.py"
+    ],
+    "tests": [
+      "tests/integration/test_chat_to_handoff.py"
+    ]
+  },
+  "runtime": {
+    "id": "T007",
+    "status": "planned"
+  },
+  "plan_sha": "a3056af8228339e5c588d094d6906a78bd9a10f3938c154038574eba9f98ed65",
+  "owner_goals": [
+    {
+      "id": "REQ-103",
+      "kind": "requirement",
+      "text": "شروع با گفتگوی ساده، پرسیدن سؤال‌های ضروری مهندسی و کم‌کردن کار فنی تحمیل‌شده به کاربر."
+    },
+    {
+      "id": "REQ-106",
+      "kind": "requirement",
+      "text": "تقسیم قابل‌تنظیم به شش مرحله یا بیشتر با ورودی، خروجی، آزمون و تحویل ثبت‌شده برای هر نقش."
+    }
+  ],
+  "review_required": false,
+  "read": [
+    "AGENTS.md",
+    "docs/MASTER-PLAN.fa.md",
+    "docs/WORKFLOW.md"
+  ],
+  "warning": "Planned files are responsibilities, not empty-file scaffolding orders."
+}

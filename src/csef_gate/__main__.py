@@ -14,6 +14,8 @@ def main(argv=None):
     sub = p.add_subparsers(dest="command", required=True)
     from .project_cli import configure
     configure(sub)
+    from .interfaces.cli import configure as configure_workflow
+    configure_workflow(sub)
     init = sub.add_parser("init")
     init.add_argument("--control", type=Path, required=True)
     init.add_argument("--project", type=Path, required=True)
@@ -31,7 +33,10 @@ def main(argv=None):
             cmd.add_argument("--proposal", type=Path, required=True)
     args = p.parse_args(argv)
     try:
-        if args.command == "project":
+        if args.command == "workflow":
+            from .interfaces.cli import execute
+            result = execute(args)
+        elif args.command == "project":
             from .project_cli import execute
             result = execute(args)
         elif args.command == "init":
@@ -55,7 +60,7 @@ def main(argv=None):
                     print(json.dumps({"run_id": report["run_id"], "evaluation_id": report["evaluation_id"], "status": report["status"], "passed": sum(c["passed"] for c in report["cases"]), "total": len(report["cases"]), "error": report["error"]}), file=sys.stderr, flush=True)
                 result = gate.run(CodexSandbox(), CodexAgent(), args.run_id, progress, measure_only=args.measure_only)
         print(json.dumps(result, ensure_ascii=True, indent=2))
-        return 2 if result.get("status") in ("review", "awaiting_owner", "draft_requires_validation") else 1 if result.get("status") in ("fail", "blocked") else 0
+        return 2 if result.get("status") in ("review", "awaiting_owner", "draft_requires_validation", "review_required", "needs_revision", "paused") else 1 if result.get("status") in ("fail", "blocked") else 0
     except (Refused, OSError, ValueError, KeyError) as exc:
         print(json.dumps({"status": "blocked", "error": str(exc)}, ensure_ascii=True), file=sys.stderr)
         return 2

@@ -328,7 +328,7 @@ class ProjectBook:
             raise Refused("context budget exceeded by index/omission metadata")
         return result
 
-    def finish(self, stage, *, packet_hash, artifacts: dict[str, bytes], checks: list[dict], reviewer=None):
+    def finish(self, stage, *, packet_hash, artifacts: dict[str, bytes], checks: list[dict], reviewer=None, _validate=None):
         # Only the trusted controller calls this method. Model labels alone do not
         # satisfy the required controller-executed check; release remains separate.
         from .core import relative_name
@@ -365,6 +365,10 @@ class ProjectBook:
             row = con.execute("SELECT * FROM stages WHERE name=?", (stage,)).fetchone()
             if row["status"] != "running" or row["packet_hash"] != packet_hash or row["version"] != current["version"]:
                 raise Refused("no matching current running stage")
+            if _validate is not None:
+                # Internal controller hook: resolve Gate authority under this
+                # very transaction, after blob preparation and before handoff.
+                _validate(con)
             folder = self.root / "artifacts" / f'v{current["version"]}' / stage
             for name, content in artifacts.items():
                 path = folder / name
