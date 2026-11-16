@@ -1,0 +1,37 @@
+{
+  "id": "72485f37cf52448b9b23d5ba301ab4ea",
+  "task_id": "T006",
+  "passed": false,
+  "full_suite": true,
+  "plan_sha": "a3056af8228339e5c588d094d6906a78bd9a10f3938c154038574eba9f98ed65",
+  "source_sha": "691720a218b6a04808af53e1128b17d160e200ee9c0c4157a94c0cc8af18c916",
+  "after_sha": "691720a218b6a04808af53e1128b17d160e200ee9c0c4157a94c0cc8af18c916",
+  "argv": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-X",
+    "utf8",
+    "-m",
+    "pytest",
+    "-o",
+    "addopts=",
+    "-q",
+    "--tb=short",
+    "--basetemp=F:\\cffmam\\.csef-build\\checks\\72485f37cf52448b9b23d5ba301ab4ea\\temp",
+    "--junitxml=F:\\cffmam\\.csef-build\\checks\\72485f37cf52448b9b23d5ba301ab4ea\\junit.xml",
+    "tests"
+  ],
+  "counts": {
+    "cases": 0,
+    "failed": 0,
+    "errors": 1,
+    "skipped": 0
+  },
+  "process": {
+    "exit_code": 4294967295,
+    "stdout": "........................................................................ [ 32%]\r\n..................................................................",
+    "stderr": "",
+    "timed_out": false,
+    "overflow": false,
+    "elapsed_s": 269.25
+  }
+}

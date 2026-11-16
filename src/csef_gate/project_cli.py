@@ -28,6 +28,8 @@ def configure(sub):
         if name == "answer":
             p.add_argument("--id", required=True)
             p.add_argument("--text", required=True)
+            p.add_argument("--version", type=int, help="expected owner revision; defaults to the current revision")
+            p.add_argument("--fact", nargs=2, action="append", default=[], metavar=("ID", "TEXT"), help="explicit update to a fact linked to this question")
     return parser
 
 
@@ -57,5 +59,9 @@ def execute(args):
         from .review import route_review
         book.packet(args.stage)
         return route_review(args.stage, args.signal, always=args.always)
-    book.amend(answers={args.id: args.text}, reason="explicit owner answer")
+    from .lifecycle.questions import Questions
+    updates = dict(args.fact)
+    if len(updates) != len(args.fact):
+        raise Refused("duplicate fact update")
+    Questions(book).answer(args.id, args.text, expected_version=args.version if args.version is not None else book.current()["version"], fact_updates=updates)
     return book.status()

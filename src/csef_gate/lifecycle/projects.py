@@ -41,12 +41,18 @@ class ProjectService:
 
     @staticmethod
     def _change_spec(change):
-        if not isinstance(change, dict) or set(change) - {"replacements", "additions", "goal"}:
+        if not isinstance(change, dict) or set(change) - {"replacements", "additions", "goal", "answers"}:
             raise Refused("unsupported explicit owner change")
         result = {"replacements": {} if change.get("replacements") is None else change["replacements"],
                   "additions": [] if change.get("additions") is None else change["additions"], "goal": change.get("goal")}
         if not isinstance(result["replacements"], dict) or not isinstance(result["additions"], list):
             raise Refused("invalid owner change fields")
+        if change.get("answers") is not None:
+            if not isinstance(change["answers"], dict):
+                raise Refused("invalid owner answer fields")
+            # Preserve existing v1 hashes for non-answer owner statements.
+            if change["answers"]:
+                result["answers"] = change["answers"]
         return result
 
     def record_owner_statement(self, text, *, expected_version, approves=None, change=None):
@@ -115,16 +121,16 @@ class ProjectService:
         text_value(item["text"])
         return item
 
-    def apply_owner_change(self, statement_id, *, expected_version, replacements=None, additions=None, goal=None):
+    def apply_owner_change(self, statement_id, *, expected_version, replacements=None, additions=None, goal=None, answers=None):
         owner_version(expected_version)
-        if not replacements and not additions and goal is None:
+        if not replacements and not additions and goal is None and not answers:
             raise Refused("explicit owner change required")
         with self.book.connection() as con:
             con.execute("BEGIN IMMEDIATE")
             current = self._current(con, expected_version)
-            change = self._change_spec({"replacements": replacements, "additions": additions, "goal": goal})
+            change = self._change_spec({"replacements": replacements, "additions": additions, "goal": goal, "answers": answers})
             statement = self._statement(con, statement_id, current, None, digest(encoded(change)))
-            result = self.book._amend_in(con, replace_facts=replacements, add_facts=additions, goal=goal,
+            result = self.book._amend_in(con, replace_facts=replacements, add_facts=additions, goal=goal, answers=answers,
                         reason=statement["text"], source={"kind": "owner_statement", "ref": statement_id})
             con.execute("UPDATE changes SET status='owner_consumed' WHERE id=?", (statement_id,))
             return result
@@ -157,12 +163,14 @@ class ProjectService:
             con.execute("UPDATE changes SET status='owner_consumed' WHERE id=?", (statement_id,))
             return result
 
-    def _timeline(self):
-        with self.book.connection() as con:
-            con.execute("BEGIN")
-            revisions = [dict(row) for row in con.execute("SELECT * FROM revisions ORDER BY version")]
-            records = [parse_json(r[0]) for r in con.execute("SELECT proposal FROM changes WHERE status='recorded'")]
-            references = {r["id"]: dict(r) for r in con.execute("SELECT id,proposal,status FROM changes WHERE status IN ('owner_consumed','accepted')")}
+    def _timeline(self, con=None):
+        if con is None:
+            with self.book.connection() as snapshot:
+                snapshot.execute("BEGIN")
+                return self._timeline(con=snapshot)
+        revisions = [dict(row) for row in con.execute("SELECT * FROM revisions ORDER BY version")]
+        records = [parse_json(r[0]) for r in con.execute("SELECT proposal FROM changes WHERE status='recorded'")]
+        references = {r["id"]: dict(r) for r in con.execute("SELECT id,proposal,status FROM changes WHERE status IN ('owner_consumed','accepted')")}
         by_version = {}
         for revision in revisions:
             body = parse_json(revision["body"])

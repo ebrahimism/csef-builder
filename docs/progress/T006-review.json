@@ -1,0 +1,23 @@
+{
+  "task_id": "T006",
+  "acceptance": "پاسخ ویرایش‌شده به نیاز متناظر وصل شود؛ سؤال قدیمی با پاسخ معلوم تکرار نشود؛ API تا پاسخ، مدل را دوباره فراخوانی نکند.",
+  "findings": "Questions persist explicit fact links, stable identity, source and context. Owner answers and edits use exact version-bound, single-use owner statements; raw answer text never silently rewrites a requirement. Explicit linked fact changes and answer observations commit with the owner revision. History retains superseded answers and validates observations, source, revision and context in one consistent snapshot, including a concurrent writer regression. Known questions are reused; stale pending questions are retained but inactive and cannot receive answers through either API or legacy amend. Context includes goal, selected facts and the four intake answers, without invalidating unrelated adaptive questions. The assistant returns before provider invocation while an active question is unanswered. CLI answer uses the same service with explicit version and linked fact updates. Full receipt 592019dce36c438ca0251cb9288ee15f has 230 cases and no failure/error/skip, matching before/after source digests. Separate source and receipt review is required alongside this report; no release claim is made.",
+  "evidence": [
+    "docs/progress/T006-handoff.fa.md",
+    "docs/progress/T006-focused-check.json",
+    "docs/progress/T006-interrupted-check.json",
+    "docs/progress/T006-review-focused-check.json",
+    "docs/progress/T006-full-check.json",
+    "docs/progress/T006-independent-review.md",
+    "tests/lifecycle/test_question_revisions.py"
+  ],
+  "risks": [
+    "Duplicate detection is mechanical key/text/context matching, not semantic recognition of all paraphrases or completeness of model-selected fact links.",
+    "Owner APIs trust the conversation/controller; source_ref is descriptive and is not independent human authentication or a Harness receipt.",
+    "Legacy unanchored adaptive questions must be refreshed in the unified store before answering. Legacy read-only store inspection is preserved.",
+    "CLI without --version deliberately binds the current revision at command receipt for compatibility; clients needing stale-input detection must supply the expected version.",
+    "One intermediate full check was intentionally interrupted after review findings; its failed receipt is retained and is not completion evidence.",
+    "Windows isolation remains unresolved; measurement-only remains REVIEW, no checkpoint or deployment was authorized by this task."
+  ],
+  "independent_review": "docs/progress/T006-independent-review.md"
+}

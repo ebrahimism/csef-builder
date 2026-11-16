@@ -1,0 +1,38 @@
+{
+  "id": "182bceb392bc4870a0eb0b3e005c4a85",
+  "task_id": "T006",
+  "passed": true,
+  "full_suite": false,
+  "plan_sha": "a3056af8228339e5c588d094d6906a78bd9a10f3938c154038574eba9f98ed65",
+  "source_sha": "0160a052cc2e20b83df9a2add88837990fe4d7022bd5d5dfbe31b0632c33edfb",
+  "after_sha": "0160a052cc2e20b83df9a2add88837990fe4d7022bd5d5dfbe31b0632c33edfb",
+  "argv": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-X",
+    "utf8",
+    "-m",
+    "pytest",
+    "-o",
+    "addopts=",
+    "-q",
+    "--tb=short",
+    "--basetemp=F:\\cffmam\\.csef-build\\checks\\182bceb392bc4870a0eb0b3e005c4a85\\temp",
+    "--junitxml=F:\\cffmam\\.csef-build\\checks\\182bceb392bc4870a0eb0b3e005c4a85\\junit.xml",
+    "tests/lifecycle/test_question_revisions.py",
+    "tests/gate/test_project.py"
+  ],
+  "counts": {
+    "cases": 26,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "process": {
+    "exit_code": 0,
+    "stdout": "..........................                                               [100%]\r\n- generated xml file: F:\\cffmam\\.csef-build\\checks\\182bceb392bc4870a0eb0b3e005c4a85\\junit.xml -\r\n26 passed in 51.66s\r\n",
+    "stderr": "",
+    "timed_out": false,
+    "overflow": false,
+    "elapsed_s": 54.125
+  }
+}

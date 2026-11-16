@@ -88,9 +88,11 @@ class ProjectBook:
             con.execute("INSERT INTO settings VALUES(30)")
         return cls(root)
 
-    def current(self):
-        with self.connection() as con:
-            row = con.execute("SELECT * FROM revisions ORDER BY version DESC LIMIT 1").fetchone()
+    def current(self, *, con=None):
+        if con is None:
+            with self.connection() as snapshot:
+                return self.current(con=snapshot)
+        row = con.execute("SELECT * FROM revisions ORDER BY version DESC LIMIT 1").fetchone()
         body = json.loads(row["body"])
         if not isinstance(body, dict) or set(body) != {"goal", "answers", "facts"}:
             raise Refused("invalid project revision envelope")
@@ -101,13 +103,21 @@ class ProjectBook:
         return {"version": row["version"], "sha256": row["sha256"], **body}
 
     def questions(self):
-        answers = self.current()["answers"]
-        questions = [{"id": key, "question": text} for key, text in QUESTIONS.items() if not isinstance(answers.get(key), str) or not answers[key].strip()]
+        from .lifecycle.questions import Questions
+        from .persistence.sqlite import DATABASE
+        service = Questions(self) if self.db.name == DATABASE else None
         with self.connection() as con:
+            con.execute("BEGIN")
+            current = self.current(con=con)
+            answers = current["answers"]
+            def known(value):
+                value = value.get("answer") if isinstance(value, dict) else value
+                return isinstance(value, str) and bool(value.strip())
+            questions = [{"id": key, "question": text} for key, text in QUESTIONS.items() if not known(answers.get(key))]
             for row in con.execute("SELECT id,proposal FROM changes WHERE status='proposed' ORDER BY id"):
                 item = json.loads(row["proposal"])
-                if item.get("type") == "owner_question":
-                    questions.append({"id": f'Q-{row["id"]}', "question": item["question"], "why_needed": item["why_needed"], "stage": item["stage"]})
+                if item.get("type") == "owner_question" and (service is None or service.is_current(f'Q-{row["id"]}', current, con=con, question=item)):
+                    questions.append({"id": f'Q-{row["id"]}', "question": item["question"], "why_needed": item["why_needed"], "stage": item["stage"], "fact_ids": item.get("fact_ids", [])})
         return questions[:3]
 
     def status(self):
@@ -145,10 +155,13 @@ class ProjectBook:
                     body["answers"][key] = text
                     continue
                 match = re.fullmatch(r"Q-([0-9]+)", key)
-                row = con.execute("SELECT * FROM changes WHERE id=? AND status='proposed'", (int(match[1]),)).fetchone() if match else None
+                row = con.execute("SELECT * FROM changes WHERE id=? AND status IN ('proposed','answered')", (int(match[1]),)).fetchone() if match else None
                 proposal = parse_json(row["proposal"]) if row else {}
                 if proposal.get("type") != "owner_question":
                     raise Refused("unknown or already answered question")
+                from .lifecycle.questions import Questions
+                if not Questions(self).is_current(key, before, con=con, question=proposal):
+                    raise Refused("question context is stale; refresh the question before answering")
                 body["answers"][key] = {"question": proposal["question"], "answer": text}
                 con.execute("UPDATE changes SET status='answered' WHERE id=?", (row["id"],))
         known = {f["id"]: f for f in body["facts"]}
@@ -184,6 +197,17 @@ class ProjectBook:
                                     for k, v in body["answers"].items() if before["answers"].get(k) != v}}
         con.execute("INSERT INTO revisions VALUES(?,?,?,?,?)", (version, encoded(body).decode(), sha, reason, now()))
         con.execute("INSERT INTO changes(proposal,status,created) VALUES(?,'recorded',?)", (encoded(audit).decode(), now()))
+        if answers:
+            from .lifecycle.questions import context_sha
+            for key in answers:
+                related = []
+                if key.startswith("Q-"):
+                    question = parse_json(con.execute("SELECT proposal FROM changes WHERE id=?", (int(key[2:]),)).fetchone()[0])
+                    related = question.get("fact_ids", [])
+                observation = {"type": "answer_revision", "schema_version": 1, "question_id": key,
+                               "project_version": version, "project_sha256": sha, "value": body["answers"][key],
+                               "fact_ids": related, "context_sha256": context_sha(body, related), "source": source}
+                con.execute("INSERT INTO changes(proposal,status,created) VALUES(?,'recorded',?)", (encoded(observation).decode(), now()))
         con.execute("UPDATE stages SET status='stale' WHERE status!='pending'")
         from .persistence.leases import invalidate_all
         invalidate_all(con, "owner revision changed")
