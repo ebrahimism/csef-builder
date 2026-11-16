@@ -1,0 +1,37 @@
+{
+  "id": "38b7171626b047c0a7da2f5430229963",
+  "task_id": "T005",
+  "passed": true,
+  "full_suite": false,
+  "plan_sha": "a3056af8228339e5c588d094d6906a78bd9a10f3938c154038574eba9f98ed65",
+  "source_sha": "751c2510509b2900da9c94e365341c43f34578f5614755302481bf59e3bce8d4",
+  "after_sha": "751c2510509b2900da9c94e365341c43f34578f5614755302481bf59e3bce8d4",
+  "argv": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-X",
+    "utf8",
+    "-m",
+    "pytest",
+    "-o",
+    "addopts=",
+    "-q",
+    "--tb=short",
+    "--basetemp=F:\\cffmam\\.csef-build\\checks\\38b7171626b047c0a7da2f5430229963\\temp",
+    "--junitxml=F:\\cffmam\\.csef-build\\checks\\38b7171626b047c0a7da2f5430229963\\junit.xml",
+    "tests/lifecycle/test_fact_authority.py"
+  ],
+  "counts": {
+    "cases": 18,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "process": {
+    "exit_code": 0,
+    "stdout": "..................                                                       [100%]\r\n- generated xml file: F:\\cffmam\\.csef-build\\checks\\38b7171626b047c0a7da2f5430229963\\junit.xml -\r\n18 passed in 124.42s (0:02:04)\r\n",
+    "stderr": "",
+    "timed_out": false,
+    "overflow": false,
+    "elapsed_s": 132.594
+  }
+}

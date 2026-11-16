@@ -1,0 +1,24 @@
+{
+  "task_id": "T005",
+  "acceptance": "پیشنهاد مدل نتواند هدف پذیرفته را عوض کند؛ هر تغییر منشأ و نسخه و آثار مشخص داشته باشد.",
+  "findings": "Accepted intent is separated from model proposals and assumptions in the existing store. Owner statements are typed at entry, bound to exact revision/hash and exact change/proposal, and consumed once with the accepted change. All owner amendment paths record source, before/after revisions, fact/answer/goal changes and conservative impacts atomically; existing IDs and historical snapshots are preserved, unknown legacy provenance is explicit. History validates revision integrity, audit hash binding, actual deltas/effects and consumed owner source references. Outstanding shared verification and active stage leases are invalidated conservatively; historical accepted observations remain immutable. Gate now binds both owner version and SHA at start, end and promotion, including the no-op/ABA case. Full receipt 0fe239f632dc44bc93da135e90965d8c records 209 passed, no failures/errors/skips, matching before/after and current source. All four exported schemas match runtime. Separate review is recorded alongside this evidence.",
+  "evidence": [
+    "docs/progress/T005-handoff.fa.md",
+    "docs/progress/T005-focused-attempt1.json",
+    "docs/progress/T005-focused-inflight.json",
+    "docs/progress/T005-focused-check.json",
+    "docs/progress/T005-full-check.json",
+    "docs/progress/T005-schema-check.json",
+    "docs/progress/T005-independent-review.md",
+    "tests/lifecycle/test_fact_authority.py"
+  ],
+  "risks": [
+    "Owner entrypoints are trusted controller/conversation APIs, not independently authenticated human identity or a hostile-writer security boundary.",
+    "Model source_ref is descriptive provenance, not a verified execution receipt.",
+    "Owner-version freshness does not establish semantic adequacy of the acceptance oracle.",
+    "Impact invalidation is conservative; fine-grained dependency invalidation is later work.",
+    "Full chat/controller wiring remains T007; legacy free-form proposals are never silently upgraded to accepted facts.",
+    "Windows isolation is unresolved and measure-only remains REVIEW. No model-cost or advanced-project success claim."
+  ],
+  "independent_review": "docs/progress/T005-independent-review.md"
+}

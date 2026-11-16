@@ -138,6 +138,21 @@ def same_json(actual, expected) -> bool:
     return actual == expected
 
 
+def owner_revision(con):
+    """A shared store binds verification to the exact owner revision."""
+    if not con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='revisions'").fetchone():
+        return None, None
+    row = con.execute("SELECT * FROM revisions ORDER BY version DESC LIMIT 1").fetchone()
+    if row is None:
+        return None, None
+    body = parse_json(row["body"])
+    if not isinstance(body, dict) or set(body) != {"goal", "answers", "facts"} or digest(encoded(body)) != row["sha256"]:
+        raise Refused("owner revision integrity mismatch")
+    from .contracts import ProjectRevision, checked
+    checked(ProjectRevision, {"version": row["version"], "sha256": row["sha256"], **body})
+    return row["version"], row["sha256"]
+
+
 class Gate:
     def __init__(self, control: Path):
         self.root = control.absolute()
@@ -284,6 +299,7 @@ class Gate:
             row = con.execute("SELECT status FROM runs WHERE id=?", (run_id,)).fetchone()
             if row[0] == "accepted":
                 raise Refused("accepted run cannot be reevaluated")
+            project_version, project_sha = owner_revision(con)
             con.execute("UPDATE evaluations SET status='stale' WHERE run_id=? AND status='pass'", (run_id,))
             con.execute("UPDATE runs SET status='verifying' WHERE id=?", (run_id,))
             con.execute("INSERT INTO evaluations VALUES(?,?,?,?,?,?,?,?,?)", (evaluation_id, run_id, source_hash, spec_hash, "running", str(snapshot), str(report_path), None, now()))
@@ -314,12 +330,16 @@ class Gate:
             error = f"{type(exc).__name__}: {exc}"
         passed = len(results) == len(spec["cases"]) and all(r["passed"] for r in results)
         status = "blocked" if error else ("review" if measure_only else "pass") if passed else "fail"
-        report = {"schema_version": 1, "evaluation_id": evaluation_id, "run_id": run_id, "status": status, "measurement_only": measure_only, "source_sha256": source_hash, "spec_sha256": spec_hash, "source_manifest": files, "boundary": boundary, "error": error, "cases": results, "finished_at": now()}
+        report = {"schema_version": 1, "evaluation_id": evaluation_id, "run_id": run_id, "status": status, "measurement_only": measure_only, "source_sha256": source_hash, "spec_sha256": spec_hash, "project_sha256": project_sha, "project_version": project_version, "source_manifest": files, "boundary": boundary, "error": error, "cases": results, "finished_at": now()}
         from .contracts import VerificationRecord, checked
-        checked(VerificationRecord, report)
-        raw = encoded(report)
-        report_path.write_bytes(raw)
         with self.connect() as con:
+            con.execute("BEGIN IMMEDIATE")
+            if owner_revision(con) != (project_version, project_sha):
+                status = report["status"] = "blocked"
+                report["error"] = "owner revision changed during verification"
+            checked(VerificationRecord, report)
+            raw = encoded(report)
+            report_path.write_bytes(raw)
             con.execute("UPDATE evaluations SET status=?,report_hash=? WHERE id=?", (status, digest(raw), evaluation_id))
             con.execute("UPDATE runs SET status=? WHERE id=?", ("verified" if status == "pass" else status, run_id))
         return report
@@ -343,6 +363,8 @@ class Gate:
             report = read_json(report_path)
             from .contracts import VerificationRecord, checked
             checked(VerificationRecord, report)
+            if (report.get("project_version"), report.get("project_sha256")) != owner_revision(con):
+                raise Refused("verified owner revision changed")
             if (report["evaluation_id"] != ev["id"] or report["run_id"] != run_id or report["status"] != "pass"
                     or report["source_sha256"] != ev["source_hash"] or report["spec_sha256"] != spec_hash
                     or report.get("boundary", {}).get("verified") is not True

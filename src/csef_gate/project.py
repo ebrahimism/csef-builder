@@ -119,41 +119,79 @@ class ProjectBook:
 
     def amend(self, *, answers=None, replace_facts=None, reason: str):
         """Owner/controller operation. Not exposed as an action to the model adapter."""
-        if not reason.strip():
-            raise Refused("owner amendment needs a reason")
         with self.connection() as con:
             con.execute("BEGIN IMMEDIATE")
-            old = con.execute("SELECT * FROM revisions ORDER BY version DESC LIMIT 1").fetchone()
-            body = json.loads(old["body"])
-            if answers:
-                for key, text in answers.items():
-                    if not isinstance(text, str) or not text.strip():
-                        raise Refused("nonempty owner answer required")
-                    if key in QUESTIONS:
-                        body["answers"][key] = text
-                        continue
-                    match = re.fullmatch(r"Q-([0-9]+)", key)
-                    row = con.execute("SELECT * FROM changes WHERE id=? AND status='proposed'", (int(match[1]),)).fetchone() if match else None
-                    proposal = json.loads(row["proposal"]) if row else {}
-                    if proposal.get("type") != "owner_question":
-                        raise Refused("unknown or already answered question")
-                    body["answers"][key] = {"question": proposal["question"], "answer": text}
-                    con.execute("UPDATE changes SET status='answered' WHERE id=?", (row["id"],))
-            if replace_facts:
-                known = {f["id"]: f for f in body["facts"]}
-                if not set(replace_facts) <= known.keys():
-                    raise Refused("unknown fact to amend")
-                for key, text in replace_facts.items():
-                    if not isinstance(text, str) or not text.strip():
-                        raise Refused("fact text required")
-                    known[key]["text"] = text
-            version = old["version"] + 1
-            con.execute("INSERT INTO revisions VALUES(?,?,?,?,?)", (version, encoded(body).decode(), digest(encoded(body)), reason, now()))
-            # Conservative invalidation. A later optimization can use a dependency graph.
-            con.execute("UPDATE stages SET status='stale' WHERE status != 'pending'")
-            from .persistence.leases import invalidate_all
-            invalidate_all(con, "owner revision changed")
+            self._amend_in(con, answers=answers, replace_facts=replace_facts, reason=reason,
+                           source={"kind": "owner_controller", "ref": None})
         return self.current()
+
+    def _amend_in(self, con, *, reason, source, answers=None, replace_facts=None, add_facts=None, goal=None):
+        """Trusted owner path, using an already-held writer transaction."""
+        from .contracts import OwnerFact, ProjectRevision, checked
+        from .core import parse_json
+        if not isinstance(reason, str) or not reason.strip():
+            raise Refused("owner amendment needs a reason")
+        old = con.execute("SELECT * FROM revisions ORDER BY version DESC LIMIT 1").fetchone()
+        before = parse_json(old["body"])
+        if not isinstance(before, dict) or set(before) != {"goal", "answers", "facts"} or digest(encoded(before)) != old["sha256"]:
+            raise Refused("project revision integrity mismatch")
+        checked(ProjectRevision, {"version": old["version"], "sha256": old["sha256"], **before})
+        body = parse_json(old["body"])
+        if answers:
+            for key, text in answers.items():
+                if not isinstance(text, str) or not text.strip():
+                    raise Refused("nonempty owner answer required")
+                if key in QUESTIONS:
+                    body["answers"][key] = text
+                    continue
+                match = re.fullmatch(r"Q-([0-9]+)", key)
+                row = con.execute("SELECT * FROM changes WHERE id=? AND status='proposed'", (int(match[1]),)).fetchone() if match else None
+                proposal = parse_json(row["proposal"]) if row else {}
+                if proposal.get("type") != "owner_question":
+                    raise Refused("unknown or already answered question")
+                body["answers"][key] = {"question": proposal["question"], "answer": text}
+                con.execute("UPDATE changes SET status='answered' WHERE id=?", (row["id"],))
+        known = {f["id"]: f for f in body["facts"]}
+        if replace_facts:
+            if not set(replace_facts) <= known.keys():
+                raise Refused("unknown fact to amend")
+            for key, text in replace_facts.items():
+                if not isinstance(text, str) or not text.strip():
+                    raise Refused("fact text required")
+                known[key]["text"] = text
+        for fact in add_facts or []:
+            validated = checked(OwnerFact, fact).model_dump()
+            if validated["id"] in known or not validated["text"].strip():
+                raise Refused("new facts require unique IDs and nonempty text")
+            body["facts"].append(validated)
+            known[validated["id"]] = validated
+        if goal is not None:
+            if not isinstance(goal, str) or not goal.strip():
+                raise Refused("nonempty explicit owner goal required")
+            body["goal"] = goal
+        version = old["version"] + 1
+        sha = digest(encoded(body))
+        checked(ProjectRevision, {"version": version, "sha256": sha, **body})
+        impacts = [r[0] for r in con.execute("SELECT name FROM stages WHERE status!='pending' ORDER BY position")]
+        old_facts = {f["id"]: f for f in before["facts"]}
+        delta = [{"id": f["id"], "before": old_facts.get(f["id"]), "after": f}
+                 for f in body["facts"] if old_facts.get(f["id"]) != f]
+        audit = {"type": "owner_revision", "schema_version": 1, "source": source, "reason": reason,
+                 "from_version": old["version"], "to_version": version,
+                 "before_sha256": old["sha256"], "after_sha256": sha, "fact_changes": delta,
+                 "goal_changed": before["goal"] != body["goal"], "stale_stages": impacts,
+                 "answer_changes": {k: {"before": before["answers"].get(k), "after": v}
+                                    for k, v in body["answers"].items() if before["answers"].get(k) != v}}
+        con.execute("INSERT INTO revisions VALUES(?,?,?,?,?)", (version, encoded(body).decode(), sha, reason, now()))
+        con.execute("INSERT INTO changes(proposal,status,created) VALUES(?,'recorded',?)", (encoded(audit).decode(), now()))
+        con.execute("UPDATE stages SET status='stale' WHERE status!='pending'")
+        from .persistence.leases import invalidate_all
+        invalidate_all(con, "owner revision changed")
+        # Conservatively revoke outstanding verification in a shared store.
+        if con.execute("SELECT 1 FROM sqlite_master WHERE name='evaluations' AND type='table'").fetchone():
+            con.execute("UPDATE evaluations SET status='stale' WHERE status='pass' AND run_id IN (SELECT id FROM runs WHERE status!='accepted')")
+            con.execute("UPDATE runs SET status='stale' WHERE status='verified'")
+        return {"version": version, "sha256": sha, **body}
 
     def suggest_change(self, proposal: dict):
         # Recording a suggestion never changes current facts or stage authority.

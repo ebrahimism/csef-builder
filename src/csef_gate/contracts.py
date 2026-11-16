@@ -90,6 +90,8 @@ class VerificationRecord(Record):
     measurement_only: bool
     source_sha256: Hash
     spec_sha256: Hash
+    project_sha256: Hash | None = None
+    project_version: Annotated[int, Field(ge=1)] | None = None
     source_manifest: dict[str, Hash]
     boundary: dict[str, JsonValue] | None
     error: str | None
@@ -98,6 +100,8 @@ class VerificationRecord(Record):
 
     @model_validator(mode="after")
     def passing_is_complete(self):
+        if (self.project_sha256 is None) != (self.project_version is None):
+            raise ValueError("owner revision requires both content hash and version")
         if self.status == "pass" and (
             self.measurement_only or self.error is not None or not self.cases
             or not self.boundary or self.boundary.get("verified") is not True

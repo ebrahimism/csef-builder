@@ -1,0 +1,38 @@
+{
+  "id": "595a2da5175d41e7a6b2f05f5b9820c1",
+  "task_id": "T005",
+  "passed": false,
+  "full_suite": false,
+  "plan_sha": "a3056af8228339e5c588d094d6906a78bd9a10f3938c154038574eba9f98ed65",
+  "source_sha": "80829008ffaaf9decbc76f728c1e46d5efc73590f7f2821ae511f3bdf7467cba",
+  "after_sha": "80829008ffaaf9decbc76f728c1e46d5efc73590f7f2821ae511f3bdf7467cba",
+  "argv": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-X",
+    "utf8",
+    "-m",
+    "pytest",
+    "-o",
+    "addopts=",
+    "-q",
+    "--tb=short",
+    "--basetemp=F:\\cffmam\\.csef-build\\checks\\595a2da5175d41e7a6b2f05f5b9820c1\\temp",
+    "--junitxml=F:\\cffmam\\.csef-build\\checks\\595a2da5175d41e7a6b2f05f5b9820c1\\junit.xml",
+    "tests/lifecycle/test_fact_authority.py",
+    "tests/gate/test_project.py"
+  ],
+  "counts": {
+    "cases": 23,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "process": {
+    "exit_code": 1,
+    "stdout": "........F..............                                                  [100%]\r\n================================== FAILURES ===================================\r\n_ test_all_owner_changes_record_impacts_and_revoke_outstanding_shared_gate_pass _\r\ntests\\lifecycle\\test_fact_authority.py:143: in test_all_owner_changes_record_impacts_and_revoke_outstanding_shared_gate_pass\r\n    from test_migrations import setup_pair, UnitExecutor\r\nE   ModuleNotFoundError: No module named 'test_migrations'\r\n- generated xml file: F:\\cffmam\\.csef-build\\checks\\595a2da5175d41e7a6b2f05f5b9820c1\\junit.xml -\r\n=========================== short test summary info ===========================\r\nFAILED tests/lifecycle/test_fact_authority.py::test_all_owner_changes_record_impacts_and_revoke_outstanding_shared_gate_pass\r\n1 failed, 22 passed in 71.99s (0:01:11)\r\n",
+    "stderr": "",
+    "timed_out": false,
+    "overflow": false,
+    "elapsed_s": 81.5
+  }
+}
