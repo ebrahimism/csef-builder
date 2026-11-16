@@ -1,5 +1,334 @@
 # CSEF — سنجش مستقل برای عامل کدنویسی موجود
+# CSEF — Independent Evaluation for an Existing Coding Agent
 
+**CSEF is an independent control and evaluation layer for an existing AI coding agent.**
+
+The installed Codex agent proposes code changes, while a separate evaluator executes the application as a black box and validates its actual behavior against predefined acceptance criteria.
+
+**An agent's claims do not constitute authorization for acceptance.** Approval must be based on independently verified evidence.
+
+The current implementation is a local pilot targeting a Python CLI application built with the standard library. Its primary objective is to demonstrate a complete, real-world feedback loop:
+
+**Detect failure → Request a fix from the existing agent → Apply the proposed changes → Re-evaluate independently.**
+
+---
+
+## 1. Staged Workflow and Project Context
+
+CSEF supports a structured, configurable development lifecycle:
+
+**Problem Discovery → Architecture → Contracts → First End-to-End Slice → Development → Delivery**
+
+The number of stages and their responsibilities are configurable.
+
+Each stage receives:
+
+- A versioned project specification.
+- Previously approved decisions.
+- Verified deliverables from earlier stages.
+- The context required for its assigned responsibilities.
+
+Model-generated suggestions cannot silently modify an approved project specification.
+
+A stage assistant may ask essential clarification questions. Execution remains suspended until the user responds, preventing unnecessary repeated model calls.
+
+### Context Handoff Evaluation
+
+A small-scale comparison evaluated three context-management strategies:
+
+1. **Full History:** Pass the complete conversation history between stages.
+2. **Compact Context:** Pass a condensed, structured project context.
+3. **Compact Context with Continuous Review:** Use compact context with a persistent reviewer at every stage.
+
+All three strategies passed **25 stage-level behavioral checks**.
+
+Under an identical allocation of design stages:
+
+| Strategy | Input Consumption | Behavioral Checks |
+|---|---|---|
+| Full History | Baseline | 25 passed |
+| Compact Context | 8.68% less than baseline | 25 passed |
+| Compact Context + Continuous Reviewer | 52.85% more than compact context alone | 25 passed |
+
+**Important:** These figures represent input consumption, not monetary API costs. They do not establish a quality guarantee for complex production projects.
+
+### Selected Development Direction
+
+The preferred approach combines:
+
+- Persistent, versioned project context.
+- Continuous machine-enforced validation.
+- Model-based review at architectural decision points and other high-risk checkpoints.
+- An optional full-review mode covering every stage.
+
+The quality advantage of targeted review over alternative strategies has not yet been established across diverse projects.
+
+### Documentation and Evidence
+
+- [Operational Workflow and Stage Questions](docs/WORKFLOW.md)
+- [Master Implementation Plan, Integrations, and Backlog](docs/MASTER-PLAN.fa.md)
+- [Context Handoff Comparison Report](docs/evidence/handoff-screening-2026-11-15/summary.json)
+- [Evidence-Based Engineering Decision](docs/decisions/DEC-003-staged-context-and-review.md)
+- [Modular Implementation Example](examples/handoff_expenses/README.md)
+
+---
+
+## 2. Installation and Execution
+
+To develop CSEF itself using Codex, consult the following resources:
+
+- [Getting Started and Local Extension Setup](docs/START-CODEX.fa.md)
+- [Ready-to-Use Startup Prompt](docs/progress/START-PROMPT.txt)
+- [Agent Instructions](AGENTS.md)
+
+The development package tracks implementation progress separately from the proposed roadmap. It does not grant release authorization.
+
+### Prerequisites
+
+Before running the pilot, ensure that:
+
+- Python is installed and available in the terminal.
+- Codex CLI is installed.
+- Codex authentication is active.
+- The control directory is new and located outside the target project directory.
+
+CSEF uses the existing authenticated Codex account. No additional API key is required.
+
+### Initialize the Pilot
+
+From the project root directory in PowerShell:
+
+```powershell
+python csef.py init --control 'C:/Users/Kp/Documents/ChatGPT/cffmam/csef-control/my-pilot' --project 'F:/cffmam/examples/expense_cli/project' --spec 'F:/cffmam/examples/expense_cli/acceptance.json'
+```
+
+### Run the Evaluation
+
+```powershell
+python csef.py run --control 'C:/Users/Kp/Documents/ChatGPT/cffmam/csef-control/my-pilot'
+```
+
+The control repository must remain separate from the project being evaluated.
+
+---
+
+## 3. Host Isolation and Security Limitations
+
+### Verified Isolation Properties
+
+Practical isolation tests successfully prevented:
+
+- Reading from the control repository.
+- Writing to the control repository.
+- Modifying protected executable files.
+
+However, **local TCP connectivity remains possible**.
+
+This is a known limitation of the current host isolation mechanism.
+
+Consequently, the normal execution path reports a `BLOCKED` status and does not create a checkpoint when the required isolation conditions are not satisfied.
+
+### Measurement-Only Mode
+
+For the reviewed local example, CSEF provides a measurement-only execution mode:
+
+```powershell
+python csef.py run --control 'C:/Users/Kp/Documents/ChatGPT/cffmam/csef-control/my-pilot' --measure-only
+```
+
+This mode:
+
+1. Detects the existing behavioral failures.
+2. Requests corrective changes from Codex.
+3. Evaluates the proposed changes.
+4. Reports the resulting acceptance-test outcomes.
+
+Even when all acceptance criteria pass, the result remains `REVIEW`, with exit code `2`.
+
+**Measurement-only mode never issues a checkpoint.**
+
+This mode is intended exclusively for the reviewed local pilot. It is not suitable for:
+
+- Hostile or untrusted code.
+- Security-sensitive projects.
+- Production deployment.
+
+Passing behavioral checks must not be interpreted as proof of secure isolation.
+
+---
+
+## 4. Implemented Capabilities
+
+The current CSEF pilot includes the following capabilities.
+
+### 4.1. Independent Control Repository
+
+Project specifications, acceptance tests, and the initial baseline are recorded in a separate control repository.
+
+This separation helps preserve evaluation integrity and prevents the coding agent from directly controlling the acceptance authority.
+
+### 4.2. Restricted Agent Proposals
+
+The coding agent produces structured JSON proposals.
+
+Changes are limited to explicitly authorized file paths.
+
+The agent does not receive unrestricted authority to modify the project or its evaluation criteria.
+
+### 4.3. Black-Box Evaluation
+
+The evaluator does not import application code or application tests into its own process.
+
+Instead, the target application is executed as a separate process.
+
+This preserves the distinction between the evaluator and the software under evaluation.
+
+### 4.4. Operating-System-Level Execution Restrictions
+
+Application execution uses Codex operating-system-level restrictions.
+
+These restrictions provide a degree of isolation, subject to the documented host limitations.
+
+### 4.5. Evidence-Based Acceptance
+
+The evaluator verifies:
+
+- Actual process execution results.
+- JSON output.
+- Every predefined acceptance criterion.
+- Exact file versions.
+
+Acceptance decisions are based on recorded evaluation results rather than the agent's self-reported success.
+
+### 4.6. Controlled Approval Authority
+
+Approval can only be issued from a complete evaluation record stored in the control repository.
+
+Legacy model-based permissions have no authority to approve results in the new evaluation workflow.
+
+### 4.7. Execution Limits and Usage Tracking
+
+The implementation enforces persistent limits on:
+
+- Agent attempts.
+- Execution time.
+
+Reported usage is recorded for auditing and analysis.
+
+The system does not claim to provide verified monetary pricing or enforce a dollar-denominated spending limit.
+
+---
+
+## 5. Validation and Test Results
+
+### Real-World Pilot Execution
+
+**Execution date:** November 15, 2026
+
+A fresh pilot run was completed without manual modifications during the evaluation cycle.
+
+The installed Codex agent generated one corrective proposal.
+
+<text></text>
+
+| Metric | Result |
+|---|---|
+| Initial acceptance criteria passed | 9 |
+| Final acceptance criteria passed | 14 of 14 |
+| Agent correction proposals | 1 |
+| Final evaluation status | `REVIEW` |
+| Checkpoint request | Rejected |
+
+The pilot demonstrated a complete failure-detection, agent-correction, and independent re-evaluation cycle.
+
+Despite satisfying all 14 behavioral acceptance criteria, the evaluation remained in `REVIEW` status.
+
+The checkpoint request was rejected, preserving the separation between behavioral correctness and authorization to proceed.
+
+[View Complete Pilot Execution Report](docs/evidence/gate-pilot-2026-11-15/clean-summary.json)
+
+### Repository Test Suite
+
+**133 repository tests passed**, covering:
+
+- Existing functionality.
+- The independent control layer.
+- Project context management.
+- Stage handoff mechanisms.
+- Stage-level conversation workflows.
+
+These results validate the tested implementation behavior but do not guarantee the security of the actual execution environment.
+
+### Run the Tests
+
+From PowerShell:
+
+```powershell
+python -m pytest -o addopts='' -q --basetemp=F:/cffmam/.pytest_cache/fresh-gate-check
+```
+
+Choose a fresh temporary directory when repeating the test run.
+
+### Technical References
+
+- [Architecture, Trust Boundaries, and Commands](docs/GATE.md)
+- [Example Behavioral Acceptance Criteria](examples/expense_cli/acceptance.json)
+- [Core Control Engine](src/csef_gate/core.py)
+- [Codex Integration and Execution Restrictions](src/csef_gate/backends.py)
+- [Control Layer Tests](tests/gate/test_gate.py)
+- [Code Generated by the Real Coding Agent](examples/expense_cli/generated/expenses.py)
+
+---
+
+## 6. Legacy Components and Compatibility
+
+Previous models, reports, and implementation artifacts are retained in:
+
+- `src/csef_contracts`
+- `compatibility`
+- `verification_step5`
+
+The previous project documentation is also preserved:
+
+[Archived Legacy README](docs/LEGACY-README.md)
+
+These components remain available for historical reference and compatibility purposes.
+
+**They are not authorized to issue approvals for the new evaluation workflow.**
+
+The earlier D1 engineering decision concerning virtual-machine isolation remains unimplemented.
+
+---
+
+## 7. Current Project Status
+
+| Component | Status |
+|---|---|
+| Independent evaluation architecture | Implemented in local pilot |
+| Separate control repository | Implemented |
+| Structured JSON change proposals | Implemented |
+| Black-box application execution | Implemented |
+| Behavioral acceptance validation | Implemented |
+| Failure detection and correction loop | Demonstrated |
+| Persistent execution limits | Implemented |
+| Stage-based context management | Implemented |
+| Repository test suite | 133 tests passed |
+| Local TCP isolation | Incomplete |
+| Production-grade isolation | Not established |
+| Virtual-machine isolation (D1) | Not implemented |
+| Production deployment readiness | Not established |
+
+### Conclusion
+
+CSEF demonstrates a practical approach to independently evaluating an existing AI coding agent without relying on the agent's own claims of correctness.
+
+The local pilot successfully demonstrated the complete correction and re-evaluation cycle, improving behavioral acceptance results from 9 passing criteria to 14 out of 14.
+
+The central architectural principle is:
+
+**The coding agent proposes. The independent evaluator verifies. The control layer determines whether acceptance is authorized.**
+
+The next engineering priority is to address the remaining host-isolation limitations before considering the system suitable for security-sensitive or production use.
 CSEF اکنون یک لایهٔ کنترل و ارزیابی است: Codex نصب‌شده پیشنهاد تغییر می‌دهد؛ ارزیاب جدا، برنامه را به‌صورت جعبه‌سیاه اجرا می‌کند و خروجی واقعی را با معیارهای از پیش تعیین‌شده می‌سنجد. ادعای عامل مجوز پذیرش نیست.
 
 این نسخه یک پایلوت محلی برای CLI پایتون با کتابخانهٔ استاندارد است. هدف آن اثبات مسیر واقعی شکست، اصلاح توسط عامل موجود و ارزیابی دوباره است.
