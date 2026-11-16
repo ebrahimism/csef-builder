@@ -1,0 +1,22 @@
+{
+  "task_id": "T004",
+  "acceptance": "دو کنترل‌کننده نتوانند یک مرحله را هم‌زمان مصرف کنند؛ قطع اجرا اختیار تأیید باقی نگذارد.",
+  "findings": "Stage start and durable intent share a writer transaction with revision revalidation. Fenced token/generation and unique execution_id prevent duplicate controllers and stale packets from completing a later attempt. Expiry and owner amendment block automatic takeover until explicit token-bound reconciliation; a returned model draft suspends without a handoff. Outcome, handoff and lease release commit together. Real subprocess os._exit, rollback, journal uniqueness, hash/size/allowlist and offline migration/restore are exercised by tests. Source journal sequences are remapped without losing event/intent IDs. Unknown effects and artifact orphans are never promoted into verification. The corrected existing adaptive-question suite passes 14/14 unchanged. Current full-suite receipt 461bcfa04a4145c087878e13338b24b5 records 188 passes, zero failures/errors/skips, without timeout/overflow. Its source digest matches the corrected focused check and current source. The separate reviewer inspected the receipt, actual JUnit and source and finalized approval with no remaining blocker.",
+  "evidence": [
+    "docs/progress/T004-handoff.fa.md",
+    "docs/progress/T004-repair-diagnosis.md",
+    "docs/progress/T004-project-check.json",
+    "docs/progress/T004-full-check.json",
+    "docs/progress/T004-independent-review.md",
+    "tests/persistence/test_crash_and_leases.py"
+  ],
+  "risks": [
+    "Lease exclusion applies within the selected DB; copies are not a cross-root distributed lock.",
+    "Fencing cannot kill a live worker or prove its external effect stopped; unknown outcomes require explicit reconciliation.",
+    "The journal is append-only through its API, not protected against a hostile local DB writer.",
+    "Interrupted artifact/export writes may leave partial files; automatic orphan overwrite and general recovery are intentionally absent.",
+    "Gate remains independent; Windows loopback isolation is unresolved and measure-only stays REVIEW.",
+    "GitHub writes are blocked: existing account ebrahimism received HTTP403 for the owner-provided repository."
+  ],
+  "independent_review": "docs/progress/T004-independent-review.md"
+}

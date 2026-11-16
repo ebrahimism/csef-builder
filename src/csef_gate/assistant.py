@@ -1,5 +1,5 @@
 """Stage-aware engineering interview/draft, without granting model truth authority."""
-from .core import Refused, encoded, relative_name
+from .core import Refused, digest, encoded, relative_name
 
 SCHEMA = {"type": "object", "additionalProperties": False,
           "properties": {"summary": {"type": "string"},
@@ -37,6 +37,7 @@ def assist_stage(book, stage, client):
         book.suggest_change({"type": "owner_question", "stage": stage, **item})
     for item in draft.get("proposed_decisions", []):
         book.suggest_change({"type": "engineering_proposal", "stage": stage, **item})
+    book.suspend(stage, packet_hash=digest(encoded(packet)), awaiting_owner=bool(draft["questions"]))
     # Drafts remain model artifacts. Only controller validation may advance a stage.
     return {"status": "awaiting_owner" if draft["questions"] else "draft_requires_validation", "draft": draft,
             "questions": book.questions(), "receipt": receipt, "model_called": True, "release_approved": False}

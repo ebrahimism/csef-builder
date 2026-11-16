@@ -1,0 +1,39 @@
+{
+  "id": "20377e53f4cd453a88e7eff689fc6189",
+  "task_id": "T004",
+  "passed": false,
+  "full_suite": false,
+  "plan_sha": "a3056af8228339e5c588d094d6906a78bd9a10f3938c154038574eba9f98ed65",
+  "source_sha": "967245113df41580d9854796679cd073e7b6cffa0bffa30e6b1d800f4943a9d9",
+  "after_sha": "967245113df41580d9854796679cd073e7b6cffa0bffa30e6b1d800f4943a9d9",
+  "argv": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-X",
+    "utf8",
+    "-m",
+    "pytest",
+    "-o",
+    "addopts=",
+    "-q",
+    "--tb=short",
+    "--basetemp=F:\\cffmam\\.csef-build\\checks\\20377e53f4cd453a88e7eff689fc6189\\temp",
+    "--junitxml=F:\\cffmam\\.csef-build\\checks\\20377e53f4cd453a88e7eff689fc6189\\junit.xml",
+    "tests/persistence/test_crash_and_leases.py",
+    "tests/gate/test_project.py",
+    "tests/persistence/test_migrations.py"
+  ],
+  "counts": {
+    "cases": 47,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "process": {
+    "exit_code": 1,
+    "stdout": ".......................F.......................                          [100%]\r\n================================== FAILURES ===================================\r\n_________ test_adaptive_question_blocks_next_call_until_owner_answers _________\r\ntests\\gate\\test_project.py:156: in test_adaptive_question_blocks_next_call_until_owner_answers\r\n    result = assist_stage(project, \"discovery\", client)\r\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\nsrc\\csef_gate\\assistant.py:40: in assist_stage\r\n    book.suspend(stage, packet_hash=digest(encoded(packet)), awaiting_owner=bool(draft[\"questions\"]))\r\nsrc\\csef_gate\\project.py:220: in suspend\r\n    packet = {**self.packet(stage), \"execution_id\": lease.intent_id} if lease else None\r\n                ^^^^^^^^^^^^^^^^^^\r\nsrc\\csef_gate\\project.py:173: in packet\r\n    raise Refused(\"owner intake answers are still missing\")\r\nE   csef_gate.core.Refused: owner intake answers are still missing\r\n- generated xml file: F:\\cffmam\\.csef-build\\checks\\20377e53f4cd453a88e7eff689fc6189\\junit.xml -\r\n=========================== short test summary info ===========================\r\nFAILED tests/gate/test_project.py::test_adaptive_question_blocks_next_call_until_owner_answers\r\n1 failed, 46 passed in 428.47s (0:07:08)\r\n",
+    "stderr": "",
+    "timed_out": false,
+    "overflow": false,
+    "elapsed_s": 431.5
+  }
+}

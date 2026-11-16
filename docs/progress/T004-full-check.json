@@ -1,0 +1,37 @@
+{
+  "id": "461bcfa04a4145c087878e13338b24b5",
+  "task_id": "T004",
+  "passed": true,
+  "full_suite": true,
+  "plan_sha": "a3056af8228339e5c588d094d6906a78bd9a10f3938c154038574eba9f98ed65",
+  "source_sha": "29fc5360cad1fe05af459f9040fa753b2659b62ff1546303debd8586430e2e8d",
+  "after_sha": "29fc5360cad1fe05af459f9040fa753b2659b62ff1546303debd8586430e2e8d",
+  "argv": [
+    "C:\\Users\\Kp\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-X",
+    "utf8",
+    "-m",
+    "pytest",
+    "-o",
+    "addopts=",
+    "-q",
+    "--tb=short",
+    "--basetemp=F:\\cffmam\\.csef-build\\checks\\461bcfa04a4145c087878e13338b24b5\\temp",
+    "--junitxml=F:\\cffmam\\.csef-build\\checks\\461bcfa04a4145c087878e13338b24b5\\junit.xml",
+    "tests"
+  ],
+  "counts": {
+    "cases": 188,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "process": {
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 38%]\r\n........................................................................ [ 76%]\r\n............................................                             [100%]\r\n- generated xml file: F:\\cffmam\\.csef-build\\checks\\461bcfa04a4145c087878e13338b24b5\\junit.xml -\r\n188 passed in 457.07s (0:07:37)\r\n",
+    "stderr": "",
+    "timed_out": false,
+    "overflow": false,
+    "elapsed_s": 465.39
+  }
+}

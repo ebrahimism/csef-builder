@@ -23,6 +23,7 @@ from .sqlite import (
     DATABASE, GATE_SQL, GATE_TABLES, PROJECT_SQL, PROJECT_TABLES,
     VERSION, connection, database_for, initialize,
 )
+from .events import RUNTIME_DDL, RUNTIME_TABLES, ensure_runtime
 
 
 MANIFEST = "migration.json"
@@ -70,6 +71,7 @@ def _read_manifest(store: Path) -> dict:
                 or not isinstance(source["tables"], dict)):
             raise Refused("invalid migration source metadata")
         allowed_tables = [set(tables)]
+        allowed_tables.append(set(tables) | set(RUNTIME_TABLES))
         if kind == "project" and source["database"] == "project.sqlite3":
             allowed_tables.append(set(tables) - {"stage_definitions"})
         if (set(source["tables"]) not in allowed_tables
@@ -125,7 +127,12 @@ def _schema(con, kind):
     if any(row[0] != "table" for row in objects):
         raise Refused("source triggers, views and custom indexes are unsupported")
     names = {row[1] for row in objects}
+    runtime = "runtime_meta" in names
     expected = set(tables) if version == 0 else set(PROJECT_TABLES + GATE_TABLES) | {"control_meta"}
+    if runtime and version == VERSION:
+        expected |= set(RUNTIME_TABLES) | {"runtime_meta"}
+    elif runtime:
+        raise Refused("legacy runtime extension requires explicit upgrade")
     # The original ProjectBook explicitly supported the pre-stage-definitions DB.
     if kind == "project" and version == 0 and "stage_definitions" not in names:
         expected.remove("stage_definitions")
@@ -133,6 +140,9 @@ def _schema(con, kind):
         raise Refused("unsupported source tables")
     with closing(sqlite3.connect(":memory:")) as reference:
         reference.executescript(PROJECT_SQL + GATE_SQL)
+        if runtime:
+            for statement in RUNTIME_DDL:
+                reference.execute(statement)
         for name in names - {"control_meta"}:
             actual = [tuple(r)[1:] for r in con.execute(f'PRAGMA table_info("{name}")')]
             wanted = [tuple(r)[1:] for r in reference.execute(f'PRAGMA table_info("{name}")')]
@@ -147,7 +157,9 @@ def _schema(con, kind):
         other = GATE_TABLES if kind == "project" else PROJECT_TABLES
         if any(con.execute(f'SELECT 1 FROM "{name}" LIMIT 1').fetchone() for name in other):
             raise Refused("source is already combined; do not merge unrelated stores")
-    return [name for name in tables if name in names]
+    if runtime and [tuple(r) for r in con.execute("SELECT id,version FROM runtime_meta")] != [(1, 1)]:
+        raise Refused("unsupported source runtime version")
+    return [name for name in (*tables, *(RUNTIME_TABLES if runtime else ())) if name in names]
 
 
 def _rows(con, tables):
@@ -303,16 +315,28 @@ def migrate(project: Path, gate: Path, destination: Path, *, offline=False) -> d
                     sources[kind].backup(target)
                 _copy_files(root, stage, info[kind]["files"])
             initialize(stage / DATABASE)
+            has_runtime = any("event_journal" in info[kind]["tables"] for kind in ("project", "gate"))
+            if has_runtime:
+                ensure_runtime(stage / DATABASE)
             with connection(stage / DATABASE) as con:
                 con.execute("BEGIN IMMEDIATE")
                 for kind in ("project", "gate"):
                     for table, rows in info[kind]["tables"].items():
                         for row in rows:
+                            if table == "event_journal":
+                                # Local sequence numbers are not global IDs.
+                                # Preserve source sequences in the backup and
+                                # manifest; retain each source's causal order.
+                                con.execute("INSERT INTO event_journal(event_id,intent_id,kind,scope,action,body,created) VALUES(?,?,?,?,?,?,?)", row[1:])
+                                continue
                             values = ",".join("?" for _ in row)
                             con.execute(f'INSERT INTO "{table}" VALUES({values})', row)
                 if "stage_definitions" not in info["project"]["tables"]:
                     con.executemany("INSERT INTO stage_definitions VALUES(?,?,?,?)", [(i, *s) for i, s in enumerate(STAGES)])
                 _rebase(con, gate, destination)
+                if has_runtime:
+                    from .leases import invalidate_all
+                    invalidate_all(con, "offline migration fenced historical execution", stopped=True)
                 con.execute("UPDATE stages SET status='stale' WHERE status='running'")
                 if con.execute("PRAGMA foreign_key_check").fetchall():
                     raise Refused("source contains orphaned records")
@@ -355,6 +379,12 @@ def rollback_copy(store: Path, destination: Path) -> dict:
                     raise Refused("unsupported backup database path")
                 with connection(output / dbname) as con:
                     _rebase(con, Path(record["sources"][kind]["root"]), destination / kind)
+            dbname = record["sources"][kind]["database"]
+            with connection(output / dbname) as con:
+                if con.execute("SELECT 1 FROM sqlite_master WHERE name='runtime_meta' AND type='table'").fetchone():
+                    from .leases import invalidate_all
+                    invalidate_all(con, "offline restore fenced historical execution", stopped=True)
+                    con.execute("UPDATE stages SET status='stale' WHERE status='running'")
         if destination.exists():
             raise Refused("restore destination appeared during copy")
         os.rename(stage, destination)
